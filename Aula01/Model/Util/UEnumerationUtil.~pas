@@ -1,0 +1,17 @@
+unit UEnumerationUtil;
+
+interface
+
+type
+   TEstadoTela =
+      (etPadrao, etIncluir, etAlterar, etExcluir, etConsultar, etListar,
+       etPesquisar);
+
+   TTipoPessoa = (tpFisica, tpJuridica);
+
+   TTipoEndereco = (tePrincipal, teEntrega, teCobranca);
+
+implementation
+
+end.
+ 
