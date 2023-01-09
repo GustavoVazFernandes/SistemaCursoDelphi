@@ -4,10 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ExtCtrls, frxpngimage , ComCtrls;
+  Dialogs, Menus, ExtCtrls, frxpngimage , ComCtrls, Buttons, UEnumerationUtil;
 
 type
-  TForm1 = class(TForm)    //Nome da Classes
+  TfrmNovoSistema = class(TForm)    //Nome da Classes
   { Lista de componentes visual que são adicionados a tela do prototipo
    Lembre-se de renomear TODOS os componentes que forem adicionados
    }
@@ -27,6 +27,7 @@ type
     
     procedure menSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure menClientesClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,25 +35,51 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmNovoSistema: TfrmNovoSistema;
 
 implementation
 
 uses
-    UConexao;
+    UConexao,UClientesView;
 
 {$R *.dfm}
 
 
-procedure TForm1.menSairClick(Sender: TObject);
+procedure TfrmNovoSistema.menSairClick(Sender: TObject);
 begin
    Close; // Fecha o Sistema
 end;
 
-procedure TForm1.FormShow(Sender: TObject);
+procedure TfrmNovoSistema.FormShow(Sender: TObject);
 begin
    stbBarraStatus.Panels [0].Text :=
    'Caminho do BD:' + TConexao.get.getCaminhoBanco;
 end;
 
+procedure TfrmNovoSistema.menClientesClick(Sender: TObject);
+begin
+   try
+      Screen.Cursor := crHourGlass;
+
+      if   frmClientes = nil then
+           frmClientes := TfrmClientes.Create(Application);
+
+
+      frmClientes.Show;
+   finally
+      Screen.Cursor := crDefault;
+   end;
+end  ;
+
+
+
 end.
+
+
+
+
+
+
+
+
+
