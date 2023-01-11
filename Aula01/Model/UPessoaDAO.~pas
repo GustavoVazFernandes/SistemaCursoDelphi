@@ -1,0 +1,55 @@
+unit UPessoaDAO;
+
+interface
+
+uses
+   SqlExpr, DBXpress, SimpleDS, Db, Classes, SysUtils, DateUtils, StdCtrls,
+   UGenericDAO, Upessoa;
+
+type
+
+   TPessoaDAO = class (TGenericDAO)
+      public
+         constructor Create(pConexao : TSQLConnection);
+         function Insere(pPessoa: TPessoa) : Boolean;
+         function InsereLista(pColPessoa : TcolPessoa): Boolean;
+         function Atuliza(pPessoa : TPessoa; pCondicao : String): Boolean ;
+         function Retorna (pCondicao: string): Tpessoa;
+
+   end;
+
+implementation
+
+{ TPessoaDAO }
+
+function TPessoaDAO.Atuliza(pPessoa: TPessoa; pCondicao: String): Boolean;
+begin
+   Result := inherited Atualiza(pPessoa, pCondicao);
+
+end;
+
+constructor TPessoaDAO.Create(pConexao: TSQLConnection);
+begin
+   inherited Create;
+   vEntidade := 'PESSOA';
+   vConexao := pConexao;
+   vClass := TPessoa;
+end;
+
+function TPessoaDAO.Insere(pPessoa: TPessoa): Boolean;
+begin
+   Result := inherited Insere(pPessoa, 'ID');
+end;
+
+function TPessoaDAO.InsereLista(pColPessoa: TcolPessoa): Boolean;
+begin
+   Result := inherited InsereLista(pColPessoa);
+end;
+
+function TPessoaDAO.Retorna(pCondicao: string): Tpessoa;
+begin
+   Result := TPessoa (inherited Retorna(pCondicao));
+end;
+
+end.
+ 

@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, ComCtrls, StdCtrls, Mask, Buttons, UEnumerationUtil;
+  Dialogs, ExtCtrls, ComCtrls, StdCtrls, Mask, Buttons, UEnumerationUtil,
+  UCliente, UPessoaController;
 
 type
   TfrmClientes = class(TForm)
@@ -64,10 +65,21 @@ type
 
     // Variaveis de Classe
     vEstadoTela: TEstadoTela;
+    vObjCliente: TCliente;
 
     procedure CamposEnabled(pOpcao : Boolean);
     procedure LimparTela;
     procedure DefineEstadoTela;
+
+
+    function ProcessaConfirmacao: Boolean;
+    function ProcessaInclusao: Boolean;
+    function ProcessaCliente: Boolean;
+
+    function ProcessaPessoa: Boolean;
+    function ProcessaEndereco: Boolean;
+
+    function ValidaCliente: Boolean;
   public
     { Public declarations }
   end;
@@ -268,7 +280,7 @@ end;
 
 procedure TfrmClientes.btnConfirmarClick(Sender: TObject);
 begin
-   //Confirmar
+   ProcessaConfirmacao;
 end;
 
 procedure TfrmClientes.btnCancelarClick(Sender: TObject);
@@ -307,4 +319,160 @@ begin
    vKey := VK_CLEAR;
 end;
 
+function TfrmClientes.ProcessaConfirmacao: Boolean;
+begin
+   Result := False;
+
+   try
+      case vEstadoTela of
+         etIncluir: Result := ProcessaInclusao;
+
+      end;
+
+      if not Result then
+         Exit;
+   except
+      on E: Exception do
+         TMessageUtil.Alerta(E.Message);
+   end;
+
+
+   Result := True;
+end;
+
+function TfrmClientes.ProcessaInclusao: Boolean;
+begin
+   try
+      Result := False;
+
+      if ProcessaCliente then
+      begin
+         TMessageUtil.Informacao('Cliente cadastrado com sucesso.'#13+
+         'Código cadastrado: '+ IntToStr(vObjCliente.Id));
+
+         vEstadoTela:= etPadrao;
+         DefineEstadoTela;
+
+         Result := True;
+      end;
+
+
+   except
+      on E: Exception do
+      begin
+         raise Exception.Create(
+         'Falha ao incluir os dados do cliente [View]: '#13+
+         e.Message);
+      end;
+
+   end;
+
+end;
+
+
+function TfrmClientes.ProcessaCliente: Boolean;
+begin
+   try
+      if (ProcessaPessoa) and
+         (ProcessaEndereco) then
+      begin
+         //Gravação do BD
+         TPessoaController.getInstancia.GravaPessoa(vObjCliente);
+
+
+         Result := True;
+
+
+      end;
+
+
+   except
+      on E: Exception do
+      begin
+      Raise Exception.Create(
+            'Falha ao gravar os dados do cliente [View]'#13+
+            e.Message);
+
+      end;
+    end;
+end;
+
+function TfrmClientes.ProcessaPessoa: Boolean;
+begin
+   try
+      Result := False;
+
+      if not ValidaCliente then
+         Exit;
+
+      if vEstadoTela =etIncluir then
+      begin
+         if vObjCliente = nil then
+            vObjCliente := Tcliente.Create;
+      end
+      else
+      if vEstadoTela =etAlterar then
+      begin
+         if vObjCliente = nil then
+            Exit;
+      end;
+
+         if (vObjCliente) = nil then
+            Exit;
+
+      vObjCliente.Tipo_Pessoa         := 0;
+      vObjCliente.Nome                := edtNome.Text;
+      vObjCliente.Fisica_Juridica     := rdgTipoPessoa.ItemIndex;
+      vObjCliente.Ativo               := chkAtivo.Checked;
+      vObjCliente.IdentificadorPessoa := edtCPFCNPJ.Text;
+
+
+      Result := True;
+   except
+      on E: Exception do
+      begin
+         raise Exception.Create(
+         'Falha ao processar os dados do cliente [View]:'#13+
+         e.Message);
+      end;
+   end;
+
+end;
+
+function TfrmClientes.ProcessaEndereco: Boolean;
+begin
+   try
+      Result :=False;
+
+
+      Result := True;
+   except
+      on E: Exception do
+      begin
+         raise Exception.Create(
+         'Falha ao preeencher os dados de enderço do cliente [View]:'#13+
+         e.Message);
+      end;
+
+   end;
+end;
+
+function TfrmClientes.ValidaCliente: Boolean;
+begin
+    Result := False;
+
+    if (edtNome.Text = EmptyStr) then
+    begin
+       TMessageUtil.Alerta('Nome do cliente em branco.');
+
+       if edtNome.CanFocus then
+          edtNome.SetFocus;
+
+        Exit;
+    end;
+
+    Result := True;
+end;
+
 end.
+

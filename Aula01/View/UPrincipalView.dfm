@@ -1,6 +1,6 @@
 object frmNovoSistema: TfrmNovoSistema
-  Left = 695
-  Top = 138
+  Left = 775
+  Top = 155
   Width = 583
   Height = 519
   Caption = 'Novo Sistema'

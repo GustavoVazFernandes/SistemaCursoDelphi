@@ -10,7 +10,11 @@ uses
   UClientesView in 'View\UClientesView.pas' {frmClientes},
   uMessageUtil in 'Model\Util\uMessageUtil.pas',
   Consts in 'Model\Util\Consts.pas',
-  UEnumerationUtil in 'Model\Util\UEnumerationUtil.pas';
+  UEnumerationUtil in 'Model\Util\UEnumerationUtil.pas',
+  Upessoa in 'Model\UPessoa.pas',
+  UPessoaDAO in 'Model\UPessoaDAO.pas',
+  UCliente in 'Model\UCliente.pas',
+  UPessoaController in 'Controller\UPessoaController.pas';
 
 {$R *.res}
 
