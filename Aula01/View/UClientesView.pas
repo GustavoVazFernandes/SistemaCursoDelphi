@@ -70,10 +70,12 @@ type
     procedure CamposEnabled(pOpcao : Boolean);
     procedure LimparTela;
     procedure DefineEstadoTela;
+    procedure CarregaDadosTela;
 
 
     function ProcessaConfirmacao: Boolean;
     function ProcessaInclusao: Boolean;
+    function ProcessaConsulta: Boolean;
     function ProcessaCliente: Boolean;
 
     function ProcessaPessoa: Boolean;
@@ -206,34 +208,66 @@ begin
 
    case vEstadoTela of
    etPadrao:
-     begin
+      begin
+         CamposEnabled(False);
+         LimparTela;
+
+         stbBarraStatus.Panels[0].Text := EmptyStr;
+         stbBarraStatus.Panels[1].Text := EmptyStr;
+
+           if (frmClientes <>nil)   and
+              (frmClientes.Active)  and
+              (btnIncluir.CanFocus) then
+               btnIncluir.SetFocus;
+
+           Application.ProcessMessages;
+      end;
+
+      etIncluir:
+      begin
+         stbBarraStatus.Panels[0].Text :='Inclusão';
+         CamposEnabled(True);
+
+         edtCodigo.Enabled := False;
+
+         chkAtivo.Checked := True;
+
+         if edtNome.CanFocus then
+            edtNome.SetFocus;
+
+      end;
+
+      etConsultar:
+      begin
+        stbBarraStatus.Panels[0].Text := 'Consulta';
+
         CamposEnabled(False);
-        LimparTela;
 
-        stbBarraStatus.Panels[0].Text := EmptyStr;
-        stbBarraStatus.Panels[1].Text := EmptyStr;
+        if (edtCodigo.Text <> EmptyStr) then
+        begin
+           edtCodigo.Enabled    := False;
+           btnAlterar.Enabled   := True;
+           btnExcluir.Enabled   := True;
+           btnListar.Enabled    := True;
+           btnConfirmar.Enabled := False;
 
-          if (frmClientes <>nil)   and
-           (frmClientes.Active)  and
-           (btnIncluir.CanFocus) then
-            btnIncluir.SetFocus;
+           if (btnAlterar.CanFocus)then
+               btnAlterar.SetFocus;
 
-         Application.ProcessMessages;
-     end;
+        end
+        else
+        begin
+          lblCodigo.Enabled := True;
+          edtCodigo.Enabled := True;
 
-     etIncluir:
-     begin
-        stbBarraStatus.Panels[0].Text :='Inclusão';
-        CamposEnabled(True);
+           if (edtCodigo.CanFocus) then
+               edtCodigo.SetFocus;
 
-        edtCodigo.Enabled := False;
+        end;
 
-        chkAtivo.Checked := True;
 
-        if edtNome.CanFocus then
-           edtNome.SetFocus;
-        
-     end;
+      end;
+
 
 
 
@@ -326,7 +360,7 @@ begin
    try
       case vEstadoTela of
          etIncluir: Result := ProcessaInclusao;
-
+         etConsultar: Result := ProcessaConsulta;
       end;
 
       if not Result then
@@ -472,6 +506,67 @@ begin
     end;
 
     Result := True;
+end;
+
+function TfrmClientes.ProcessaConsulta: Boolean;
+begin
+   try
+      Result := False;
+
+      if (edtCodigo.Text = EmptyStr) then
+      begin
+         TMessageUtil.Alerta('Codigo do cliente não preenchido.');
+
+         if edtCodigo.CanFocus then
+            edtCodigo.SetFocus;
+
+         Exit;
+      end;
+
+      vObjCliente :=
+         TCliente(TPessoaController.getInstancia.BuscaPessoa(
+            StrToIntDef(edtCodigo.Text, 0)));
+
+      if (vObjCliente <> nil) then
+         CarregaDadosTela
+      else
+      begin
+         TMessageUtil.Alerta(
+            'Nenhum cliente encotrado para o código informado.');
+
+         LimparTela;
+
+         if (edtCodigo.CanFocus) then
+            edtCodigo.SetFocus;
+
+         Exit;
+      end;
+
+      DefineEstadoTela;
+
+      Result:= True;
+
+   except
+      on E: Exception do
+      begin
+         Raise Exception.Create(
+         'Falha ao consultar os dados do cliente [View]:'#13+
+         e.Message);
+      end;
+    end;
+end;
+
+procedure TfrmClientes.CarregaDadosTela;
+begin
+   if (vObjCliente = nil) then
+      Exit;
+
+   edtCodigo.Text          := IntToStr (vObjCliente.Id);
+   rdgTipoPessoa.ItemIndex :=vObjCliente.Fisica_Juridica;
+   edtNome.Text            := vObjCliente.Nome;
+   chkAtivo.Checked        :=vObjCliente.Ativo;
+   edtCPFCNPJ.Text         := vObjCliente.IdentificadorPessoa;
+
 end;
 
 end.
