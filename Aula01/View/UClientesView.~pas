@@ -58,6 +58,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtCodigoExit(Sender: TObject);
 
   private
     { Private declarations }
@@ -70,12 +71,14 @@ type
     procedure CamposEnabled(pOpcao : Boolean);
     procedure LimparTela;
     procedure DefineEstadoTela;
+    procedure CarregaDadosTela;
 
 
     function ProcessaConfirmacao: Boolean;
     function ProcessaInclusao: Boolean;
     function ProcessaConsulta: Boolean;
     function ProcessaCliente: Boolean;
+    function ProcessaAlteracao:Boolean;
 
     function ProcessaPessoa: Boolean;
     function ProcessaEndereco: Boolean;
@@ -236,7 +239,33 @@ begin
 
       end;
 
-      etConsultar;
+      etAlterar:
+      begin
+         stbBarraStatus.Panels[0].Text :='Alterando';
+
+         if (edtCodigo.Text <> EmptyStr)then
+         begin
+            CamposEnabled(True);
+
+            edtCodigo.Enabled    := False;
+            btnAlterar.Enabled   := False;
+            btnConfirmar.Enabled := True;
+
+            if chkAtivo.CanFocus then
+               chkAtivo.SetFocus;
+
+         end
+         else
+         begin
+            lblCodigo.Enabled := True;
+            edtCodigo.Enabled := True;
+
+            if edtCodigo.CanFocus then
+               edtCodigo.SetFocus;
+         end;
+      end;
+
+      etConsultar:
       begin
         stbBarraStatus.Panels[0].Text := 'Consulta';
 
@@ -360,6 +389,7 @@ begin
       case vEstadoTela of
          etIncluir: Result := ProcessaInclusao;
          etConsultar: Result := ProcessaConsulta;
+         etAlterar: Result := ProcessaAlteracao;
       end;
 
       if not Result then
@@ -523,16 +553,81 @@ begin
       end;
 
       vObjCliente :=
-         TCliente(TPessoaController.getInstacia.BuscaPessoa(
-            StrToIntDef(edtCodigo.Text)));
+         TCliente(TPessoaController.getInstancia.BuscaPessoa(
+            StrToIntDef(edtCodigo.Text, 0)));
+
+      if (vObjCliente <> nil) then
+         CarregaDadosTela
+      else
+      begin
+         TMessageUtil.Alerta(
+            'Nenhum cliente encotrado para o código informado.');
+
+         LimparTela;
+
+         if (edtCodigo.CanFocus) then
+            edtCodigo.SetFocus;
+
+         Exit;
+      end;
+
+      DefineEstadoTela;
+
+      Result:= True;
+
    except
       on E: Exception do
       begin
-         Raise Excepetion.Create(
+         Raise Exception.Create(
          'Falha ao consultar os dados do cliente [View]:'#13+
          e.Message);
       end;
     end;
+end;
+
+procedure TfrmClientes.CarregaDadosTela;
+begin
+   if (vObjCliente = nil) then
+      Exit;
+
+   edtCodigo.Text          := IntToStr (vObjCliente.Id);
+   rdgTipoPessoa.ItemIndex :=vObjCliente.Fisica_Juridica;
+   edtNome.Text            := vObjCliente.Nome;
+   chkAtivo.Checked        :=vObjCliente.Ativo;
+   edtCPFCNPJ.Text         := vObjCliente.IdentificadorPessoa;
+
+end;
+
+function TfrmClientes.ProcessaAlteracao: Boolean;
+begin
+   try
+      Result := False;
+
+      if ProcessaCliente then
+      begin
+         TMessageUtil.Informacao('Dados foram alterados com sucesso!');
+
+         vEstadoTela := etPadrao;
+         DefineEstadoTela;
+         Result := True;
+      end;
+
+   except
+       on E: Exception do
+       begin
+          raise Exception.Create (
+            'Falha ao alterar os dados do cliente [View]'#13+
+            e.Message);
+       end;
+
+   end;
+end;
+
+procedure TfrmClientes.edtCodigoExit(Sender: TObject);
+begin
+   if vKey = VK_RETURN then
+      ProcessaConsulta;
+      
 end;
 
 end.

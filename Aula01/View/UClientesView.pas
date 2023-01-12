@@ -58,6 +58,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtCodigoExit(Sender: TObject);
 
   private
     { Private declarations }
@@ -77,6 +78,7 @@ type
     function ProcessaInclusao: Boolean;
     function ProcessaConsulta: Boolean;
     function ProcessaCliente: Boolean;
+    function ProcessaAlteracao:Boolean;
 
     function ProcessaPessoa: Boolean;
     function ProcessaEndereco: Boolean;
@@ -237,6 +239,32 @@ begin
 
       end;
 
+      etAlterar:
+      begin
+         stbBarraStatus.Panels[0].Text :='Alterando';
+
+         if (edtCodigo.Text <> EmptyStr)then
+         begin
+            CamposEnabled(True);
+
+            edtCodigo.Enabled    := False;
+            btnAlterar.Enabled   := False;
+            btnConfirmar.Enabled := True;
+
+            if chkAtivo.CanFocus then
+               chkAtivo.SetFocus;
+
+         end
+         else
+         begin
+            lblCodigo.Enabled := True;
+            edtCodigo.Enabled := True;
+
+            if edtCodigo.CanFocus then
+               edtCodigo.SetFocus;
+         end;
+      end;
+
       etConsultar:
       begin
         stbBarraStatus.Panels[0].Text := 'Consulta';
@@ -361,6 +389,7 @@ begin
       case vEstadoTela of
          etIncluir: Result := ProcessaInclusao;
          etConsultar: Result := ProcessaConsulta;
+         etAlterar: Result := ProcessaAlteracao;
       end;
 
       if not Result then
@@ -567,6 +596,39 @@ begin
    chkAtivo.Checked        :=vObjCliente.Ativo;
    edtCPFCNPJ.Text         := vObjCliente.IdentificadorPessoa;
 
+end;
+
+function TfrmClientes.ProcessaAlteracao: Boolean;
+begin
+   try
+      Result := False;
+
+      if ProcessaCliente then
+      begin
+         TMessageUtil.Informacao('Dados foram alterados com sucesso!');
+
+         vEstadoTela := etPadrao;
+         DefineEstadoTela;
+         Result := True;
+      end;
+
+   except
+       on E: Exception do
+       begin
+          raise Exception.Create (
+            'Falha ao alterar os dados do cliente [View]'#13+
+            e.Message);
+       end;
+
+   end;
+end;
+
+procedure TfrmClientes.edtCodigoExit(Sender: TObject);
+begin
+   if vKey = VK_RETURN then
+      ProcessaConsulta;
+
+   vKey := VK_CLEAR;
 end;
 
 end.
