@@ -74,11 +74,12 @@ type
     procedure CarregaDadosTela;
 
 
-    function ProcessaConfirmacao: Boolean;
-    function ProcessaInclusao: Boolean;
-    function ProcessaConsulta: Boolean;
-    function ProcessaCliente: Boolean;
-    function ProcessaAlteracao:Boolean;
+    function ProcessaConfirmacao :Boolean;
+    function ProcessaInclusao    :Boolean;
+    function ProcessaConsulta    :Boolean;
+    function ProcessaCliente     :Boolean;
+    function ProcessaAlteracao   :Boolean;
+    function ProcessaExclusao    :Boolean;
 
     function ProcessaPessoa: Boolean;
     function ProcessaEndereco: Boolean;
@@ -265,6 +266,21 @@ begin
          end;
       end;
 
+      etExcluir:
+      begin
+         stbBarraStatus.Panels[0].Text  := 'Excluindo';
+
+         if edtCodigo.Text <> EmptyStr then
+            ProcessaExclusao;
+            begin
+               lblCodigo.Enabled := True;
+               edtCodigo.Enabled := True;
+
+               if edtCodigo.CanFocus then
+                  edtCodigo.SetFocus;
+            end;
+      end;
+
       etConsultar:
       begin
         stbBarraStatus.Panels[0].Text := 'Consulta';
@@ -390,6 +406,7 @@ begin
          etIncluir: Result := ProcessaInclusao;
          etConsultar: Result := ProcessaConsulta;
          etAlterar: Result := ProcessaAlteracao;
+         etExcluir: Result := ProcessaExclusao;
       end;
 
       if not Result then
@@ -629,6 +646,64 @@ begin
       ProcessaConsulta;
 
    vKey := VK_CLEAR;
+end;
+
+function TfrmClientes.ProcessaExclusao: Boolean;
+begin
+   try
+      Result:= False;
+
+      if vObjCliente = nil then
+      begin
+         TMessageUtil.Alerta (
+         'Não foi possivel carregar os dados cadastrados do cliente informado.');
+
+         LimparTela;
+         vEstadoTela := etPadrao;
+         DefineEstadoTela;
+         Exit;
+      end;
+
+      try
+         if TMessageUtil.Pergunta(
+         'Quer realmente excluir os dados do cliente?')then
+         begin
+            Screen.Cursor := crHourGlass;
+            TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
+
+         end
+         else
+         begin
+         LimparTela;
+         vEstadoTela := etPadrao;
+         DefineEstadoTela;
+         Exit;
+         end;
+
+      finally
+         Screen.Cursor := crDefault;
+         Application.ProcessMessages;
+
+
+      end;
+
+      vEstadoTela:= etPadrao;
+      DefineEstadoTela;
+
+      Result:= True;
+
+      TMessageUtil.Informacao('Cliente excluido com sucesso!');
+   except
+       on E: Exception do
+       begin
+          raise Exception.Create(
+          'Falha na exclusão dos dados do cliente [View].'#13+
+          e.Message);
+       end;
+
+   end;
+
+
 end;
 
 end.
