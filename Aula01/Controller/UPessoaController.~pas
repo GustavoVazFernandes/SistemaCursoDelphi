@@ -2,14 +2,15 @@ unit UPessoaController;
 
 interface
 
-uses SysUtils, Math, StrUtils, UConexao, UPessoa;
+uses SysUtils, Math, StrUtils, UConexao, UPessoa, UEndereco;
 
 type
   TPessoaController = class
      public
         constructor Create;
         function GravaPessoa(
-                    pPessoa: TPessoa) : Boolean;
+                    pPessoa: TPessoa;
+                    pColEndereco : TColEndereco) : Boolean;
 
         function ExcluiPessoa(pPessoa : TPessoa): Boolean;
 
@@ -23,7 +24,7 @@ type
 
 implementation
 
-uses UPessoaDAO;
+uses UPessoaDAO, UEnderecoDAO;
 
 var
    _instance : TPessoaController;
@@ -87,7 +88,7 @@ begin
          Result:= True;
       finally
          if xPessoaDAO <> nil then
-            FreeAndNill(xPessoaDAO);
+            FreeAndNil(xPessoaDAO);
 
       end;
 
@@ -113,9 +114,12 @@ begin
 
 end;
 
-function TPessoaController.GravaPessoa(pPessoa: TPessoa): Boolean;
+function TPessoaController.GravaPessoa(
+         pPessoa: TPessoa;
+         pColEndereco : TColEndereco ): Boolean;
 var
-   xPessoaDAO: TPessoaDAO;
+   xPessoaDAO   : TPessoaDAO;
+   xEnderecoDAO : TEnderecoDAO;
    xAux: Integer;
 
 begin
@@ -128,10 +132,18 @@ begin
          xPessoaDAO :=
             TPessoaDAO.Create (TConexao.get.getConn);
 
+         xEnderecoDAO :=
+            TEnderecoDAO.Create (TConexao.get.getConn);
+
 
          if pPessoa.Id = 0 then
          begin
             xPessoaDAO.Insere(pPessoa);
+
+            for xAux := 0 to pred(pColEndereco.Count) do
+               pColEndereco.Retorna(xAux).ID_Pessoa := pPessoa.Id;
+
+            xEnderecoDAO.InsereLista(pColEndereco);
 
          end
          else

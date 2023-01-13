@@ -1,0 +1,23 @@
+unit UEnderecoDAO;
+
+interface
+
+uses
+   SqlExpr, DBXpress, SimpleDS, Db, Classes, SysUtils, DateUtils, StdCtrls,
+   UGenericDAO, UEndereco;
+
+type
+
+   TEnderecoDAO = class (TGenericDAO)
+      public
+         constructor Create(pConexao : TSQLConnection);
+         function Insere(pEndereco: TEndereco) : Boolean;
+         function InsereLista(pColEndereco : TColEndereco): Boolean;
+         function Atuliza(pEndereco : TEndereco; pCondicao : String): Boolean ;
+         function Retorna (pCondicao: string): TEndereco;
+         function RetornaLista (pCondicao : string = ''): TColEndereco;
+
+   end;
+implementation
+
+end.

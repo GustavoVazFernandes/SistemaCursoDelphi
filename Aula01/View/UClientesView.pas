@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ComCtrls, StdCtrls, Mask, Buttons, UEnumerationUtil,
-  UCliente, UPessoaController;
+  UCliente, UPessoaController, UEndereco;
 
 type
   TfrmClientes = class(TForm)
@@ -60,13 +60,15 @@ type
       Shift: TShiftState);
     procedure edtCodigoExit(Sender: TObject);
 
+
   private
     { Private declarations }
     vKey : Word;
 
     // Variaveis de Classe
-    vEstadoTela: TEstadoTela;
-    vObjCliente: TCliente;
+    vEstadoTela     :TEstadoTela;
+    vObjCliente     :TCliente;
+    vObjColEndereco :TColEndereco;
 
     procedure CamposEnabled(pOpcao : Boolean);
     procedure LimparTela;
@@ -85,6 +87,7 @@ type
     function ProcessaEndereco: Boolean;
 
     function ValidaCliente: Boolean;
+    function ValidaEndereco: Boolean;
   public
     { Public declarations }
   end;
@@ -453,11 +456,13 @@ end;
 function TfrmClientes.ProcessaCliente: Boolean;
 begin
    try
+      Result:= False;
       if (ProcessaPessoa) and
          (ProcessaEndereco) then
       begin
          //Gravação do BD
-         TPessoaController.getInstancia.GravaPessoa(vObjCliente);
+         TPessoaController.getInstancia.GravaPessoa(
+         vObjCliente,vObjColEndereco);
 
 
          Result := True;
@@ -484,6 +489,7 @@ begin
 
       if not ValidaCliente then
          Exit;
+
 
       if vEstadoTela =etIncluir then
       begin
@@ -520,10 +526,37 @@ begin
 end;
 
 function TfrmClientes.ProcessaEndereco: Boolean;
+var
+   xEndereco : TEndereco;
+   xID_Pessoa : Integer;
 begin
    try
       Result :=False;
 
+      xEndereco := nil;
+      xID_Pessoa := 0;
+
+      if (not ValidaEndereco) then
+             Exit;
+      if vObjColEndereco <> nil then
+         FreeAndNil(vObjColEndereco);
+
+      vObjColEndereco := TColEndereco.Create;
+
+      if vEstadoTela = etAlterar then
+         xID_Pessoa  := StrToIntDef(edtCodigo.Text, 0);
+
+      xEndereco                := TEndereco.Create;
+      xEndereco.ID_Pessoa      := xID_Pessoa;
+      xEndereco.Tipo_Endereco  :=0;
+      xEndereco.Endereco       := edtEndereco.Text;
+      xEndereco.Numero         := edtNumero.Text;
+      xEndereco.Complemento    := edtComplemento.Text;
+      xEndereco.Bairro         := edtBairro.Text;
+      xEndereco.UF             := cmbUF.Text;
+      xEndereco.Cidade         := edtCidade.Text;
+
+      vObjColEndereco.Add(xEndereco);
 
       Result := True;
    except
@@ -706,5 +739,62 @@ begin
 
 end;
 
-end.
+function TfrmClientes.ValidaEndereco: Boolean;
+begin
+   Result:= False;
 
+   if(Trim(edtEndereco.Text) = EmptyStr) then
+   begin
+      TMessageUtil.Alerta('Endereço do cliente não pode ficar em branco.');
+
+      if edtEndereco.CanFocus then
+         edtEndereco.SetFocus;
+      Exit;
+   end;
+
+   if(Trim(edtNumero.Text) = EmptyStr) then
+   begin
+      TMessageUtil.Alerta(
+      'O numero do endereço do cliente não pode ficar em branco.');
+
+      if edtNumero.CanFocus then
+         edtNumero.SetFocus;
+      Exit;
+   end;
+
+
+   if(Trim(edtBairro.Text) = EmptyStr) then
+   begin
+      TMessageUtil.Alerta(
+      'O bairro do cliente não pode ficar em branco.');
+
+      if edtBairro.CanFocus then
+         edtBairro.SetFocus;
+      Exit;
+   end;
+
+   if(Trim(cmbUF.Text) = EmptyStr) then
+   begin
+      TMessageUtil.Alerta(
+      'O Estado do cliente não pode ficar em branco.');
+
+      if cmbUF.CanFocus then
+         cmbUF.SetFocus;
+      Exit;
+   end;
+
+   if(Trim(edtCidade.Text) = EmptyStr) then
+   begin
+      TMessageUtil.Alerta(
+      'A cidade do cliente não pode ficar em branco.');
+
+      if edtCidade.CanFocus then
+         edtCidade.SetFocus;
+      Exit;
+   end;
+
+   Result:= True;
+end;
+
+
+end.

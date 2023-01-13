@@ -484,14 +484,14 @@ object frmClientes: TfrmClientes
       object lblComplemento: TLabel
         Left = 135
         Top = 54
-        Width = 76
+        Width = 64
         Height = 13
         Caption = 'Complemento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        Font.Style = [fsBold]
+        Font.Style = []
         ParentFont = False
       end
       object lblBairro: TLabel

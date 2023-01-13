@@ -12,7 +12,10 @@ uses
   Consts in 'Model\Util\Consts.pas',
   UEnumerationUtil in 'Model\Util\UEnumerationUtil.pas',
   Upessoa in 'Model\UPessoa.pas',
-  UPessoaDAO in 'Model\UPessoaDAO.pas';
+  UPessoaDAO in 'Model\UPessoaDAO.pas',
+  UCliente in 'Model\UCliente.pas',
+  UPessoaController in 'Controller\UPessoaController.pas',
+  UEndereco in 'Model\UEndereco.pas';
 
 {$R *.res}
 
