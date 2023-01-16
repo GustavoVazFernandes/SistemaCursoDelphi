@@ -4,7 +4,7 @@ interface
 
 uses
    SqlExpr, DBXpress, SimpleDS, Db, Classes, SysUtils, DateUtils, StdCtrls,
-   UGenericDAO, Upessoa;
+   UGenericDAO, UPessoa;
 
 type
 

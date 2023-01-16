@@ -1,6 +1,6 @@
 object frmClientes: TfrmClientes
-  Left = 744
-  Top = 278
+  Left = 714
+  Top = 176
   Width = 630
   Height = 404
   Caption = 'Clientes'
@@ -567,6 +567,7 @@ object frmClientes: TfrmClientes
         Width = 49
         Height = 21
         ItemHeight = 13
+        MaxLength = 2
         TabOrder = 4
         Items.Strings = (
           'MG'

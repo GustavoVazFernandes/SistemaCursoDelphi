@@ -14,8 +14,12 @@ type
 
         function ExcluiPessoa(pPessoa : TPessoa): Boolean;
 
+        function BuscaEnderecoPessoa(pID_Pessoa: Integer) : TColEndereco;
+
         function BuscaPessoa(pID: integer): TPessoa;
-        function RetornaCondicaoPessoa (pID_Pessoa : Integer) : String;
+        function RetornaCondicaoPessoa (
+        pID_Pessoa : Integer;
+        pRelacionada:Boolean = False ) : String;
      published
         class function getInstancia: TPessoaController;
   end;
@@ -30,6 +34,35 @@ var
    _instance : TPessoaController;
 
 { TPessoaController }
+
+function TPessoaController.BuscaEnderecoPessoa(
+  pID_Pessoa: Integer): TColEndereco;
+var
+   xEnderecoDAO: TEnderecoDAO
+begin
+   try
+       try
+          Result := nil;
+
+          xEnderecoDAO:=
+             TEnderecoDAO.Create(TConexao.getInstance.getConn);
+
+          Result:=
+             xEnderecoDAO.RetornaLista(RetornaCondicaoPessoa(pID_Pessoa, True));
+
+       finally
+           if xEnderecoDAO <> nil then
+           FreeAndNil(xEnderecoDAO)
+       end;
+   except
+      on E: Exception do
+      begin
+         raise Exception.Create(
+         'Falha ao retornar dados de endereço da pessoa [Controller]:'#13+
+         e.Message);
+      end;
+   end;
+end;
 
 function TPessoaController.BuscaPessoa(pID: integer): TPessoa;
   var
@@ -157,8 +190,8 @@ begin
       finally
          if xPessoaDAO <> nil then
             FreeAndNil(xPessoaDAO);
-
-
+         if xEnderecoDAO <> nil then
+            FreeAndNil(xEnderecoDAO);
       end;
 
    except
@@ -174,11 +207,14 @@ begin
 end;
 
 function TPessoaController.RetornaCondicaoPessoa(
-  pID_Pessoa: Integer): String;
+  pID_Pessoa: Integer; pRelacionada : Boolean): String;
 var
    xChave : string;
 begin
-   xChave := 'ID';
+   if(pRelacionada = True) then
+      xChave := 'ID_PESSOA'
+   else
+      xChave := 'ID';
 
    Result :=
    'WHERE'#13+

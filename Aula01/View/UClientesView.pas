@@ -194,6 +194,9 @@ begin
       // Se o campo for do tipo CheckBox
       if (Components[i] is TCheckBox) then // Define o campo como FALSO
          (Components[i] as TCheckBox).Checked := False;
+
+      if vObjCliente <> nil then
+         FreeAndNil(vObjCliente);
    end;
 end;
 
@@ -538,6 +541,7 @@ begin
 
       if (not ValidaEndereco) then
              Exit;
+
       if vObjColEndereco <> nil then
          FreeAndNil(vObjColEndereco);
 
@@ -548,7 +552,7 @@ begin
 
       xEndereco                := TEndereco.Create;
       xEndereco.ID_Pessoa      := xID_Pessoa;
-      xEndereco.Tipo_Endereco  :=0;
+      xEndereco.Tipo_Endereco  := 0;
       xEndereco.Endereco       := edtEndereco.Text;
       xEndereco.Numero         := edtNumero.Text;
       xEndereco.Complemento    := edtComplemento.Text;
@@ -606,6 +610,10 @@ begin
          TCliente(TPessoaController.getInstancia.BuscaPessoa(
             StrToIntDef(edtCodigo.Text, 0)));
 
+      vObjColEndereco :=
+         TPessoaController.getInstancia.BuscaEnderecoPessoa(
+         StrToIntDef(edtCodigo.Text, 0));
+
       if (vObjCliente <> nil) then
          CarregaDadosTela
       else
@@ -636,15 +644,31 @@ begin
 end;
 
 procedure TfrmClientes.CarregaDadosTela;
+var
+   i : Integer;
 begin
    if (vObjCliente = nil) then
       Exit;
 
    edtCodigo.Text          := IntToStr (vObjCliente.Id);
-   rdgTipoPessoa.ItemIndex :=vObjCliente.Fisica_Juridica;
+   rdgTipoPessoa.ItemIndex := vObjCliente.Fisica_Juridica;
    edtNome.Text            := vObjCliente.Nome;
-   chkAtivo.Checked        :=vObjCliente.Ativo;
+   chkAtivo.Checked        := vObjCliente.Ativo;
    edtCPFCNPJ.Text         := vObjCliente.IdentificadorPessoa;
+
+   if vObjColEndereco <> nil then
+   begin
+      for i := 0 to (vObjColEndereco.Count - 1) do
+      begin
+         edtEndereco.Text    := vObjColEndereco.Retorna(i).Endereco;
+         edtNumero.Text      := vObjColEndereco.Retorna(i).Numero;
+         edtComplemento.Text := vObjColEndereco.Retorna(i).Complemento;
+         edtBairro.Text      := vObjColEndereco.Retorna(i).Bairro;
+         cmbUF.Text          := vObjColEndereco.Retorna(i).UF;
+         edtCidade.Text      := vObjColEndereco.Retorna(i).Cidade;
+      end;
+   end;
+
 
 end;
 

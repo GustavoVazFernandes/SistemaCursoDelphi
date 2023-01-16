@@ -13,7 +13,7 @@ type
          constructor Create(pConexao : TSQLConnection);
          function Insere(pEndereco: TEndereco) : Boolean;
          function InsereLista(pColEndereco : TColEndereco): Boolean;
-         function Atuliza(pEndereco : TEndereco; pCondicao : String): Boolean ;
+         function Atualiza(pEndereco : TEndereco; pCondicao : String): Boolean ;
          function Retorna (pCondicao: string): TEndereco;
          function RetornaLista (pCondicao : string = ''): TColEndereco;
 
@@ -22,7 +22,7 @@ implementation
 
 { TEnderecoDAO }
 
-function TEnderecoDAO.Atuliza(pEndereco: TEndereco;
+function TEnderecoDAO.Atualiza(pEndereco: TEndereco;
   pCondicao: String): Boolean;
 begin
    Result := inherited Atualiza(pEndereco, pCondicao);
