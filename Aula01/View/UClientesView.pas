@@ -195,9 +195,14 @@ begin
       if (Components[i] is TCheckBox) then // Define o campo como FALSO
          (Components[i] as TCheckBox).Checked := False;
 
-      if vObjCliente <> nil then
-         FreeAndNil(vObjCliente);
    end;
+
+   if vObjCliente <> nil then
+         FreeAndNil(vObjCliente);
+
+   if vObjColEndereco <> nil then
+         FreeAndNil(vObjColEndereco);
+
 end;
 
 procedure TfrmClientes.DefineEstadoTela;
@@ -710,7 +715,8 @@ begin
    try
       Result:= False;
 
-      if vObjCliente = nil then
+      if (vObjCliente = nil) or
+         (vObjColEndereco = nil) then
       begin
          TMessageUtil.Alerta (
          'Não foi possivel carregar os dados cadastrados do cliente informado.');
@@ -724,18 +730,19 @@ begin
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados do cliente?')then
-         begin
-            Screen.Cursor := crHourGlass;
-            TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
 
-         end
+            begin
+               Screen.Cursor := crHourGlass;
+               TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
+
+            end
          else
-         begin
-         LimparTela;
-         vEstadoTela := etPadrao;
-         DefineEstadoTela;
-         Exit;
-         end;
+            begin
+               LimparTela;
+               vEstadoTela := etPadrao;
+               DefineEstadoTela;
+               Exit;
+            end;
 
       finally
          Screen.Cursor := crDefault;

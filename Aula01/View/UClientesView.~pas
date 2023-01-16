@@ -197,6 +197,9 @@ begin
 
       if vObjCliente <> nil then
          FreeAndNil(vObjCliente);
+
+      if vObjColEndereco <> nil then
+         FreeAndNil(vObjColEndereco);
    end;
 end;
 
@@ -644,15 +647,31 @@ begin
 end;
 
 procedure TfrmClientes.CarregaDadosTela;
+var
+   i : Integer;
 begin
    if (vObjCliente = nil) then
       Exit;
 
    edtCodigo.Text          := IntToStr (vObjCliente.Id);
-   rdgTipoPessoa.ItemIndex :=vObjCliente.Fisica_Juridica;
+   rdgTipoPessoa.ItemIndex := vObjCliente.Fisica_Juridica;
    edtNome.Text            := vObjCliente.Nome;
-   chkAtivo.Checked        :=vObjCliente.Ativo;
+   chkAtivo.Checked        := vObjCliente.Ativo;
    edtCPFCNPJ.Text         := vObjCliente.IdentificadorPessoa;
+
+   if vObjColEndereco <> nil then
+   begin
+      for i := 0 to (vObjColEndereco.Count - 1) do
+      begin
+         edtEndereco.Text    := vObjColEndereco.Retorna(i).Endereco;
+         edtNumero.Text      := vObjColEndereco.Retorna(i).Numero;
+         edtComplemento.Text := vObjColEndereco.Retorna(i).Complemento;
+         edtBairro.Text      := vObjColEndereco.Retorna(i).Bairro;
+         cmbUF.Text          := vObjColEndereco.Retorna(i).UF;
+         edtCidade.Text      := vObjColEndereco.Retorna(i).Cidade;
+      end;
+   end;
+
 
 end;
 
@@ -694,7 +713,8 @@ begin
    try
       Result:= False;
 
-      if vObjCliente = nil then
+      if (vObjCliente = nil) or
+         (vObjColEndereco = nil) then
       begin
          TMessageUtil.Alerta (
          'Não foi possivel carregar os dados cadastrados do cliente informado.');
@@ -708,18 +728,19 @@ begin
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados do cliente?')then
-         begin
-            Screen.Cursor := crHourGlass;
-            TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
 
-         end
+            begin
+               Screen.Cursor := crHourGlass;
+               TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
+
+            end
          else
-         begin
-         LimparTela;
-         vEstadoTela := etPadrao;
-         DefineEstadoTela;
-         Exit;
-         end;
+            begin
+               LimparTela;
+               vEstadoTela := etPadrao;
+               DefineEstadoTela;
+               Exit;
+            end;
 
       finally
          Screen.Cursor := crDefault;
