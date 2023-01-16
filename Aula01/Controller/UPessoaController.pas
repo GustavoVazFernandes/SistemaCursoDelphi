@@ -168,7 +168,6 @@ begin
          xEnderecoDAO :=
             TEnderecoDAO.Create (TConexao.get.getConn);
 
-
          if pPessoa.Id = 0 then
          begin
             xPessoaDAO.Insere(pPessoa);
@@ -182,6 +181,9 @@ begin
          else
          begin
             xPessoaDAO.Atualiza(pPessoa, RetornaCondicaoPessoa(pPessoa.Id));
+
+            xEnderecoDAO.Deleta(RetornaCondicaoPessoa(pPessoa.Id, True));
+            xEnderecoDAO.InsereLista(pColEndereco);
 
          end;
 

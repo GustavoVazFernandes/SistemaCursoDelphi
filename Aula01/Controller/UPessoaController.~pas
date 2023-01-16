@@ -38,7 +38,7 @@ var
 function TPessoaController.BuscaEnderecoPessoa(
   pID_Pessoa: Integer): TColEndereco;
 var
-   xEnderecoDAO: TEnderecoDAO
+   xEnderecoDAO: TEnderecoDAO;
 begin
    try
        try
@@ -182,6 +182,9 @@ begin
          else
          begin
             xPessoaDAO.Atualiza(pPessoa, RetornaCondicaoPessoa(pPessoa.Id));
+
+            xEnderecoDAO.Deleta(RetornaCondicaoPessoa(pPessoa.Id, True));
+            xEnderecoDAO.InsereLista(pColEndereco);
 
          end;
 
