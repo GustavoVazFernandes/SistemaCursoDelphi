@@ -430,6 +430,7 @@ object frmClientes: TfrmClientes
         'Fisica'
         'Juridica')
       TabOrder = 2
+      OnClick = rdgTipoPessoaClick
     end
     object edtCPFCNPJ: TMaskEdit
       Left = 480
@@ -538,6 +539,7 @@ object frmClientes: TfrmClientes
         Top = 16
         Width = 513
         Height = 21
+        MaxLength = 100
         TabOrder = 0
       end
       object edtNumero: TEdit
@@ -545,6 +547,7 @@ object frmClientes: TfrmClientes
         Top = 48
         Width = 65
         Height = 21
+        MaxLength = 20
         TabOrder = 1
       end
       object edtComplemento: TEdit
@@ -552,6 +555,7 @@ object frmClientes: TfrmClientes
         Top = 48
         Width = 361
         Height = 21
+        MaxLength = 100
         TabOrder = 2
       end
       object edtBairro: TEdit
@@ -559,6 +563,7 @@ object frmClientes: TfrmClientes
         Top = 80
         Width = 513
         Height = 21
+        MaxLength = 100
         TabOrder = 3
       end
       object cmbUF: TComboBox

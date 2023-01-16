@@ -59,6 +59,7 @@ type
     procedure FormKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure edtCodigoExit(Sender: TObject);
+    procedure rdgTipoPessoaClick(Sender: TObject);
 
 
   private
@@ -827,5 +828,20 @@ begin
    Result:= True;
 end;
 
+
+procedure TfrmClientes.rdgTipoPessoaClick(Sender: TObject);
+begin
+   if rdgTipoPessoa.ItemIndex = 1 then
+      begin
+         edtCPFCNPJ.Clear;
+         edtCPFCNPJ.EditMask := '00\.000\.000\/0000\-00;1;_'
+      end
+   else
+      begin
+         edtCPFCNPJ.Clear;
+         edtCPFCNPJ.EditMask := '000\.000\.000\-00;1;_';
+      end;
+
+end;
 
 end.

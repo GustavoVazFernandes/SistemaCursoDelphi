@@ -430,6 +430,7 @@ object frmClientes: TfrmClientes
         'Fisica'
         'Juridica')
       TabOrder = 2
+      OnClick = rdgTipoPessoaClick
     end
     object edtCPFCNPJ: TMaskEdit
       Left = 480
