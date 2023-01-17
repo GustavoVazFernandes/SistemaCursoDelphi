@@ -1,6 +1,6 @@
 object frmClientes: TfrmClientes
-  Left = 714
-  Top = 176
+  Left = 401
+  Top = 213
   Width = 630
   Height = 404
   Caption = 'Clientes'
@@ -336,7 +336,6 @@ object frmClientes: TfrmClientes
       Width = 75
       Height = 25
       Caption = '&Sair'
-      Enabled = False
       TabOrder = 8
       OnClick = btnSairClick
       Glyph.Data = {
@@ -539,6 +538,7 @@ object frmClientes: TfrmClientes
         Top = 16
         Width = 513
         Height = 21
+        MaxLength = 100
         TabOrder = 0
       end
       object edtNumero: TEdit
@@ -546,6 +546,7 @@ object frmClientes: TfrmClientes
         Top = 48
         Width = 65
         Height = 21
+        MaxLength = 20
         TabOrder = 1
       end
       object edtComplemento: TEdit
@@ -553,6 +554,7 @@ object frmClientes: TfrmClientes
         Top = 48
         Width = 361
         Height = 21
+        MaxLength = 100
         TabOrder = 2
       end
       object edtBairro: TEdit
@@ -560,6 +562,7 @@ object frmClientes: TfrmClientes
         Top = 80
         Width = 513
         Height = 21
+        MaxLength = 100
         TabOrder = 3
       end
       object cmbUF: TComboBox
@@ -588,6 +591,7 @@ object frmClientes: TfrmClientes
         Top = 112
         Width = 401
         Height = 21
+        MaxLength = 100
         TabOrder = 5
       end
     end

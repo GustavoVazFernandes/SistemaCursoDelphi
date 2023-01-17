@@ -15,7 +15,9 @@ uses
   UPessoaDAO in 'Model\UPessoaDAO.pas',
   UCliente in 'Model\UCliente.pas',
   UPessoaController in 'Controller\UPessoaController.pas',
-  UEndereco in 'Model\UEndereco.pas';
+  UEndereco in 'Model\UEndereco.pas',
+  UEnderecoDAO in 'Model\UEnderecoDAO.pas',
+  UClientesPesqView in 'View\UClientesPesqView.pas' {frmClientesPesq};
 
 {$R *.res}
 

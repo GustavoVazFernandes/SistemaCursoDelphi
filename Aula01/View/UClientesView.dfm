@@ -1,6 +1,6 @@
 object frmClientes: TfrmClientes
-  Left = 714
-  Top = 176
+  Left = 722
+  Top = 171
   Width = 630
   Height = 404
   Caption = 'Clientes'
@@ -336,7 +336,6 @@ object frmClientes: TfrmClientes
       Width = 75
       Height = 25
       Caption = '&Sair'
-      Enabled = False
       TabOrder = 8
       OnClick = btnSairClick
       Glyph.Data = {
@@ -447,6 +446,7 @@ object frmClientes: TfrmClientes
       Top = 56
       Width = 553
       Height = 21
+      CharCase = ecUpperCase
       TabOrder = 4
     end
     object grbEndereco: TGroupBox
@@ -592,6 +592,7 @@ object frmClientes: TfrmClientes
         Top = 112
         Width = 401
         Height = 21
+        MaxLength = 100
         TabOrder = 5
       end
     end

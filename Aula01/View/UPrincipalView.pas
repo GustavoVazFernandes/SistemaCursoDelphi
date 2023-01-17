@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Menus, ExtCtrls, frxpngimage , ComCtrls, Buttons, UEnumerationUtil;
+  Dialogs, Menus, ExtCtrls, frxpngimage , ComCtrls, Buttons, UEnumerationUtil,
+  uMessageUtil;
 
 type
   TfrmNovoSistema = class(TForm)    //Nome da Classes
@@ -28,8 +29,12 @@ type
     procedure menSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure menClientesClick(Sender: TObject);
+
+
+
   private
     { Private declarations }
+
   public
     { Public declarations }
   end;
@@ -69,11 +74,11 @@ begin
    finally
       Screen.Cursor := crDefault;
    end;
-end  ;
-
+end;
 
 
 end.
+
 
 
 

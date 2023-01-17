@@ -99,7 +99,7 @@ var
 implementation
 
 uses
-   uMessageUtil;
+   uMessageUtil, UClientesPesqView;
 
 {$R *.dfm}
 
@@ -216,13 +216,13 @@ begin
    btnPesquisar.Enabled := (vEstadoTela in [etPadrao]);
 
    btnConfirmar.Enabled :=
-      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar];
+      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar];
 
    btnCancelar.Enabled :=
-      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar];
+      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar];
 
    case vEstadoTela of
-   etPadrao:
+      etPadrao:
       begin
          CamposEnabled(False);
          LimparTela;
@@ -322,12 +322,38 @@ begin
         end;
 
 
+
       end;
 
+      etPesquisar:
+      begin
+         stbBarraStatus.Panels[0].Text := 'Pesquisar';
 
+         if frmClientesPesq = nil then
+           frmClientesPesq := TfrmClientesPesq.Create(Application);
 
+         frmClientesPesq.ShowModal;
 
+         if  frmClientesPesq.mClienteID <> 0 then
+         begin
+            edtCodigo.Text := IntToStr(frmClientesPesq.mClienteID);
+            vEstadoTela := etConsultar;
+            ProcessaConsulta;
+         end
+         else
+         begin
+            vEstadoTela := etPadrao;
+            DefineEstadoTela;
+         end;
+
+         frmClientesPesq.mClienteID := 0;
+         frmClientesPesq.mClienteNome := EmptyStr;
+
+         if edtNome.CanFocus then
+            edtNome.SetFocus;
+      end;
    end;
+
 
 end;
 
@@ -383,14 +409,19 @@ procedure TfrmClientes.btnSairClick(Sender: TObject);
 begin
    if (vEstadoTela <> etPadrao) then
    begin
-      if (TMessageUtil.Pergunta('Deseja encerrar a operação?')) then
+      if  TMessageUtil.Pergunta('Deseja sair da operação?') then
       begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
-      end;
+      end
    end
    else
-     Close;
+      if  TMessageUtil.Pergunta('Deseja sair da rotina?') then
+      begin
+         vEstadoTela := etPadrao;
+         DefineEstadoTela;
+         Close;
+      end;
 end;
 
 procedure TfrmClientes.FormCreate(Sender: TObject);

@@ -16,6 +16,7 @@ type
 
         function BuscaEnderecoPessoa(pID_Pessoa: Integer) : TColEndereco;
 
+        function PesquisaPessoa (pNome : String ) : TColPessoa;
         function BuscaPessoa(pID: integer): TPessoa;
         function RetornaCondicaoPessoa (
         pID_Pessoa : Integer;
@@ -211,6 +212,38 @@ begin
           e.Message);
        end;
 
+   end;
+end;
+
+function TPessoaController.PesquisaPessoa(pNome: String): TColPessoa;
+var
+   xPessoaDAO : TPessoaDAO;
+   xCondicao : string;
+begin
+   try
+      try
+         Result := nil;
+
+         xPessoaDAO := TPessoaDAO.Create(TConexao.get.getConn);
+
+         xCondicao :=
+            IfThen(pNome <> EmptyStr,
+               'WHERE                                         '#13+
+               '        (NOME LIKE UPPER (''%'+ pNome +'%'') )'#13+
+               'ORDER BY NOME, ID', EmptyStr);
+
+         Result := xPessoaDAO.RetornaLista(xCondicao);
+      finally
+         if xPessoaDAO <> nil then
+            FreeAndNil(xPessoaDAO);
+      end;
+   except
+      on E:Exception do
+      begin
+         Raise Exception.Create(
+         'Falha ao buscar ao dados da pessoa'#13+
+         e.Message);
+      end;
    end;
 end;
 
