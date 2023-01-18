@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, DB, DBClient, Grids,
-  DBGrids, uMessageUtil, UPessoa, UPessoaController;
+  DBGrids, uMessageUtil, UPessoa, UPessoaController, UClassFuncoes,
+  OleServer, ExcelXP;
 
 type
   TfrmClientesPesq = class(TForm)
@@ -29,6 +30,9 @@ type
     cdsClienteNome: TStringField;
     cdsClienteAtivo: TIntegerField;
     cdsClienteDescricaoAtivo: TStringField;
+    BitBtn1: TBitBtn;
+    svdDiretorio: TSaveDialog;
+    Excel: TExcelApplication;
     procedure btnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -39,6 +43,7 @@ type
     procedure dbgClienteDblClick(Sender: TObject);
     procedure dbgClienteKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
     vKey : Word;
@@ -46,6 +51,7 @@ type
     procedure LimparTela;
     procedure ProcessaPesquisa;
     procedure ProcessaConfirmacao;
+    procedure PreenchePlanilha;
   public
     { Public declarations }
     mClienteID : Integer;
@@ -57,7 +63,7 @@ var
 
 implementation
 
-uses Math, StrUtils;
+uses Math, StrUtils, ComObj;
 
 {$R *.dfm}
 
@@ -231,6 +237,82 @@ begin
       (btnConfirmar.CanFocus) then
       btnConfirmar.SetFocus;
 
+end;
+
+procedure TfrmClientesPesq.BitBtn1Click(Sender: TObject);
+begin
+   PreenchePlanilha;
+end;
+
+procedure TfrmClientesPesq.PreenchePlanilha;
+var
+   xExcel     : Variant;
+   xIndiceCab : Integer;
+   xCaminho   : String;
+begin
+   xIndiceCab := 1;
+   xCaminho   := 'ListagemCliente_'+ DateTimeToStr(Now)+ '.xls';
+
+   xCaminho   := TFuncoes.Troca(xCaminho, '/','');
+   xCaminho   := TFuncoes.Troca(xCaminho, ':','');
+   svdDiretorio.FileName := xCaminho;
+   if not svdDiretorio.Execute then
+      Exit;
+
+   xCaminho := svdDiretorio.FileName;
+   try
+      xExcel := CreateOleObject('Excel.Application');
+      xExcel.Application.Visible := False;
+
+      xExcel.WorkBooks.Add(null);
+
+      xExcel.ActiveSheet.Rows[2].Select;
+      xExcel.ActiveSheet.FreezePanes := True;
+
+      xExcel.Range['A1','A1'].ColumnWidth := 10.00;
+      xExcel.Range['B1','B1'].ColumnWidth := 100.00;
+      xExcel.Range['C1','C1'].ColumnWidth := 10.00;
+
+      xExcel.Range['D1','E1'].MergeCells := True;  //Mesclar celulas
+
+      xExcel.Range['A1','C1'].Interior.ColorIndex := 16;       //Cinza Escuro
+      xExcel.Range['A1','C1'].Font.Bold := True;               //Negrito
+      xExcel.Range['A1','C1'].Font.Name := 'Arial';            //Fonte
+      xExcel.Range['A1','C1'].Font.Size := 12;                 //Tamanho Fonte
+      xExcel.Range['A1','C1'].HorizontalAlignment := xlCenter; // Alinhamento
+
+      xExcel.Range['A1','A1'].Value := 'Código';
+      xExcel.Range['B1','B1'].Value := 'Nome';
+      xExcel.Range['C1','C1'].Value := 'Ativo';
+
+      cdsCliente.First;
+      while not cdsCliente.Eof do
+      begin
+         Inc(xIndiceCab);
+         xExcel.Range['A'+IntToStr(xIndiceCab),'A'+IntToStr(xIndiceCab)].Value
+           := cdsClienteID.AsString;
+         xExcel.Range['B'+IntToStr(xIndiceCab),'B'+IntToStr(xIndiceCab)].Value
+           := cdsClienteNome.Value;
+         xExcel.Range['C'+IntToStr(xIndiceCab),'C'+IntToStr(xIndiceCab)].Value
+           := cdsClienteDescricaoAtivo.Value;
+
+         cdsCliente.Next;
+
+      end;
+
+
+
+      if FileExists(xCaminho) then
+         DeleteFile(xCaminho);
+
+      xExcel.WorkBooks[1].Worksheets[1].Activate;
+      xExcel.ActiveWorkBook.SaveAs(xCaminho);
+
+      xExcel.Application.Visible := True;
+   finally
+      xExcel := Unassigned;
+
+   end;
 end;
 
 end.
