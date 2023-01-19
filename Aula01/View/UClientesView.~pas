@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ComCtrls, StdCtrls, Mask, Buttons, UEnumerationUtil,
-  UCliente, UPessoaController, UEndereco, frxClass, DB, DBClient, frxDBSet;
+  UCliente, UPessoaController, UEndereco, frxClass, DB, DBClient, frxDBSet,
+  frxExportXLS, frxExportPDF;
 
 type
   TfrmClientes = class(TForm)
@@ -54,6 +55,8 @@ type
     cdsClienteComplemento: TStringField;
     cdsClienteCidadeUF: TStringField;
     frxDBCliente: TfrxDBDataset;
+    frxPDF: TfrxPDFExport;
+    frxXLS: TfrxXLSExport;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -100,8 +103,11 @@ type
     function ProcessaPessoa   : Boolean;
     function ProcessaEndereco : Boolean;
 
-    function ValidaCliente  : Boolean;
-    function ValidaEndereco : Boolean;
+    function NumerosCPFCNPJ(const Texto:String) : String;
+    function ValidaCliente                     : Boolean;
+    function ValidaEndereco                    : Boolean;
+    function ValidaCPF(num:string)             : Boolean;
+    function ValidaCNPJ(num:string)            : Boolean;
   public
     { Public declarations }
   end;
@@ -552,12 +558,40 @@ begin
 end;
 
 function TfrmClientes.ProcessaPessoa: Boolean;
+var
+   xCPFCNPJ: string;
+
 begin
    try
       Result := False;
 
       if not ValidaCliente then
          Exit;
+
+      if rdgTipoPessoa.ItemIndex = 0 then
+      begin
+         xCPFCNPJ := NumerosCPFCNPJ(Trim(edtCPFCNPJ.Text));
+         if not ValidaCPF(xCPFCNPJ) then
+         begin
+         if edtCPFCNPJ.CanFocus then
+            edtCPFCNPJ.SetFocus;
+            edtCPFCNPJ.Clear;
+            Exit;
+         end;
+      end;
+
+      if rdgTipoPessoa.ItemIndex = 1 then
+      begin
+         xCPFCNPJ := NumerosCPFCNPJ(Trim(edtCPFCNPJ.Text));
+         if not ValidaCNPJ(xCPFCNPJ) then
+         begin
+            
+         if edtCPFCNPJ.CanFocus then
+            edtCPFCNPJ.SetFocus;
+            edtCPFCNPJ.Clear;
+            Exit;
+         end;
+      end;
 
 
       if vEstadoTela =etIncluir then
@@ -924,6 +958,9 @@ begin
          QuotedStr(FormatDateTime('DD/MM/YYYY hh:mm', Date + Time));
       frxListagemCliente.Variables['NOMEEMPRESA'] :=
          QuotedStr('Nome da Empresa');
+
+      frxXLS.Wysiwyg := False;
+
       frxListagemCliente.ShowReport();
 
    finally
@@ -932,5 +969,146 @@ begin
       cdsCliente.EmptyDataSet;
    end;
 end;
+
+function TfrmClientes.ValidaCPF(num:string) : Boolean;
+var
+   xN1,xN2,xN3,xN4,xN5,xN6,xN7,xN8,xN9 : Integer;
+   xDigito1,xDigito2 : Integer;
+   xDigitosInformados : string;
+   xDigitosCalculados : string;
+   xCPFCNPJ : string;
+begin
+   Result := False;
+   xCPFCNPJ := NumerosCPFCNPJ(edtCPFCNPJ.Text);
+
+   if (xCPFCNPJ = '11111111111') or (xCPFCNPJ = '22222222222') or
+      (xCPFCNPJ = '33333333333') or (xCPFCNPJ = '44444444444') or
+      (xCPFCNPJ = '55555555555') or (xCPFCNPJ = '66666666666') or
+      (xCPFCNPJ = '77777777777') or (xCPFCNPJ = '88888888888') or
+      (xCPFCNPJ = '99999999999') or (xCPFCNPJ = '00000000000') then
+      begin
+         TMessageUtil.Alerta('O CPF informado é invalido.');
+         Exit
+      end
+   else
+      if (Length(Trim(num))<>11)then
+      begin
+         TMessageUtil.Alerta('O CPF informado é invalido.');
+      end
+      else
+      begin
+         xN1 := StrToInt(num[1]);
+         xN2 := StrToInt(num[2]);
+         xN3 := StrToInt(num[3]);
+         xN4 := StrToInt(num[4]);
+         xN5 := StrToInt(num[5]);
+         xN6 := StrToInt(num[6]);
+         xN7 := StrToInt(num[7]);
+         xN8 := StrToInt(num[8]);
+         xN9 := StrToInt(num[9]);
+         xDigito1 := ((xN1*10) + (xN2*9) + (xN3*8) + (xN4*7) + (xN5*6) +
+            (xN6*5) + (xN7*4) + (xN8*3) + (xN9*2));
+         xDigito1 := 11 - (xDigito1 mod 11);
+         if xDigito1 > 9 then
+            xDigito1 := 0;
+
+         xDigito2 :=  ((xN1*11) + (xN2*10) + (xN3*9) + (xN4*8) + (xN5*7) +
+            (xN6*6) + (xN7*5) + (xN8*4) + (xN9*3) + (xDigito1*2));
+         xDigito2 := 11 - (xDigito2 mod 11);
+         if xDigito2 > 9 then
+            xDigito2 := 0;
+         xDigitosCalculados := IntToStr(xDigito1)+IntToStr(xDigito2);
+         xDigitosInformados := num[10] + num[11];
+         if xDigitosInformados = xDigitosCalculados then
+            Result:= True
+         else
+            TMessageUtil.Alerta('O CPF informado é invalido.');
+      end;
+
+
+end;
+
+function TfrmClientes.NumerosCPFCNPJ(Const Texto:string):string;
+var
+   xNumero: Integer;
+   xString: string;
+begin
+   xString := '';
+   for xNumero := 1 to Length(Texto) do
+   begin
+      if Texto [xNumero] in ['0'..'9'] then
+      begin
+         xString := xString + Copy(Texto, xNumero,1);
+      end;
+      Result := xString;
+   end;
+end;
+
+function TfrmClientes.ValidaCNPJ(num:string): Boolean;
+var
+   xN1,xN2,xN3,xN4,xN5,xN6,xN7,xN8,xN9,xN10,xN11,xN12 : Integer;
+   xDigito1,xDigito2 : Integer;
+   xDigitosInformados : string;
+   xDigitosCalculados : string;
+   xCPFCNPJ: string;
+begin
+   Result := False;
+   xCPFCNPJ := NumerosCPFCNPJ(edtCPFCNPJ.Text);
+
+   if (xCPFCNPJ = '11111111111111') or (xCPFCNPJ = '22222222222222') or
+      (xCPFCNPJ = '33333333333333') or (xCPFCNPJ = '44444444444444') or
+      (xCPFCNPJ = '55555555555555') or (xCPFCNPJ = '66666666666666') or
+      (xCPFCNPJ = '77777777777777') or (xCPFCNPJ = '88888888888888') or
+      (xCPFCNPJ = '99999999999999') or (xCPFCNPJ = '00000000000000') then
+      begin
+         TMessageUtil.Alerta('O CPF informado é invalido.');
+         Exit
+      end
+   else
+   if (Length(Trim(num))<>14)then
+   begin
+      Result:= False;
+   end
+   else
+   begin
+      xN1 := StrToInt(num[1]);
+      xN2 := StrToInt(num[2]);
+      xN3 := StrToInt(num[3]);
+      xN4 := StrToInt(num[4]);
+      xN5 := StrToInt(num[5]);
+      xN6 := StrToInt(num[6]);
+      xN7 := StrToInt(num[7]);
+      xN8 := StrToInt(num[8]);
+      xN9 := StrToInt(num[9]);
+      xN10 := StrToInt(num[10]);
+      xN11 := StrToInt(num[11]);
+      xN12 := StrToInt(num[12]);
+      xDigito1 := ((xN1*5) + (xN2*4) + (xN3*3) + (xN4*2) + (xN5*9) +
+         (xN6*8) + (xN7*7) + (xN8*6) + (xN9*5)+(xN10*4)+(xN11*3)+(xN12*2));
+      xDigito1 := xDigito1 mod 11;
+      if xDigito1 < 2  then
+         xDigito1 := 0
+      else
+         xDigito1 := 11 - xDigito1;
+
+      xDigito2 :=  ((xN1*6) + (xN2*5) + (xN3*4) + (xN4*3) + (xN5*2) + (xN6*9) +
+         (xN7*8) + (xN8*7) + (xN9*6) +(xN10*5)+(xN11*4)+(xN12*3)+(xDigito1*2));
+      xDigito2 :=  (xDigito2 mod 11);
+      if xDigito2 < 2 then
+         xDigito2 := 0
+      else
+         xDigito2 := 11 - xDigito2;
+
+      xDigitosCalculados := IntToStr(xDigito1)+IntToStr(xDigito2);
+      xDigitosInformados := num[13] + num[14];
+      if xDigitosInformados = xDigitosCalculados then
+         Result:= True
+      else
+         TMessageUtil.Alerta('O CNPJ informado é invalido');
+
+
+   end;
+end;
+
 
 end.
