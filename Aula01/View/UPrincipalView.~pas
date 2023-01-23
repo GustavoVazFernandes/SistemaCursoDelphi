@@ -23,12 +23,14 @@ type
     menSair: TMenuItem;
     stbBarraStatus: TStatusBar;
     imgLogo: TImage;
+    menUnidadeProduto: TMenuItem;
 
     // Metodos ja criados
     
     procedure menSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure menClientesClick(Sender: TObject);
+    procedure menProdutosClick(Sender: TObject);
 
 
 
@@ -45,7 +47,7 @@ var
 implementation
 
 uses
-    UConexao,UClientesView;
+    UConexao,UClientesView, UUnidadeProdutosView;
 
 {$R *.dfm}
 
@@ -76,6 +78,21 @@ begin
    end;
 end;
 
+
+procedure TfrmNovoSistema.menUnidadeProdutosClick(Sender: TObject);
+begin
+   try
+      Screen.Cursor := crHourGlass;
+
+      if   frmUnidadeProdutos = nil then
+           frmUnidadeProdutos := TfrmUnidadeProdutos.Create(Application);
+
+
+      frmUnidadeProdutos.Show;
+   finally
+      Screen.Cursor := crDefault;
+   end;
+end;
 
 end.
 
