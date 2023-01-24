@@ -63,6 +63,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Width = 52
       Height = 21
       TabOrder = 0
+      OnExit = edtCodigoExit
     end
     object edtUnidade: TEdit
       Left = 61
@@ -84,6 +85,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Top = 41
       Width = 365
       Height = 21
+      CharCase = ecUpperCase
       TabOrder = 3
     end
   end

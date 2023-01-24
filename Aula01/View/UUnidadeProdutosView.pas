@@ -72,7 +72,7 @@ var
 
 implementation
 
-uses uMessageUtil;
+uses uMessageUtil, UUnidadeProdutosPesqView;
 
 {$R *.dfm}
 
@@ -278,6 +278,33 @@ begin
 
       end;
 
+      etPesquisar:
+      begin
+         stbBarraStatus.Panels[0].Text := 'Pesquisar';
+
+         if frmUnidadeProdutosPesq = nil then
+           frmUnidadeProdutosPesq := TfrmUnidadeProdutosPesq.Create(Application);
+
+         frmUnidadeProdutosPesq.ShowModal;
+
+         if  frmUnidadeProdutosPesq.mUnidadeProdutosID <> 0 then
+         begin
+            edtCodigo.Text := IntToStr(frmUnidadeProdutosPesq.mUnidadeProdutosID);
+            vEstadoTela := etConsultar;
+            ProcessaConsulta;
+         end
+         else
+         begin
+            vEstadoTela := etPadrao;
+            DefineEstadoTela;
+         end;
+
+         frmUnidadeProdutosPesq.mUnidadeProdutosID := 0;
+         frmUnidadeProdutosPesq.mUnidadeProdutosDescricao := EmptyStr;
+
+         if edtDescricao.CanFocus then
+            edtDescricao.SetFocus;
+      end;
    end;
 end;
 

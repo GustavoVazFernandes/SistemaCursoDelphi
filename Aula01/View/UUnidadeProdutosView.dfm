@@ -85,6 +85,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Top = 41
       Width = 365
       Height = 21
+      CharCase = ecUpperCase
       TabOrder = 3
     end
   end
