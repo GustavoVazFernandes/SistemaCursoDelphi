@@ -2163,6 +2163,7 @@ object frmNovoSistema: TfrmNovoSistema
       end
       object menProdutos: TMenuItem
         Caption = 'Produtos'
+        OnClick = menProdutosClick
       end
       object menUnidadeProduto: TMenuItem
         Caption = 'Unidade de Produto'

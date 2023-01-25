@@ -1,0 +1,61 @@
+unit UProdutosDAO;
+
+interface
+uses
+   SqlExpr, DBXpress, SimpleDS, Db, Classes, SysUtils, DateUtils, StdCtrls,
+   UGenericDAO, UProdutos;
+
+   type
+
+   TProdutoDAO = class (TGenericDAO)
+      public
+         constructor Create(pConexao : TSQLConnection);
+         function Insere(pProduto: TProduto) : Boolean;
+         function InsereLista(pColProduto : TColProduto): Boolean;
+         function Atualiza(pProduto : TProduto; pCondicao : String): Boolean;
+         function Retorna (pCondicao: string): TProduto;
+         function RetornaLista (pCondicao : string = ''): TColProduto;
+
+   end;
+
+
+implementation
+
+{ TProdutosDAO }
+
+function TProdutoDAO.Atualiza(pProduto: TProduto;
+  pCondicao: String): Boolean;
+begin
+   Result := inherited Atualiza(pProduto, pCondicao);
+end;
+
+constructor TProdutoDAO.Create(pConexao: TSQLConnection);
+begin
+   inherited Create;
+   vEntidade := 'PRODUTO';
+   vConexao := pConexao;
+   vClass := TProduto;
+end;
+
+function TProdutoDAO.Insere(pProduto: TProduto): Boolean;
+begin
+   Result := inherited Insere(pProduto, 'ID');
+end;
+
+function TProdutoDAO.InsereLista(pColProduto: TColProduto): Boolean;
+begin
+   Result := inherited InsereLista(pColProduto);
+end;
+
+function TProdutoDAO.Retorna(pCondicao: string): TProduto;
+begin
+   Result := TProduto (inherited Retorna(pCondicao));
+end;
+
+function TProdutoDAO.RetornaLista(pCondicao: string): TColProduto;
+begin
+   Result:= TColProduto (inherited RetornaLista(pCondicao));
+end;
+
+end.
+ 

@@ -23,6 +23,12 @@ type
 
    end;
 
+   TColUnidadeProdutos = class (TList)
+      public
+         function Retorna(pIndex : Integer) : TUnidadeProdutos;
+         procedure Adiciona(pUnidadeProdutos : TUnidadeProdutos);
+
+   end;
 implementation
 
 { TUnidadeProdutos }
@@ -35,4 +41,16 @@ begin
    Self.vAtivo               := False;
 end;
 
-end.
+{ TColUnidadeProdutos }
+
+procedure TColUnidadeProdutos.Adiciona(pUnidadeProdutos: TUnidadeProdutos);
+begin
+   Self.Add(TUnidadeProdutos(pUnidadeProdutos));
+end;
+
+function TColUnidadeProdutos.Retorna(pIndex: Integer): TUnidadeProdutos;
+begin
+   Result := TUnidadeProdutos(Self[pIndex]);
+end;
+
+end.                         

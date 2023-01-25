@@ -31,6 +31,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure menClientesClick(Sender: TObject);
     procedure menUnidadeProdutoClick(Sender: TObject);
+    procedure menProdutosClick(Sender: TObject);
 
 
 
@@ -47,7 +48,7 @@ var
 implementation
 
 uses
-    UConexao,UClientesView, UUnidadeProdutosView;
+    UConexao, UClientesView, UUnidadeProdutosView, UProdutosView;
 
 {$R *.dfm}
 
@@ -88,6 +89,21 @@ begin
 
 
       frmUnidadeProdutos.Show;
+   finally
+      Screen.Cursor := crDefault;
+   end;
+end;
+
+procedure TfrmNovoSistema.menProdutosClick(Sender: TObject);
+begin
+   try
+      Screen.Cursor := crHourGlass;
+
+      if   frmProdutos = nil then
+           frmProdutos := TfrmProdutos.Create(Application);
+
+
+      frmProdutos.Show;
    finally
       Screen.Cursor := crDefault;
    end;

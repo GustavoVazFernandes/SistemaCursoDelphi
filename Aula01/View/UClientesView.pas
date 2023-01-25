@@ -338,9 +338,6 @@ begin
                edtCodigo.SetFocus;
 
         end;
-
-
-
       end;
 
       etPesquisar:
@@ -390,7 +387,6 @@ begin
 
 
 end;
-
 
 procedure TfrmClientes.btnIncluirClick(Sender: TObject);
 begin

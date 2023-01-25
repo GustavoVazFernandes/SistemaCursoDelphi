@@ -1,0 +1,205 @@
+unit UProdutosController;
+
+interface
+
+uses
+   SysUtils, Math, StrUtils, UConexao, UProdutos;
+
+type
+  TProdutoController = class
+     public
+        constructor Create;
+        function GravaProduto(pProduto: TProduto) : Boolean;
+        function ExcluiProduto(pProduto : TProduto): Boolean;
+        function PesquisaProduto (pNome : String ) : TColProduto;
+        function BuscaProduto(pID: integer): TProduto;
+        function RetornaCondicaoProduto (
+        pID_Produto : Integer;
+        pRelacionada:Boolean = False ) : String;
+     published
+        class function getInstancia: TProdutoController;
+  end;
+
+
+implementation
+
+uses
+   UProdutosDAO;
+
+var
+   _instance : TProdutoController;
+
+{ TProdutosController }
+
+function TProdutoController.BuscaProduto(pID: integer): TProduto;
+   var
+     xProdutoDAO : TProdutoDAO;
+begin
+   try
+      try
+         Result:= nil;
+
+         xProdutoDAO := TProdutoDAO.Create(TConexao.getInstance.getConn);
+         Result := xProdutoDAO.Retorna(RetornaCondicaoProduto(pID));
+
+      finally
+         if (xProdutoDAO <> nil) then
+            FreeAndNil(xProdutoDAO);
+
+      end;
+
+   except
+      on E: Exception do
+      begin
+          raise Exception.Create(
+          'Falha ao buscar os dados do produto. [Controller]'#13+
+          e.Message);
+      end;
+   end;
+end;
+
+constructor TProdutoController.Create;
+begin
+   inherited Create;
+end;
+
+function TProdutoController.ExcluiProduto(pProduto: TProduto): Boolean;
+var
+   xProdutoDAO : TProdutoDAO;
+begin
+   try
+      try
+         Result:= False;
+
+         TConexao.get.iniciaTransacao;
+
+         xProdutoDAO:= TProdutoDAO.Create(TConexao.get.getConn);
+
+         if pProduto.Id = 0 then
+            Exit
+         else
+            xProdutoDAO.Deleta(RetornaCondicaoProduto(pProduto.Id));
+
+
+         TConexao.get.confirmaTransacao;
+
+         Result:= True;
+      finally
+         if xProdutoDAO <> nil then
+            FreeAndNil(xProdutoDAO);
+      end;
+
+
+   except
+       on E: Exception do
+       begin
+          TConexao.get.cancelaTransacao;
+          raise Exception.Create(
+             'Falha ao excluir os dados do produto [Controller]'#13+
+             e.Message);
+       end;
+   end;
+end;
+
+class function TProdutoController.getInstancia: TProdutoController;
+begin
+   if _instance = nil then
+      _instance  := TProdutoController.Create;
+
+
+   Result  := _instance;
+end;
+
+function TProdutoController.GravaProduto(pProduto: TProduto): Boolean;
+var
+   xProdutoDAO   : TProdutoDAO;
+   xAux: Integer;
+
+begin
+   try
+      try
+         TConexao.get.iniciaTransacao;
+
+         Result := False;
+
+         xProdutoDAO :=
+            TProdutoDAO.Create (TConexao.get.getConn);
+
+         if pProduto.Id = 0 then
+            xProdutoDAO.Insere(pProduto)
+
+         else
+            xProdutoDAO.Atualiza(pProduto, RetornaCondicaoProduto(pProduto.Id));
+
+         TConexao.get.confirmaTransacao;
+
+      finally
+         if xProdutoDAO <> nil then
+            FreeAndNil(xProdutoDAO);
+
+      end;
+
+   except
+       on E: Exception do
+       begin
+          TConexao.get.cancelaTransacao;
+          Raise Exception.Create(
+          'Falha ao gravar os dados do produto [Controller].'#13 +
+          e.Message);
+       end;
+
+   end;
+end;
+
+function TProdutoController.PesquisaProduto(pNome: String): TColProduto;
+var
+   xProdutoDAO : TProdutoDAO;
+   xCondicao : string;
+begin
+   try
+      try
+         Result := nil;
+
+         xProdutoDAO := TProdutoDAO.Create(TConexao.get.getConn);
+
+         xCondicao :=
+            IfThen(pNome <> EmptyStr,
+               'WHERE                                         '#13+
+               '        (NOME LIKE UPPER (''%'+ pNome +'%'')) '#13+
+               'ORDER BY NOME, ID', EmptyStr);
+
+         Result := xProdutoDAO.RetornaLista(xCondicao);
+      finally
+         if xProdutoDAO <> nil then
+            FreeAndNil(xProdutoDAO);
+      end;
+   except
+      on E:Exception do
+      begin
+         Raise Exception.Create(
+         'Falha ao buscar ao dados do produto'#13+
+         e.Message);
+      end;
+   end;
+end;
+
+function TProdutoController.RetornaCondicaoProduto(pID_Produto: Integer;
+  pRelacionada: Boolean): String;
+var
+   xChave : string;
+begin
+   if(pRelacionada = True) then
+      xChave := 'ID_PRODUTO'
+   else
+      xChave := 'ID';
+
+   Result :=
+   'WHERE'#13+
+   '     '+xChave + ' = '+ QuotedStr(IntToStr(pID_Produto))+' '#13;
+
+
+end;
+
+
+end.
+ 

@@ -76,7 +76,6 @@ type
     procedure edtCodigoExit(Sender: TObject);
     procedure rdgTipoPessoaClick(Sender: TObject);
 
-
   private
     { Private declarations }
     vKey : Word;
@@ -339,9 +338,6 @@ begin
                edtCodigo.SetFocus;
 
         end;
-
-
-
       end;
 
       etPesquisar:
@@ -391,7 +387,6 @@ begin
 
 
 end;
-
 
 procedure TfrmClientes.btnIncluirClick(Sender: TObject);
 begin
@@ -1109,6 +1104,5 @@ begin
 
    end;
 end;
-
 
 end.

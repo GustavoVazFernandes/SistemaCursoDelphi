@@ -300,7 +300,7 @@ begin
          end;
 
          frmUnidadeProdutosPesq.mUnidadeProdutosID := 0;
-         frmUnidadeProdutosPesq.mUnidadeProdutosNome := EmptyStr;
+         frmUnidadeProdutosPesq.mUnidadeProdutosDescricao := EmptyStr;
 
          if edtDescricao.CanFocus then
             edtDescricao.SetFocus;

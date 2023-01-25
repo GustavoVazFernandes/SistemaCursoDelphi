@@ -8,18 +8,18 @@ type
    TUnidadeProdutos = class (TPersistent)
 
    private
-         vId                      : Integer;
-         vAtivo                   : Boolean;
-         vUnidade                 : String;
-         vDescricao               : string;
+         vId         : Integer;
+         vAtivo      : Boolean;
+         vUnidade    : String;
+         vDescricao  : string;
 
    public
         constructor Create;
        published
-         property Id                      : Integer read vId                  write vId;
-         property Ativo                   : Boolean read vAtivo               write vAtivo;
-         property Unidade                 : string read vUnidade             write vUnidade;
-         property Descricao               : String read vDescricao           write vDescricao;
+         property Id             : Integer read vId          write vId;
+         property Ativo          : Boolean read vAtivo       write vAtivo;
+         property Unidade        : string read vUnidade      write vUnidade;
+         property Descricao      : String read vDescricao    write vDescricao;
 
    end;
 

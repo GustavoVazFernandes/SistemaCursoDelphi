@@ -3,7 +3,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
   Top = 403
   Width = 587
   Height = 203
-  Caption = 'Cadastro de Produtos'
+  Caption = 'Cadastro de Unidade de Produtos'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
