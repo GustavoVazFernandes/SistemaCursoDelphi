@@ -92,7 +92,7 @@ uses
 procedure TfrmProdutos.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-    vKey := Key;
+   vKey := Key;
 
    case vKey of
       VK_RETURN: // Corresponde ao Enter
@@ -169,6 +169,7 @@ begin
    edtCodigo.Text          := IntToStr (vObjProduto.Id);
    edtNome.Text            := vObjProduto.Nome;
    edtPreco.Text           := FloatToStr(vObjProduto.PrecoVenda);
+   
 
 end;
 

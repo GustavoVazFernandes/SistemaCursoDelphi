@@ -12,6 +12,7 @@ object frmProdutos: TfrmProdutos
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -417,10 +418,7 @@ object frmProdutos: TfrmProdutos
       Top = 16
       Width = 65
       Height = 21
-      EditMask = '00\,00'
-      MaxLength = 5
       TabOrder = 3
-      Text = '  ,  '
     end
     object edtCodigoUnidade: TEdit
       Left = 240

@@ -1,6 +1,6 @@
 object frmProdutosPesq: TfrmProdutosPesq
-  Left = 363
-  Top = 260
+  Left = 728
+  Top = 266
   Width = 636
   Height = 280
   Caption = 'Pesquisa de Produto'
@@ -10,7 +10,9 @@ object frmProdutosPesq: TfrmProdutosPesq
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13

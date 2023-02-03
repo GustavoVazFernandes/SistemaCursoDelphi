@@ -763,8 +763,6 @@ begin
          edtCidade.Text      := vObjColEndereco.Retorna(i).Cidade;
       end;
    end;
-
-
 end;
 
 function TfrmClientes.ProcessaAlteracao: Boolean;

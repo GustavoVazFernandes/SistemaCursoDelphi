@@ -151,7 +151,7 @@ begin
                 cdsProdutoUnidade.Value := xListaProduto.Retorna(xAux).UnidadeSaida;
                 cdsProdutoNome.Value := xListaProduto.Retorna(xAux).Nome;
                 cdsProdutoPreco.Value := xListaProduto.Retorna(xAux).PrecoVenda;
-                   cdsProduto.Post;
+                cdsProduto.Post;
              end;
 
              if cdsProduto.RecordCount = 0 then
@@ -202,7 +202,7 @@ procedure TfrmProdutosPesq.dbgProdutoKeyDown(
 begin
    if (Key = VK_RETURN) and
       (btnConfirmar.CanFocus) then
-      btnConfirmar.SetFocus;
+       btnConfirmar.SetFocus;
 
 end;
 

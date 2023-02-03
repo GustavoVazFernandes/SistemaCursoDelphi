@@ -12,6 +12,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow

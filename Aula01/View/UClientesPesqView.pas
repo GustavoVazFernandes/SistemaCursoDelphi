@@ -44,6 +44,8 @@ type
     procedure dbgClienteKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure BitBtn1Click(Sender: TObject);
+
+    
   private
     { Private declarations }
     vKey : Word;
@@ -314,5 +316,6 @@ begin
 
    end;
 end;
+
 
 end.

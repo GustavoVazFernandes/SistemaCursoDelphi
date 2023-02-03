@@ -26,7 +26,6 @@ implementation
 function TPessoaDAO.Atualiza(pPessoa: TPessoa; pCondicao: String): Boolean;
 begin
    Result := inherited Atualiza(pPessoa, pCondicao);
-
 end;
 
 constructor TPessoaDAO.Create(pConexao: TSQLConnection);

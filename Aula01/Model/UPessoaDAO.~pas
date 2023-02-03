@@ -13,7 +13,7 @@ type
          constructor Create(pConexao : TSQLConnection);
          function Insere(pPessoa: TPessoa) : Boolean;
          function InsereLista(pColPessoa : TcolPessoa): Boolean;
-         function Atuliza(pPessoa : TPessoa; pCondicao : String): Boolean ;
+         function Atualiza(pPessoa : TPessoa; pCondicao : String): Boolean ;
          function Retorna (pCondicao: string): Tpessoa;
          function RetornaLista (pCondicao : string = ''): TColPessoa;
 
@@ -23,7 +23,7 @@ implementation
 
 { TPessoaDAO }
 
-function TPessoaDAO.Atuliza(pPessoa: TPessoa; pCondicao: String): Boolean;
+function TPessoaDAO.Atualiza(pPessoa: TPessoa; pCondicao: String): Boolean;
 begin
    Result := inherited Atualiza(pPessoa, pCondicao);
 

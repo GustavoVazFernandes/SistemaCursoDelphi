@@ -5,7 +5,8 @@ interface
 type
    TEstadoTela =
       (etPadrao, etIncluir, etAlterar, etExcluir, etConsultar, etListar,
-       etPesquisar);
+       etPesquisarCliente,etPesquisarProduto,etConsultarCliente,
+       etConsultarProduto,etPesquisar,etIncluirDados, etConsultarVenda);
 
    TPessoa = (peFisica, peJuridica);
 

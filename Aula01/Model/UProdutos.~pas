@@ -26,16 +26,16 @@ type
 
       end;
 
-   TColProdutos = class (TList)
+   TColProduto = class (TList)
       public
          function Retorna(pIndex : Integer) : TProduto;
-         procedure Adiciona(pProdutos : TProduto);
+         procedure Adiciona(pProduto : TProduto);
 
    end;
 
 implementation
 
-{ TColProdutos }
+{ TColProduto }
 
 procedure TColProduto.Adiciona(pProduto: TProduto);
 begin

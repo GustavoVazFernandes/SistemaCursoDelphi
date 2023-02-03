@@ -22,7 +22,7 @@ type
          property Id            : Integer read vId            write vId;
          property Nome          : String  read vNome          write vNome;
          property PrecoVenda    : Double  read vPrecoVenda    write vPrecoVenda;
-         property UnidadeSaida  : String read vUnidadeSaida  write vUnidadeSaida;
+         property UnidadeSaida  : String  read vUnidadeSaida  write vUnidadeSaida;
 
       end;
 

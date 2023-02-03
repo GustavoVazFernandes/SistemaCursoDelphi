@@ -10,7 +10,9 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
   object pnFiltro: TPanel
@@ -247,7 +249,7 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
         end
         item
           Expanded = False
-          FieldName = 'Nome'
+          FieldName = 'Descricao'
           Width = 423
           Visible = True
         end
@@ -279,11 +281,6 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
         Size = 2
       end
       item
-        Name = 'Nome'
-        DataType = ftString
-        Size = 100
-      end
-      item
         Name = 'Ativo'
         DataType = ftInteger
       end
@@ -291,6 +288,11 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
         Name = 'DescricaoAtivo'
         DataType = ftString
         Size = 3
+      end
+      item
+        Name = 'Descricao'
+        DataType = ftString
+        Size = 20
       end>
     IndexDefs = <>
     Params = <>
@@ -298,19 +300,18 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
     Left = 33
     Top = 112
     Data = {
-      8B0000009619E0BD0100000018000000050000000000030000008B0002494404
+      900000009619E0BD010000001800000005000000000003000000900002494404
       0001000000000007556E69646164650100490000000100055749445448020002
-      000200044E6F6D65010049000000010005574944544802000200640005417469
-      766F04000100000000000E44657363726963616F417469766F01004900000001
-      000557494454480200020003000000}
+      00020005417469766F04000100000000000E44657363726963616F417469766F
+      01004900000001000557494454480200020003000944657363726963616F0100
+      4900000001000557494454480200020014000000}
     object cdsUnidadeProdutosID: TIntegerField
       DisplayWidth = 12
       FieldName = 'ID'
     end
-    object cdsUnidadeProdutosNome: TStringField
-      DisplayWidth = 77
-      FieldName = 'Nome'
-      Size = 100
+    object cdsUnidadeProdutosUnidade: TStringField
+      FieldName = 'Unidade'
+      Size = 2
     end
     object cdsUnidadeProdutosAtivo: TIntegerField
       DisplayWidth = 12
@@ -321,9 +322,8 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
       FieldName = 'DescricaoAtivo'
       Size = 3
     end
-    object cdsUnidadeProdutosUnidade: TStringField
-      FieldName = 'Unidade'
-      Size = 2
+    object cdsUnidadeProdutosDescricao: TStringField
+      FieldName = 'Descricao'
     end
   end
 end

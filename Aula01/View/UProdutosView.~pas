@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, Mask, UProdutos, UProdutosDAO,
   UProdutosController, UEnumerationUtil, UUnidadeProdutos, UUnidadeProdutosDAO,
-  UUnidadeProdutosController;
+  UUnidadeProdutosController, DBCtrls;
 
 type
   TfrmProdutos = class(TForm)
@@ -26,9 +26,11 @@ type
     btnCancelar: TBitBtn;
     btnSair: TBitBtn;
     lblPreco: TLabel;
-    Label1: TLabel;
-    cmbUnidadeProdutos: TComboBox;
+    lblCodigoUnidade: TLabel;
     edtPreco: TMaskEdit;
+    edtCodigoUnidade: TEdit;
+    lblTipoUnidade: TLabel;
+    edtTipoUnidade: TEdit;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -45,25 +47,29 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
     procedure edtCodigoExit(Sender: TObject);
+    procedure edtCodigoUnidadeExit(Sender: TObject);
   private
     { Private declarations }
     vKey : Word;
 
-    vEstadoTela      :TEstadoTela;
-    vObjProduto     :TProduto;
+    vEstadoTela         :TEstadoTela;
+    vObjProduto         :TProduto;
+    vObjUnidadeProdutos :TUnidadeProdutos;
 
     procedure CamposEnabled(pOpcao : Boolean);
     procedure LimparTela;
     procedure DefineEstadoTela;
     procedure CarregaDadosTela;
+    procedure CarregaDadosUnidade;
 
 
-    function ProcessaConfirmacao :Boolean;
-    function ProcessaInclusao    :Boolean;
-    function ProcessaConsulta    :Boolean;
-    function ProcessaProdutos    :Boolean;
-    function ProcessaAlteracao   :Boolean;
-    function ProcessaExclusao    :Boolean;
+    function ProcessaConfirmacao     :Boolean;
+    function ProcessaInclusao        :Boolean;
+    function ProcessaConsulta        :Boolean;
+    function ProcessaProdutos        :Boolean;
+    function ProcessaAlteracao       :Boolean;
+    function ProcessaExclusao        :Boolean;
+    function ProcessaConsultaUnidade :Boolean;
 
     function ProcessaDadosProdutos   : Boolean;
     function ValidaProdutos          : Boolean;
@@ -86,7 +92,7 @@ uses
 procedure TfrmProdutos.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-    vKey := Key;
+   vKey := Key;
 
    case vKey of
       VK_RETURN: // Corresponde ao Enter
@@ -150,8 +156,6 @@ var
          if (Components[i] is TMaskEdit) then
             (Components[i] as TMaskEdit).Enabled := pOpcao;
 
-         if (Components[i] is TComboBox) then
-            (Components[i] as TComboBox).Enabled := pOpcao;
       end;
 
    end;
@@ -165,7 +169,7 @@ begin
    edtCodigo.Text          := IntToStr (vObjProduto.Id);
    edtNome.Text            := vObjProduto.Nome;
    edtPreco.Text           := FloatToStr(vObjProduto.PrecoVenda);
-   cmbUnidadeProdutos      := vObjProduto.Unidade;
+   
 
 end;
 
@@ -322,13 +326,6 @@ begin
       if (Components[i] is TMaskEdit) then // Limpa o valor que esta no campo
          (Components[i] as TMaskEdit).Text := EmptyStr;
 
-      // Se o campo for do tipo COMBOBOX
-      if (Components[i] is TComboBox) then  // Define o valor igual a -1
-      begin
-         (Components[i] as TComboBox).Clear;
-         (Components[i] as TComboBox).ItemIndex := -1;
-      end;
-
    end;
 
    if vObjProduto <> nil then
@@ -402,6 +399,8 @@ begin
          TProduto(TProdutoController.getInstancia.BuscaProduto(
             StrToIntDef(edtCodigo.Text, 0)));
 
+
+
       if (vObjProduto <> nil) then
          CarregaDadosTela
       else
@@ -457,7 +456,7 @@ begin
 
       vObjProduto.Nome                := edtNome.Text;
       vObjProduto.PrecoVenda          := StrToFloat(edtPreco.Text);
-      vObjProduto.Unidade        := cmbUnidadeProdutos.Text;
+      vObjProduto.UnidadeSaida        := edtTipoUnidade.Text;
 
 
       Result := True;
@@ -665,6 +664,72 @@ begin
     end;
 
     Result := True;
+end;
+
+procedure TfrmProdutos.edtCodigoUnidadeExit(Sender: TObject);
+begin
+   if vKey = VK_RETURN then
+      ProcessaConsultaUnidade;
+
+   vKey := VK_CLEAR;
+end;
+
+function TfrmProdutos.ProcessaConsultaUnidade: Boolean;
+begin
+   try
+      Result := False;
+
+      if (edtCodigoUnidade.Text = EmptyStr) then
+      begin
+         TMessageUtil.Alerta('Codigo da unidade de  produto não preenchido.');
+
+         if edtCodigoUnidade.CanFocus then
+            edtCodigoUnidade.SetFocus;
+
+         Exit;
+      end;
+
+      vObjUnidadeProdutos :=
+         TUnidadeProdutos(TUnidadeProdutosController.getInstancia.
+         BuscaUnidadeProdutos(StrToIntDef(edtCodigoUnidade.Text,0)));
+
+
+
+      if (edtCodigoUnidade <> nil) then
+         CarregaDadosUnidade
+      else
+      begin
+         TMessageUtil.Alerta(
+            'Nenhuma unidade de produto encotrado para o código informado.');
+
+         LimparTela;
+
+         if (edtCodigoUnidade.CanFocus) then
+             edtCodigoUnidade.SetFocus;
+
+         Exit;
+      end;
+
+      DefineEstadoTela;
+
+      Result:= True;
+
+   except
+      on E: Exception do
+      begin
+         Raise Exception.Create(
+         'Falha ao consultar os dados da unidade de  produto [View]:'#13+
+         e.Message);
+      end;
+   end;
+end;
+
+procedure TfrmProdutos.CarregaDadosUnidade;
+begin
+   if (vObjUnidadeProdutos = nil) then
+      Exit;
+
+   edtTipoUnidade.Text          := vObjUnidadeProdutos.Unidade;
 end;
 
 end.

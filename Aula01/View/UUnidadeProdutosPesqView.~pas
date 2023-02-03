@@ -25,10 +25,10 @@ type
     dtsUnidadeProdutos: TDataSource;
     cdsUnidadeProdutos: TClientDataSet;
     cdsUnidadeProdutosID: TIntegerField;
-    cdsUnidadeProdutosNome: TStringField;
     cdsUnidadeProdutosAtivo: TIntegerField;
     cdsUnidadeProdutosDescricaoAtivo: TStringField;
     cdsUnidadeProdutosUnidade: TStringField;
+    cdsUnidadeProdutosDescricao: TStringField;
     procedure btnSairClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -127,7 +127,7 @@ begin
    if not cdsUnidadeProdutos.IsEmpty then
    begin
       mUnidadeProdutosID := cdsUnidadeProdutosID.Value;
-      mUnidadeProdutosDescricao := cdsUnidadeProdutosNome.Value;
+      mUnidadeProdutosDescricao := cdsUnidadeProdutosDescricao.Value;
       Self.ModalResult  := mrOk;
       Close;
    end
@@ -163,7 +163,7 @@ begin
                    xAux).Id;
                 cdsUnidadeProdutosUnidade.Value := xListaUnidadeProdutos.Retorna(
                    xAux).Unidade;
-                cdsUnidadeProdutosNome.Value := xListaUnidadeProdutos.Retorna(
+                cdsUnidadeProdutosDescricao.Value := xListaUnidadeProdutos.Retorna(
                    xAux).Descricao;
                 cdsUnidadeProdutosAtivo.Value :=
                    IfThen(xListaUnidadeProdutos.Retorna(xAux).Ativo,1,0);
