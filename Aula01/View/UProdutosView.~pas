@@ -169,6 +169,9 @@ begin
    edtCodigo.Text          := IntToStr (vObjProduto.Id);
    edtNome.Text            := vObjProduto.Nome;
    edtPreco.Text           := FloatToStr(vObjProduto.PrecoVenda);
+   edtTipoUnidade.Text     := vObjProduto.UnidadeSaida;
+
+   edtPreco.Text := FormatFloat('##0.00',vObjProduto.PrecoVenda);
    
 
 end;
@@ -402,7 +405,10 @@ begin
 
 
       if (vObjProduto <> nil) then
-         CarregaDadosTela
+         begin
+            CarregaDadosTela;
+            CarregaDadosUnidade;
+         end
       else
       begin
          TMessageUtil.Alerta(

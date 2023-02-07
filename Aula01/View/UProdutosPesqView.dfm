@@ -34,9 +34,9 @@ object frmProdutosPesq: TfrmProdutosPesq
     object lblInfo: TLabel
       Left = 38
       Top = 10
-      Width = 264
+      Width = 185
       Height = 13
-      Caption = 'Digite parte ou toda a descri'#231#227'o da Unidade de Produto'
+      Caption = 'Digite parte ou todo o nome do produto'
     end
     object edtNome: TEdit
       Left = 38

@@ -434,9 +434,9 @@ object frmClientes: TfrmClientes
     object edtCPFCNPJ: TMaskEdit
       Left = 480
       Top = 13
-      Width = 128
+      Width = 122
       Height = 21
-      EditMask = '000\.000\.000\-00;1;'
+      EditMask = '###\.###\.###\-##;1;'
       MaxLength = 14
       TabOrder = 3
       Text = '   .   .   -  '

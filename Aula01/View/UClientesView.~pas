@@ -76,6 +76,7 @@ type
     procedure edtCodigoExit(Sender: TObject);
     procedure rdgTipoPessoaClick(Sender: TObject);
 
+
   private
     { Private declarations }
     vKey : Word;
@@ -763,8 +764,6 @@ begin
          edtCidade.Text      := vObjColEndereco.Retorna(i).Cidade;
       end;
    end;
-
-
 end;
 
 function TfrmClientes.ProcessaAlteracao: Boolean;
@@ -1104,5 +1103,6 @@ begin
 
    end;
 end;
+
 
 end.

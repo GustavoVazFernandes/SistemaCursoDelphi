@@ -33,7 +33,8 @@ uses
   UVendaDAO in 'Model\UVendaDAO.pas',
   UVendaItem in 'Model\UVendaItem.pas',
   UVendaItemDAO in 'Model\UVendaItemDAO.pas',
-  UVendaController in 'Model\UVendaController.pas';
+  UVendaController in 'Controller\UVendaController.pas',
+  UVendasPesqView in 'View\UVendasPesqView.pas' {frmVendaPesq};
 
 {$R *.res}
 

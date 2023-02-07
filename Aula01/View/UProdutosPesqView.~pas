@@ -202,7 +202,7 @@ procedure TfrmProdutosPesq.dbgProdutoKeyDown(
 begin
    if (Key = VK_RETURN) and
       (btnConfirmar.CanFocus) then
-      btnConfirmar.SetFocus;
+       btnConfirmar.SetFocus;
 
 end;
 

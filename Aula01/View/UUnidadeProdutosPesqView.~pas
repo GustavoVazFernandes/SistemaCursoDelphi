@@ -76,8 +76,7 @@ end;
 procedure TfrmUnidadeProdutosPesq.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-   vKey := Key;
-
+ vKey := Key;
    case vKey of
       VK_RETURN:
       begin

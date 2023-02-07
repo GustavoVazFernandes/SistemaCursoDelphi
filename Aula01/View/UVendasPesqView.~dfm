@@ -1,9 +1,9 @@
-object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
-  Left = 743
-  Top = 390
-  Width = 636
-  Height = 282
-  Caption = 'Pesqusia de Unidade de Produto'
+object frmVendaPesq: TfrmVendaPesq
+  Left = 704
+  Top = 166
+  Width = 631
+  Height = 310
+  Caption = 'Pesquisa de Venda'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,42 +12,42 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
-  Position = poScreenCenter
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object pnFiltro: TPanel
     Left = 0
     Top = 0
-    Width = 620
+    Width = 615
     Height = 57
     Align = alTop
     TabOrder = 0
     object grbFiltrar: TGroupBox
       Left = 1
       Top = 1
-      Width = 618
+      Width = 613
       Height = 55
       Align = alClient
       Caption = 'Filtrar'
       TabOrder = 0
-      object lblNome: TLabel
+      object lblCodigo: TLabel
         Left = 6
         Top = 29
-        Width = 28
+        Width = 33
         Height = 13
-        Caption = 'Nome'
+        Caption = 'Codigo'
       end
       object lblInfo: TLabel
         Left = 38
         Top = 10
-        Width = 264
+        Width = 98
         Height = 13
-        Caption = 'Digite parte ou toda a descri'#231#227'o da Unidade de Produto'
+        Caption = 'Digite o ID da venda'
       end
-      object edtNome: TEdit
-        Left = 38
+      object edtCodigo: TEdit
+        Left = 46
         Top = 25
-        Width = 491
+        Width = 483
         Height = 21
         TabOrder = 0
       end
@@ -89,20 +89,13 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
       end
     end
   end
-  object stbBarraStatus: TStatusBar
-    Left = 0
-    Top = 224
-    Width = 620
-    Height = 19
-    Panels = <>
-  end
   object pnlBotoes: TPanel
     Left = 0
-    Top = 183
-    Width = 620
+    Top = 211
+    Width = 615
     Height = 41
     Align = alBottom
-    TabOrder = 2
+    TabOrder = 1
     object btnConfirmar: TBitBtn
       Left = 365
       Top = 8
@@ -212,21 +205,28 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
         AF8DC2AA84AA9161A98B5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     end
   end
+  object stbBarraStatus: TStatusBar
+    Left = 0
+    Top = 252
+    Width = 615
+    Height = 19
+    Panels = <>
+  end
   object grbGrid: TGroupBox
     Left = 0
     Top = 57
-    Width = 620
-    Height = 126
+    Width = 615
+    Height = 154
     Align = alClient
     Caption = 'Resultado da Busca'
     TabOrder = 3
-    object dbgUnidadeProdutos: TDBGrid
+    object dbgVendaPesq: TDBGrid
       Left = 2
       Top = 15
-      Width = 616
-      Height = 109
+      Width = 611
+      Height = 137
       Align = alClient
-      DataSource = dtsUnidadeProdutos
+      DataSource = dtsVendaPesq
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgCancelOnExit]
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
@@ -234,40 +234,16 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
       TitleFont.Height = -11
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
-      Columns = <
-        item
-          Expanded = False
-          FieldName = 'ID'
-          Title.Caption = 'C'#243'digo'
-          Width = 75
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Unidade'
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'Descricao'
-          Width = 423
-          Visible = True
-        end
-        item
-          Expanded = False
-          FieldName = 'DescricaoAtivo'
-          Title.Caption = 'Ativo'
-          Width = 40
-          Visible = True
-        end>
+      OnDblClick = dbgVendaPesqDblClick
+      OnKeyDown = dbgVendaPesqKeyDown
     end
   end
-  object dtsUnidadeProdutos: TDataSource
-    DataSet = cdsUnidadeProdutos
+  object dtsVendaPesq: TDataSource
+    DataSet = cdsVendaPesq
     Left = 6
     Top = 112
   end
-  object cdsUnidadeProdutos: TClientDataSet
+  object cdsVendaPesq: TClientDataSet
     Active = True
     Aggregates = <>
     FieldDefs = <
@@ -276,54 +252,44 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
         DataType = ftInteger
       end
       item
-        Name = 'Unidade'
+        Name = 'Cliente'
         DataType = ftString
-        Size = 2
+        Size = 100
       end
       item
-        Name = 'Ativo'
-        DataType = ftInteger
+        Name = 'Data'
+        DataType = ftDateTime
       end
       item
-        Name = 'DescricaoAtivo'
-        DataType = ftString
-        Size = 3
-      end
-      item
-        Name = 'Descricao'
-        DataType = ftString
-        Size = 20
+        Name = 'Total'
+        DataType = ftFloat
       end>
     IndexDefs = <>
     Params = <>
     StoreDefs = True
+    BeforeDelete = cdsVendaPesqBeforeDelete
     Left = 33
     Top = 112
     Data = {
-      900000009619E0BD010000001800000005000000000003000000900002494404
-      0001000000000007556E69646164650100490000000100055749445448020002
-      00020005417469766F04000100000000000E44657363726963616F417469766F
-      01004900000001000557494454480200020003000944657363726963616F0100
-      4900000001000557494454480200020014000000}
-    object cdsUnidadeProdutosID: TIntegerField
-      DisplayWidth = 12
+      5C0000009619E0BD0100000018000000040000000000030000005C0002494404
+      0001000000000007436C69656E74650100490000000100055749445448020002
+      0064000444617461080008000000000005546F74616C08000400000000000000}
+    object cdsVendaPesqID: TIntegerField
+      DisplayWidth = 15
       FieldName = 'ID'
     end
-    object cdsUnidadeProdutosUnidade: TStringField
-      FieldName = 'Unidade'
-      Size = 2
+    object cdsVendaPesqCliente: TStringField
+      DisplayWidth = 59
+      FieldName = 'Cliente'
+      Size = 100
     end
-    object cdsUnidadeProdutosAtivo: TIntegerField
-      DisplayWidth = 12
-      FieldName = 'Ativo'
+    object cdsVendaPesqData: TDateTimeField
+      DisplayWidth = 11
+      FieldName = 'Data'
     end
-    object cdsUnidadeProdutosDescricaoAtivo: TStringField
-      DisplayWidth = 15
-      FieldName = 'DescricaoAtivo'
-      Size = 3
-    end
-    object cdsUnidadeProdutosDescricao: TStringField
-      FieldName = 'Descricao'
+    object cdsVendaPesqTotal: TFloatField
+      DisplayWidth = 8
+      FieldName = 'Total'
     end
   end
 end

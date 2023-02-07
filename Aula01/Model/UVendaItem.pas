@@ -54,13 +54,13 @@ end;
 
 constructor TVendaItem.Create;
 begin
-   Self.vId           :=0;
-   Self.vId_Venda     :=0;
-   Self.vId_Produto   :=0;
-   Self.vQuantidade   := 0;
-   Self.vUnidadeSaida :=EmptyStr;
-   Self.vTotalItem    :=0;
-   Self.vValorUnitario:=0;
+   Self.vId            := 0;
+   Self.vId_Venda      := 0;
+   Self.vId_Produto    := 0;
+   Self.vQuantidade    := 0;
+   Self.vUnidadeSaida  := EmptyStr;
+   Self.vTotalItem     := 0;
+   Self.vValorUnitario := 0;
 end;
 
 

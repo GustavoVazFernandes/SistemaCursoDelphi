@@ -1,6 +1,6 @@
 object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
-  Left = 491
-  Top = 382
+  Left = 743
+  Top = 390
   Width = 636
   Height = 282
   Caption = 'Pesqusia de Unidade de Produto'
@@ -13,6 +13,7 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object pnFiltro: TPanel
