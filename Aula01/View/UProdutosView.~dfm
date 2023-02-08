@@ -121,7 +121,7 @@ object frmProdutos: TfrmProdutos
       Width = 611
       Height = 72
       Align = alBottom
-      TabOrder = 2
+      TabOrder = 5
       object btnIncluir: TBitBtn
         Left = 19
         Top = 6
@@ -425,7 +425,7 @@ object frmProdutos: TfrmProdutos
       Top = 16
       Width = 57
       Height = 21
-      TabOrder = 4
+      TabOrder = 2
       OnExit = edtCodigoUnidadeExit
     end
     object edtTipoUnidade: TEdit
@@ -434,7 +434,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       Enabled = False
-      TabOrder = 5
+      TabOrder = 4
     end
   end
 end

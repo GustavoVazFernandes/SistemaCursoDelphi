@@ -254,7 +254,8 @@ begin
          if  frmClientesPesq.mClienteID <> 0 then
          begin
             edtCodigoCliente.Text := IntToStr(frmClientesPesq.mClienteID);
-            if (edtNome.Text = EmptyStr) and (edtCodigoCliente.Text = EmptyStr) then
+            if (edtNome.Text = EmptyStr) or (edtCodigoCliente.Text = EmptyStr)
+            or (dbgVenda.Enabled = True) then
             begin
                vEstadoTela := etIncluir;
                DefineEstadoTela;
@@ -265,7 +266,6 @@ begin
                DefineEstadoTela;
             end;
             ProcessaConsultaCliente;
-
          end
          else
          if (edtNome.Text = EmptyStr) and (edtCodigoCliente.Text = EmptyStr) then
@@ -490,7 +490,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum cliente encotrado para o código informado.');
+            'Nenhum cliente encontrado para o código informado.');
 
          LimparTela;
 
@@ -722,6 +722,15 @@ begin
          if (vObjVenda) = nil then
             Exit;
 
+      if vEstadoTela = etAlterar then
+         if ProcessaConsultaCliente = False then
+         begin
+            vEstadoTela := etPadrao;
+            DefineEstadoTela;
+            Exit;
+         end;
+      ProcessaTotalValor;
+      
       vObjVenda.Id_Cliente   := StrToInt(edtCodigoCliente.Text);
       vObjVenda.DataVenda    := StrToDate(edtData.Text);
       vObjVenda.TotalVenda   := StrToFloat(edtValor.Text);
@@ -761,6 +770,7 @@ function TfrmVendas.ProcessaVendaItem: Boolean;
          if (cdsVendaCodigo.Value = 0) and (cdsVendaDescricao.Text = EmptyStr) then
             cdsVenda.Delete;
 
+
          for i := 0 to dbgVenda.DataSource.DataSet.RecordCount - 1 do
          begin
              dbgVenda.DataSource.DataSet.RecNo := i + 1;
@@ -772,12 +782,13 @@ function TfrmVendas.ProcessaVendaItem: Boolean;
                xVendaItem.Quantidade   := cdsVendaQuantidade.Value
             else
             begin
-               xVendaItem.Quantidade    := 1;
+
                cdsVenda.Edit;
                cdsVendaQuantidade.Value := 1;
                cdsVendaPrecoTotal.Value := cdsVendaQuantidade.Value * cdsVendaPrecoUnitario.Value;
                cdsVenda.Post;
-               xVendaItem.TotalItem := cdsVendaPrecoTotal.Value;
+               xVendaItem.Quantidade    := cdsVendaQuantidade.Value;
+               xVendaItem.TotalItem     := cdsVendaPrecoTotal.Value;
 
                ProcessaTotalValor;
             end;
@@ -803,7 +814,7 @@ function TfrmVendas.ProcessaVendaItem: Boolean;
          on E: Exception do
          begin
             raise Exception.Create(
-            'Falha ao preeencher os dados de enderço do cliente [View]:'#13+
+            'Falha ao preeencher os itens da venda [View]:'#13+
             e.Message);
          end;
 
@@ -828,7 +839,7 @@ begin
        on E: Exception do
        begin
           raise Exception.Create (
-            'Falha ao alterar os dados do cliente [View]'#13+
+            'Falha ao alterar os dados da venda [View]'#13+
             e.Message);
        end;
 
@@ -844,7 +855,7 @@ begin
          (vObjColVendaItem = nil) then
       begin
          TMessageUtil.Alerta (
-         'Não foi possivel carregar os dados cadastrados da venda informada.');
+         'Não foi possivel carregar os dados cadatrados da venda informada.');
 
          LimparTela;
          vEstadoTela := etPadrao;
@@ -922,6 +933,8 @@ begin
             cdsVendaCodigo.Value               := vObjProduto.Id;
             cdsVendaPrecoUnitario.Value        := vObjProduto.PrecoVenda;
             cdsVendaUnidade.Value              := vObjProduto.UnidadeSaida;
+            cdsVendaPrecoTotal.Value           := cdsVendaQuantidade.value *
+               cdsVendaPrecoUnitario.Value;
             cdsVenda.Post;
          end
          else
@@ -932,12 +945,14 @@ begin
             cdsVendaCodigo.Value               := vObjProduto.Id;
             cdsVendaPrecoUnitario.Value        := vObjProduto.PrecoVenda;
             cdsVendaUnidade.Value              := vObjProduto.UnidadeSaida;
+            cdsVendaPrecoTotal.Value           := cdsVendaQuantidade.value *
+               cdsVendaPrecoUnitario.Value;
             cdsVenda.Post;
          end
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encotrado para o código informado.');
+            'Nenhum produto encontrado para o código informado.');
 
          LimparTela;
 
@@ -973,11 +988,12 @@ begin
       Exit;
 
    cdsVenda.Edit;
-   cdsVendaQuantidade.Value := 1;
+   cdsVendaQuantidade.Value           := 1;
    cdsVendaDescricao.Value            := vObjProduto.Nome;
    cdsVendaCodigo.Value               := vObjProduto.Id;
    cdsVendaPrecoUnitario.Value        := vObjProduto.PrecoVenda;
    cdsVendaUnidade.Value              := vObjProduto.UnidadeSaida;
+   cdsVendaPrecoTotal.Value           := cdsVendaQuantidade.value * cdsVendaPrecoUnitario.Value;
    cdsVenda.Post;
 
 end;
@@ -1003,7 +1019,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encotrado para o código informado.');
+            'Nenhum produto encontrado para o código informado.');
 
          Exit;
       end;
@@ -1079,7 +1095,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encotrado para o código informado.');
+            'Nenhum produto encontrado para o código informado.');
 
          LimparTela;
 

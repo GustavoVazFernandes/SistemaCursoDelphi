@@ -401,7 +401,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhuma unidade de produto encotrado para o código informado.');
+            'Nenhuma unidade de produto encontrado para o código informado.');
 
          LimparTela;
 

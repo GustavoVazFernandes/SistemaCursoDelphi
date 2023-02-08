@@ -715,7 +715,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum cliente encotrado para o código informado.');
+            'Nenhum cliente encontrado para o código informado.');
 
          LimparTela;
 

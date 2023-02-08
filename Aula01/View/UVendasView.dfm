@@ -562,7 +562,7 @@ object frmVendas: TfrmVendas
     object btnConsultar: TBitBtn
       Left = 174
       Top = 39
-      Width = 75
+      Width = 76
       Height = 25
       Caption = '&Consultar'
       TabOrder = 5

@@ -412,7 +412,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encotrado para o código informado.');
+            'Nenhum produto encontrado para o código informado.');
 
          LimparTela;
 
@@ -706,7 +706,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhuma unidade de produto encotrado para o código informado.');
+            'Nenhuma unidade de produto encontrado para o código informado.');
 
          LimparTela;
 
