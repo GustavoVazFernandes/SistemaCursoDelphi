@@ -1,6 +1,6 @@
 object frmVendas: TfrmVendas
-  Left = 772
-  Top = 24
+  Left = 764
+  Top = 52
   Width = 575
   Height = 587
   Caption = 'Vendas'
@@ -186,12 +186,12 @@ object frmVendas: TfrmVendas
         Caption = 'Dados dos Produtos'
         TabOrder = 0
         object dbgVenda: TDBGrid
-          Left = -8
+          Tag = 9
+          Left = 0
           Top = 16
           Width = 553
           Height = 257
           DataSource = dtsVendas
-          Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgCancelOnExit]
           ParentShowHint = False
           ShowHint = False
           TabOrder = 0
@@ -200,7 +200,6 @@ object frmVendas: TfrmVendas
           TitleFont.Height = -11
           TitleFont.Name = 'MS Sans Serif'
           TitleFont.Style = []
-          OnExit = dbgVendaExit
           OnKeyDown = dbgVendaKeyDown
           OnKeyPress = dbgVendaKeyPress
           Columns = <

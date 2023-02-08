@@ -64,7 +64,6 @@ type
     procedure btnPesquisarClick(Sender: TObject);
     procedure dbgVendaKeyPress(Sender: TObject; var Key: Char);
     procedure edtCodigoClienteKeyPress(Sender: TObject; var Key: Char);
-    procedure dbgVendaExit(Sender: TObject);
     procedure dbgVendaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
 
@@ -752,8 +751,9 @@ function TfrmVendas.ProcessaVendaItem: Boolean;
                xVendaItem.Quantidade   := cdsVendaQuantidade.Value
             else
             begin
-               xVendaItem.Quantidade   := 1;
+               xVendaItem.Quantidade    := 1;
                cdsVenda.Edit;
+               cdsVendaQuantidade.Value := 1;
                cdsVendaPrecoTotal.Value := cdsVendaQuantidade.Value * cdsVendaPrecoUnitario.Value;
                cdsVenda.Post;
                xVendaItem.TotalItem := cdsVendaPrecoTotal.Value;
@@ -1008,8 +1008,8 @@ begin
    xTotal := 0;
    for xAux := 0 to dbgVenda.DataSource.DataSet.RecordCount - 1 do
    begin
-     dbgVenda.DataSource.DataSet.RecNo := xAux + 1;
-     xTotal := xTotal + dbgVenda.DataSource.DataSet.FieldByName('PrecoTotal').AsFloat;
+      dbgVenda.DataSource.DataSet.RecNo := xAux + 1;
+      xTotal := xTotal + dbgVenda.DataSource.DataSet.FieldByName('PrecoTotal').AsFloat;
    end;
    edtValor.Text := FloatToStr(xTotal);
 
@@ -1253,16 +1253,6 @@ begin
    vKey := VK_CLEAR;
 end;
 
-procedure TfrmVendas.dbgVendaExit(Sender: TObject);
-begin
-   cdsVenda.Edit;
-   cdsVendaPrecoTotal.Value := cdsVendaQuantidade.Value * cdsVendaPrecoUnitario.Value;
-   cdsVenda.Post;
-
-   ProcessaTotalValor;
-
-   cdsVenda.Last;
-end;
 
 procedure TfrmVendas.dbgVendaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
@@ -1271,10 +1261,12 @@ begin
    begin
       if cdsVenda.RecordCount > 0 then
       begin
-        cdsVenda.Delete;
+         cdsVenda.Delete;
       end;
+      ProcessaTotalValor;
    end;
-   ProcessaTotalValor;
+
+
 end;
 
 end.
