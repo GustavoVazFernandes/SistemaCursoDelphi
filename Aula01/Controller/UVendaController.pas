@@ -183,15 +183,10 @@ begin
                   pColVendaItem.Retorna(xAux).ID_Venda := pVenda.Id;
 
                xVendaItemDAO.InsereLista(pColVendaItem);
-
             end
             else
             begin
                xVendaDAO.Atualiza(pVenda, RetornaCondicaoVenda(pVenda.Id));
-
-               xVendaItemDAO.Deleta(RetornaCondicaoVenda(pVenda.Id, True));
-               xVendaItemDAO.InsereLista(pColVendaItem);
-
             end;
 
          TConexao.get.confirmaTransacao;

@@ -254,15 +254,25 @@ begin
          if  frmClientesPesq.mClienteID <> 0 then
          begin
             edtCodigoCliente.Text := IntToStr(frmClientesPesq.mClienteID);
-            vEstadoTela := etIncluir;
-            ProcessaConsultaCliente;
-         end
-         else
-         if (edtNome.Text = EmptyStr) and (edtCodigoCliente.Text = EmptyStr) then
+            if (edtNome.Text = EmptyStr) and (edtCodigoCliente.Text = EmptyStr) then
             begin
                vEstadoTela := etIncluir;
                DefineEstadoTela;
             end
+            else
+            begin
+               vEstadoTela := etAlterar;
+               DefineEstadoTela;
+            end;
+            ProcessaConsultaCliente;
+
+         end
+         else
+         if (edtNome.Text = EmptyStr) and (edtCodigoCliente.Text = EmptyStr) then
+         begin
+            vEstadoTela := etIncluir;
+            DefineEstadoTela;
+         end
          else
          begin
              vEstadoTela := etAlterar;
@@ -314,6 +324,7 @@ begin
             btnConfirmar.Enabled := True;
             btnLimpar.Enabled    := False;
             dbgVenda.ReadOnly := True;
+            dbgVenda.Enabled := False;
          end
          else
          begin
@@ -506,33 +517,43 @@ procedure TfrmVendas.CarregaDadosTela;
 var
    i : Integer;
 begin
-
-   if (vObjCliente = nil) then
-      Exit;
-
-   edtCodigoCliente.Text   := IntToStr (vObjCliente.Id);
-   edtNome.Text            := vObjCliente.Nome;
-
-   if (vObjVenda = nil) then
-      Exit;
-
-   edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
-   edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
-   edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
-
-
-   if vObjColVendaItem <> nil then
+   if vEstadoTela = etAlterar then
    begin
-      for i := 0 to (vObjColVendaItem.Count - 1) do
+      if (vObjCliente = nil) then
+         Exit;
+
+      edtCodigoCliente.Text   := IntToStr (vObjCliente.Id);
+      edtNome.Text            := vObjCliente.Nome;
+   end
+   else
+   begin
+      if (vObjCliente = nil) then
+         Exit;
+
+      edtCodigoCliente.Text   := IntToStr (vObjCliente.Id);
+      edtNome.Text            := vObjCliente.Nome;
+
+      if (vObjVenda = nil) then
+         Exit;
+
+      edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
+      edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
+      edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
+
+
+      if vObjColVendaItem <> nil then
       begin
-         edtCodigoVenda.Text          := IntToStr(vObjColVendaItem.Retorna(i).Id_Venda);
-         cdsVenda.Append;
-         cdsVendaCodigo.Text          := IntToStr(vObjColVendaItem.Retorna(i).Id_Produto);
-         cdsVendaQuantidade.Text      := FloatToStr(vObjColVendaItem.Retorna(i).Quantidade);
-         cdsVendaUnidade.Text         := vObjColVendaItem.Retorna(i).UnidadeSaida;
-         cdsVendaPrecoUnitario.Text   := FloatToStr(vObjColVendaItem.Retorna(i).ValorUnitario);
-         cdsVendaPrecoTotal.Text      := FloatToStr(vObjColVendaItem.Retorna(i).TotalItem);
-         cdsVenda.Post;
+         for i := 0 to (vObjColVendaItem.Count - 1) do
+         begin
+            edtCodigoVenda.Text          := IntToStr(vObjColVendaItem.Retorna(i).Id_Venda);
+            cdsVenda.Append;
+            cdsVendaCodigo.Text          := IntToStr(vObjColVendaItem.Retorna(i).Id_Produto);
+            cdsVendaQuantidade.Text      := FloatToStr(vObjColVendaItem.Retorna(i).Quantidade);
+            cdsVendaUnidade.Text         := vObjColVendaItem.Retorna(i).UnidadeSaida;
+            cdsVendaPrecoUnitario.Text   := FloatToStr(vObjColVendaItem.Retorna(i).ValorUnitario);
+            cdsVendaPrecoTotal.Text      := FloatToStr(vObjColVendaItem.Retorna(i).TotalItem);
+            cdsVenda.Post;
+         end;
       end;
    end;
 end;
@@ -1261,10 +1282,12 @@ begin
    begin
       if cdsVenda.RecordCount > 0 then
       begin
-        cdsVenda.Delete;
+         cdsVenda.Delete;
       end;
+      ProcessaTotalValor;
    end;
-   ProcessaTotalValor;
+
+
 end;
 
 end.

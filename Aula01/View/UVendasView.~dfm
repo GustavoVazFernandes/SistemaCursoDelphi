@@ -1,5 +1,5 @@
 object frmVendas: TfrmVendas
-  Left = 764
+  Left = 677
   Top = 52
   Width = 575
   Height = 587
@@ -79,6 +79,7 @@ object frmVendas: TfrmVendas
         Height = 21
         EditMask = '00\/00\/0000'
         MaxLength = 10
+        ReadOnly = True
         TabOrder = 0
         Text = '  /  /    '
       end
@@ -95,6 +96,7 @@ object frmVendas: TfrmVendas
         Top = 68
         Width = 409
         Height = 21
+        ReadOnly = True
         TabOrder = 2
       end
       object edtCodigoCliente: TEdit
@@ -167,6 +169,7 @@ object frmVendas: TfrmVendas
         Top = 40
         Width = 121
         Height = 21
+        ReadOnly = True
         TabOrder = 0
       end
     end
