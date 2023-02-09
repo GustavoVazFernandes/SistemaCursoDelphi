@@ -59,13 +59,15 @@ type
     procedure btnAlterarClick(Sender: TObject);
     procedure btnPesquisaClienteClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
-    procedure edtCodigoVendaExit(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure dbgVendaKeyPress(Sender: TObject; var Key: Char);
     procedure edtCodigoClienteKeyPress(Sender: TObject; var Key: Char);
     procedure dbgVendaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtCodigoVendaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+
 
 
 
@@ -236,6 +238,7 @@ begin
         CamposEnabled(True);
         btnPesquisar.Enabled := False;
         btnConsultar.Enabled := False;
+        btnLimpar.Enabled    := True;
 
          if edtCodigoCliente.CanFocus then
             edtCodigoCliente.SetFocus;
@@ -524,6 +527,12 @@ begin
 
       edtCodigoCliente.Text   := IntToStr (vObjCliente.Id);
       edtNome.Text            := vObjCliente.Nome;
+
+      if (vObjVenda = nil) then
+         Exit;
+
+      edtData.Text            := DateToStr(vObjVenda.DataVenda);
+
    end
    else
    begin
@@ -539,6 +548,7 @@ begin
       edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
       edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
       edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
+      edtData.Text            := DateToStr(vObjVenda.DataVenda);
 
 
       if vObjColVendaItem <> nil then
@@ -725,9 +735,9 @@ begin
       if vEstadoTela = etAlterar then
          if ProcessaConsultaCliente = False then
          begin
-            vEstadoTela := etPadrao;
-            DefineEstadoTela;
-            Exit;
+            if edtCodigoCliente.CanFocus then
+               edtCodigoCliente.SetFocus;
+               Exit;
          end;
       ProcessaTotalValor;
       
@@ -1001,7 +1011,7 @@ end;
 function TfrmVendas.ProcessaPesquisaProduto: Boolean;
 begin
    try
-   Result := False;
+      Result := False;
 
       vObjProduto :=
          TProduto(TProdutoController.getInstancia.BuscaProduto(
@@ -1055,14 +1065,6 @@ begin
    Result := True;
 end;
 
-
-procedure TfrmVendas.edtCodigoVendaExit(Sender: TObject);
-begin
-   if vKey = VK_RETURN then
-      ProcessaConsulta;
-
-   vKey := VK_CLEAR;
-end;
 
 function TfrmVendas.ProcessaConsulta: Boolean;
 begin
@@ -1130,6 +1132,7 @@ begin
    edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
    edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
    edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
+   edtData.Text            := DateToStr(vObjVenda.DataVenda);
 
    vObjCliente :=
          TCliente(TPessoaController.getInstancia.BuscaPessoa(
@@ -1304,6 +1307,15 @@ begin
    end;
 
 
+end;
+
+procedure TfrmVendas.edtCodigoVendaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   if vKey = VK_RETURN then
+      ProcessaConsulta;
+
+   vKey := VK_CLEAR;
 end;
 
 end.

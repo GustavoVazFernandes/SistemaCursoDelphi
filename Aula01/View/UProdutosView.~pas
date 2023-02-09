@@ -412,7 +412,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encotrado para o código informado.');
+            'Nenhum produto encontrado para o código informado.');
 
          LimparTela;
 
@@ -675,7 +675,12 @@ end;
 procedure TfrmProdutos.edtCodigoUnidadeExit(Sender: TObject);
 begin
    if vKey = VK_RETURN then
+   begin
       ProcessaConsultaUnidade;
+
+      if edtPreco.CanFocus then
+         edtPreco.SetFocus;
+   end;
 
    vKey := VK_CLEAR;
 end;
@@ -706,7 +711,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhuma unidade de produto encotrado para o código informado.');
+            'Nenhuma unidade de produto encontrado para o código informado.');
 
          LimparTela;
 

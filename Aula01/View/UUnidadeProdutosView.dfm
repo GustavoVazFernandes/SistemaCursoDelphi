@@ -71,7 +71,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Top = 42
       Width = 52
       Height = 21
-      TabOrder = 1
+      TabOrder = 2
     end
     object chkAtivo: TCheckBox
       Left = 128
@@ -79,7 +79,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Width = 97
       Height = 17
       Caption = 'Ativo'
-      TabOrder = 2
+      TabOrder = 1
     end
     object edtDescricao: TEdit
       Left = 196

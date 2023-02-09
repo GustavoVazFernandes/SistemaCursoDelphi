@@ -89,7 +89,7 @@ object frmVendas: TfrmVendas
         Width = 70
         Height = 21
         TabOrder = 1
-        OnExit = edtCodigoVendaExit
+        OnKeyDown = edtCodigoVendaKeyDown
       end
       object edtNome: TEdit
         Left = 136

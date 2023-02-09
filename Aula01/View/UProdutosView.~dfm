@@ -434,6 +434,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       Enabled = False
+      ReadOnly = True
       TabOrder = 4
     end
   end

@@ -438,7 +438,7 @@ object frmClientes: TfrmClientes
       Height = 21
       EditMask = '###\.###\.###\-##;1;'
       MaxLength = 14
-      TabOrder = 3
+      TabOrder = 4
       Text = '   .   .   -  '
     end
     object edtNome: TEdit
@@ -447,7 +447,7 @@ object frmClientes: TfrmClientes
       Width = 553
       Height = 21
       CharCase = ecUpperCase
-      TabOrder = 4
+      TabOrder = 3
     end
     object grbEndereco: TGroupBox
       Left = 16

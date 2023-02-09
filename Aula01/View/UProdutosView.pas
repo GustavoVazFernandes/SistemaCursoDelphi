@@ -677,6 +677,7 @@ begin
    if vKey = VK_RETURN then
       ProcessaConsultaUnidade;
 
+
    vKey := VK_CLEAR;
 end;
 
@@ -701,8 +702,13 @@ begin
 
 
 
-      if (edtCodigoUnidade <> nil) then
-         CarregaDadosUnidade
+      if (vObjUnidadeProdutos <> nil) then
+      begin
+         CarregaDadosUnidade;
+
+         if edtPreco.CanFocus then
+            edtPreco.SetFocus;
+      end
       else
       begin
          TMessageUtil.Alerta(
