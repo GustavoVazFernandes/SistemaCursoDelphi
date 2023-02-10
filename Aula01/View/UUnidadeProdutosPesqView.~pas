@@ -30,14 +30,14 @@ type
     cdsUnidadeProdutosUnidade: TStringField;
     cdsUnidadeProdutosDescricao: TStringField;
     procedure btnSairClick(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
     procedure btnFiltrarClick(Sender: TObject);
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnLimparClick(Sender: TObject);
     procedure cdsUnidadeProdutosBeforeDelete(DataSet: TDataSet);
     procedure dbgUnidadeProdutosDblClick(Sender: TObject);
     procedure dbgUnidadeProdutosKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
 
 
@@ -73,34 +73,6 @@ begin
    Close;
 end;
 
-procedure TfrmUnidadeProdutosPesq.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
- vKey := Key;
-   case vKey of
-      VK_RETURN:
-      begin
-         Perform(WM_NEXTDLGCTL,0,0);
-      end;
-      VK_ESCAPE:
-      begin
-         if TMessageUtil.Pergunta('Deseja sair da rotina?') then
-            LimparTela;
-            Close;
-      end;
-      VK_UP:
-      begin
-         vKey := VK_CLEAR;
-
-         if ActiveControl = dbgUnidadeProdutos then
-            Exit;
-
-         Perform(WM_NEXTDLGCTL,1,0);
-      end;
-
-   end;
-
-end;
 
 procedure TfrmUnidadeProdutosPesq.LimparTela;
 var
@@ -244,5 +216,35 @@ begin
 
 end;
 
+
+procedure TfrmUnidadeProdutosPesq.FormKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+ vKey := Key;
+
+   case vKey of
+      VK_RETURN:
+      begin
+         Perform(WM_NEXTDLGCTL,0,0);
+      end;
+      VK_ESCAPE:
+      begin
+         if TMessageUtil.Pergunta('Deseja sair da rotina?') then
+            LimparTela;
+            Close;
+      end;
+      VK_UP:
+      begin
+         vKey := VK_CLEAR;
+
+         if ActiveControl = dbgUnidadeProdutos then
+            Exit;
+
+         Perform(WM_NEXTDLGCTL,1,0);
+      end;
+
+   end;
+
+end;
 
 end.

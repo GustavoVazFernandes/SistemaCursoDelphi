@@ -10,9 +10,11 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  FormStyle = fsMDIChild
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  Visible = True
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow

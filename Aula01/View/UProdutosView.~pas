@@ -675,12 +675,8 @@ end;
 procedure TfrmProdutos.edtCodigoUnidadeExit(Sender: TObject);
 begin
    if vKey = VK_RETURN then
-   begin
       ProcessaConsultaUnidade;
 
-      if edtPreco.CanFocus then
-         edtPreco.SetFocus;
-   end;
 
    vKey := VK_CLEAR;
 end;
@@ -706,8 +702,13 @@ begin
 
 
 
-      if (edtCodigoUnidade <> nil) then
-         CarregaDadosUnidade
+      if (vObjUnidadeProdutos <> nil) then
+      begin
+         CarregaDadosUnidade;
+
+         if edtPreco.CanFocus then
+            edtPreco.SetFocus;
+      end
       else
       begin
          TMessageUtil.Alerta(

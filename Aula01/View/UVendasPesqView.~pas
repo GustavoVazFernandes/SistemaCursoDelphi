@@ -146,7 +146,7 @@ begin
                 if edtCodigo.CanFocus then
                    edtCodigo.SetFocus;
 
-                TMessageUtil.Alerta('Nenhum cliente encontrado na pesquisa.');
+                TMessageUtil.Alerta('Nenhuma venda encontrado na pesquisa.');
              end
              else
              begin
@@ -163,7 +163,7 @@ begin
       on E: Exception do
       begin
          raise Exception.Create(
-         'Falha ao pesquisar os dados da Pessoa [View]:'#13+
+         'Falha ao pesquisar os dados do Cliente [View]:'#13+
          e.Message);
       end;
    end;

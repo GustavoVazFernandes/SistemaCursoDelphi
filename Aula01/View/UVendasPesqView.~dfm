@@ -1,8 +1,9 @@
 object frmVendaPesq: TfrmVendaPesq
-  Left = 704
-  Top = 166
+  Left = 395
+  Top = 178
   Width = 631
   Height = 310
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Pesquisa de Venda'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,6 +13,7 @@ object frmVendaPesq: TfrmVendaPesq
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poDefault
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13

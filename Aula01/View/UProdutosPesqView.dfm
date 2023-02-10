@@ -1,9 +1,10 @@
 object frmProdutosPesq: TfrmProdutosPesq
   Left = 728
   Top = 266
-  Width = 636
-  Height = 280
+  BorderStyle = bsDialog
   Caption = 'Pesquisa de Produto'
+  ClientHeight = 241
+  ClientWidth = 620
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

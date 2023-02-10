@@ -1,9 +1,10 @@
 object frmClientesPesq: TfrmClientesPesq
   Left = 708
   Top = 54
-  Width = 635
-  Height = 312
+  BorderStyle = bsDialog
   Caption = 'Pesquisa de Cliente'
+  ClientHeight = 273
+  ClientWidth = 619
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

@@ -71,8 +71,8 @@ begin
    try
       Screen.Cursor := crHourGlass;
 
-      if   frmClientes = nil then
-           frmClientes := TfrmClientes.Create(Application);
+      if frmClientes = nil then
+         frmClientes := TfrmClientes.Create(Application);
 
 
       frmClientes.Show;
@@ -86,8 +86,8 @@ begin
    try
       Screen.Cursor := crHourGlass;
 
-      if   frmUnidadeProdutos = nil then
-           frmUnidadeProdutos := TfrmUnidadeProdutos.Create(Application);
+      if frmUnidadeProdutos = nil then
+         frmUnidadeProdutos := TfrmUnidadeProdutos.Create(Application);
 
 
       frmUnidadeProdutos.Show;
@@ -101,8 +101,8 @@ begin
    try
       Screen.Cursor := crHourGlass;
 
-      if   frmProdutos = nil then
-           frmProdutos := TfrmProdutos.Create(Application);
+      if frmProdutos = nil then
+         frmProdutos := TfrmProdutos.Create(Application);
 
 
       frmProdutos.Show;
@@ -116,8 +116,8 @@ begin
    try
       Screen.Cursor := crHourGlass;
 
-      if   frmVendas = nil then
-           frmVendas := TfrmVendas.Create(Application);
+      if frmVendas = nil then
+         frmVendas := TfrmVendas.Create(Application);
 
 
       frmVendas.Show;

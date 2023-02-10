@@ -10,9 +10,11 @@ object frmVendas: TfrmVendas
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  FormStyle = fsMDIChild
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -616,7 +618,7 @@ object frmVendas: TfrmVendas
       end
       item
         Name = 'Quantidade'
-        DataType = ftFloat
+        DataType = ftInteger
       end
       item
         Name = 'PrecoUnitario'

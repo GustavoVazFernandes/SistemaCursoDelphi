@@ -2180,6 +2180,7 @@ object frmNovoSistema: TfrmNovoSistema
       Caption = 'Movimenta'#231#245'es'
       object menVendas: TMenuItem
         Caption = 'Vendas'
+        OnClick = menVendasClick
       end
     end
     object menSair: TMenuItem

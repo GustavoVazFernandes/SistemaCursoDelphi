@@ -1,9 +1,10 @@
 object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
   Left = 743
   Top = 390
-  Width = 636
-  Height = 282
+  BorderStyle = bsDialog
   Caption = 'Pesqusia de Unidade de Produto'
+  ClientHeight = 243
+  ClientWidth = 620
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

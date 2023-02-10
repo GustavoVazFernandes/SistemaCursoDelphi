@@ -1,9 +1,10 @@
 object frmVendaPesq: TfrmVendaPesq
-  Left = 704
-  Top = 166
-  Width = 631
-  Height = 310
+  Left = 395
+  Top = 178
+  BorderStyle = bsDialog
   Caption = 'Pesquisa de Venda'
+  ClientHeight = 271
+  ClientWidth = 615
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,6 +13,7 @@ object frmVendaPesq: TfrmVendaPesq
   Font.Style = []
   KeyPreview = True
   OldCreateOrder = False
+  Position = poScreenCenter
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
