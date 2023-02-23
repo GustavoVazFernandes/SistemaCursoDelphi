@@ -3,6 +3,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
   Top = 403
   Width = 587
   Height = 203
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Cadastro de Unidade de Produtos'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -15,6 +16,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
   OldCreateOrder = False
   Position = poScreenCenter
   Visible = True
+  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnShow = FormShow
@@ -73,6 +75,8 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Top = 42
       Width = 52
       Height = 21
+      CharCase = ecUpperCase
+      MaxLength = 2
       TabOrder = 2
     end
     object chkAtivo: TCheckBox
@@ -89,6 +93,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Width = 365
       Height = 21
       CharCase = ecUpperCase
+      MaxLength = 20
       TabOrder = 3
     end
   end
@@ -154,7 +159,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Width = 75
       Height = 25
       Caption = '&Consultar'
-      TabOrder = 1
+      TabOrder = 3
       OnClick = btnConsultarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -190,7 +195,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Width = 75
       Height = 24
       Caption = '&Alterar'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnAlterarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -226,7 +231,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Width = 75
       Height = 25
       Caption = '&Excluir'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btnExcluirClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100

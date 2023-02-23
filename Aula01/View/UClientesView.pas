@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, ComCtrls, StdCtrls, Mask, Buttons, UEnumerationUtil,
   UCliente, UPessoaController, UEndereco, frxClass, DB, DBClient, frxDBSet,
-  frxExportXLS, frxExportPDF;
+  frxExportXLS, frxExportPDF,UClassFuncoes;
 
 type
   TfrmClientes = class(TForm)
@@ -77,6 +77,7 @@ type
     procedure rdgTipoPessoaClick(Sender: TObject);
 
 
+
   private
     { Private declarations }
     vKey : Word;
@@ -85,6 +86,7 @@ type
     vEstadoTela     :TEstadoTela;
     vObjCliente     :TCliente;
     vObjColEndereco :TColEndereco;
+    vFuncao         :TFuncoes;
 
     procedure CamposEnabled(pOpcao : Boolean);
     procedure LimparTela;
@@ -207,7 +209,7 @@ begin
       // Se o campo for do tipo COMBOBOX
       if (Components[i] is TComboBox) then  // Define o valor igual a -1
       begin
-         (Components[i] as TComboBox).Clear;
+        // (Components[i] as TComboBox).Clear;
          (Components[i] as TComboBox).ItemIndex := -1;
       end;
 
@@ -233,12 +235,17 @@ begin
    btnConsultar.Enabled := (vEstadoTela in [etPadrao]);
    btnListar.Enabled    := (vEstadoTela in [etPadrao]);
    btnPesquisar.Enabled := (vEstadoTela in [etPadrao]);
+   btnSair.Enabled      := (vEstadoTela in [etPadrao]);
 
    btnConfirmar.Enabled :=
-      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar];
+      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar,
+      etListar];
 
    btnCancelar.Enabled :=
-      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar];
+      vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar,
+      etListar];
+
+
 
    case vEstadoTela of
       etPadrao:
@@ -264,6 +271,7 @@ begin
 
          edtCodigo.Enabled := False;
 
+
          chkAtivo.Checked := True;
 
          if edtNome.CanFocus then
@@ -273,7 +281,7 @@ begin
 
       etAlterar:
       begin
-         stbBarraStatus.Panels[0].Text :='Alterando';
+         stbBarraStatus.Panels[0].Text :='Alteração';
 
          if (edtCodigo.Text <> EmptyStr)then
          begin
@@ -299,17 +307,18 @@ begin
 
       etExcluir:
       begin
-         stbBarraStatus.Panels[0].Text  := 'Excluindo';
+         stbBarraStatus.Panels[0].Text  := 'Exclusão';
 
-         if edtCodigo.Text <> EmptyStr then
-            ProcessaExclusao;
+         if edtCodigo.Text = EmptyStr then
             begin
                lblCodigo.Enabled := True;
                edtCodigo.Enabled := True;
 
                if edtCodigo.CanFocus then
                   edtCodigo.SetFocus;
-            end;
+            end
+
+
       end;
 
       etConsultar:
@@ -343,7 +352,7 @@ begin
 
       etPesquisar:
       begin
-         stbBarraStatus.Panels[0].Text := 'Pesquisar';
+         stbBarraStatus.Panels[0].Text := 'Pesquisa';
 
          if frmClientesPesq = nil then
            frmClientesPesq := TfrmClientesPesq.Create(Application);
@@ -371,7 +380,7 @@ begin
 
       etListar:
       begin
-         stbBarraStatus.Panels[0].Text := 'Listar';
+         stbBarraStatus.Panels[0].Text := 'Lista';
 
          if edtCodigo.Text <> EmptyStr then
             ProcessaListagem
@@ -432,12 +441,6 @@ end;
 
 procedure TfrmClientes.btnCancelarClick(Sender: TObject);
 begin
-   vEstadoTela := etPadrao;
-   DefineEstadoTela;
-end;
-
-procedure TfrmClientes.btnSairClick(Sender: TObject);
-begin
    if (vEstadoTela <> etPadrao) then
    begin
       if  TMessageUtil.Pergunta('Deseja sair da operação?') then
@@ -445,8 +448,12 @@ begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
       end
-   end
-   else
+   end;
+
+end;
+
+procedure TfrmClientes.btnSairClick(Sender: TObject);
+begin
    if  TMessageUtil.Pergunta('Deseja sair da rotina?') then
    begin
       vEstadoTela := etPadrao;
@@ -742,6 +749,7 @@ end;
 procedure TfrmClientes.CarregaDadosTela;
 var
    i : Integer;
+   xAux: Integer;
 begin
    if (vObjCliente = nil) then
       Exit;
@@ -760,7 +768,8 @@ begin
          edtNumero.Text      := vObjColEndereco.Retorna(i).Numero;
          edtComplemento.Text := vObjColEndereco.Retorna(i).Complemento;
          edtBairro.Text      := vObjColEndereco.Retorna(i).Bairro;
-         cmbUF.Text          := vObjColEndereco.Retorna(i).UF;
+         xAux := cmbUF.Items.IndexOf(vObjColEndereco.Retorna(i).UF);
+         cmbUF.ItemIndex := xAux;
          edtCidade.Text      := vObjColEndereco.Retorna(i).Cidade;
       end;
    end;
@@ -820,24 +829,21 @@ begin
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados do cliente?')then
 
-            begin
-               Screen.Cursor := crHourGlass;
-               TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
-               TMessageUtil.Informacao('Cliente excluido com sucesso!');
-            end
+         begin
+            Screen.Cursor := crHourGlass;
+            TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
+            TMessageUtil.Informacao('Cliente excluido com sucesso!');
+         end
          else
-            begin
-               LimparTela;
-               vEstadoTela := etPadrao;
-               DefineEstadoTela;
-               Exit;
-            end;
-
+         begin
+            LimparTela;
+            vEstadoTela := etPadrao;
+            DefineEstadoTela;
+            Exit;
+         end;
       finally
          Screen.Cursor := crDefault;
          Application.ProcessMessages;
-
-
       end;
       Result:= True;
 
@@ -1103,6 +1109,5 @@ begin
 
    end;
 end;
-
 
 end.

@@ -1,8 +1,9 @@
 object frmProdutos: TfrmProdutos
-  Left = 726
-  Top = 443
+  Left = 481
+  Top = 201
   Width = 629
   Height = 212
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Cadastro de Produtos'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -418,9 +419,10 @@ object frmProdutos: TfrmProdutos
     object edtPreco: TMaskEdit
       Left = 536
       Top = 16
-      Width = 65
+      Width = 58
       Height = 21
-      TabOrder = 3
+      TabOrder = 4
+      OnExit = edtPrecoExit
     end
     object edtCodigoUnidade: TEdit
       Left = 240
@@ -437,7 +439,7 @@ object frmProdutos: TfrmProdutos
       Height = 21
       Enabled = False
       ReadOnly = True
-      TabOrder = 4
+      TabOrder = 3
     end
   end
 end

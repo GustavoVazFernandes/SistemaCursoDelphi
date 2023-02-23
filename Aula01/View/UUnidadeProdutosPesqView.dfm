@@ -14,6 +14,7 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
@@ -236,6 +237,7 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
       TitleFont.Height = -11
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
+      OnKeyDown = dbgUnidadeProdutosKeyDown
       Columns = <
         item
           Expanded = False

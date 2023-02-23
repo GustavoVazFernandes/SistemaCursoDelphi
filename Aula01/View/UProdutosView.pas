@@ -48,6 +48,7 @@ type
     procedure btnSairClick(Sender: TObject);
     procedure edtCodigoExit(Sender: TObject);
     procedure edtCodigoUnidadeExit(Sender: TObject);
+    procedure edtPrecoExit(Sender: TObject);
   private
     { Private declarations }
     vKey : Word;
@@ -170,6 +171,7 @@ begin
    edtNome.Text            := vObjProduto.Nome;
    edtPreco.Text           := FloatToStr(vObjProduto.PrecoVenda);
    edtTipoUnidade.Text     := vObjProduto.UnidadeSaida;
+   edtCodigoUnidade.Text   := IntToStr(vObjProduto.Id_UnidadeProduto);
 
    edtPreco.Text := FormatFloat('##0.00',vObjProduto.PrecoVenda);
    
@@ -184,6 +186,7 @@ begin
    btnExcluir.Enabled   := (vEstadoTela in [etPadrao]);
    btnConsultar.Enabled := (vEstadoTela in [etPadrao]);
    btnPesquisar.Enabled := (vEstadoTela in [etPadrao]);
+   btnSair.Enabled      := (vEstadoTela in [etPadrao]);
 
    btnConfirmar.Enabled :=
       vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar];
@@ -214,8 +217,14 @@ begin
          CamposEnabled(True);
 
          edtCodigo.Enabled := False;
-
-         if edtNome.CanFocus then
+         edtPreco.Text     := FloatToStr(0);
+         if edtNome.text <> EmptyStr then
+         begin
+            if edtPreco.CanFocus then
+               edtPreco.SetFocus;
+         end
+         else
+         if edtNome.CanFocus  then
             edtNome.SetFocus;
 
       end;
@@ -402,8 +411,6 @@ begin
          TProduto(TProdutoController.getInstancia.BuscaProduto(
             StrToIntDef(edtCodigo.Text, 0)));
 
-
-
       if (vObjProduto <> nil) then
          begin
             CarregaDadosTela;
@@ -463,7 +470,7 @@ begin
       vObjProduto.Nome                := edtNome.Text;
       vObjProduto.PrecoVenda          := StrToFloat(edtPreco.Text);
       vObjProduto.UnidadeSaida        := edtTipoUnidade.Text;
-
+      vObjProduto.Id_UnidadeProduto     := StrToInt(edtCodigoUnidade.Text);
 
       Result := True;
    except
@@ -624,21 +631,18 @@ end;
 
 procedure TfrmProdutos.btnCancelarClick(Sender: TObject);
 begin
-   vEstadoTela := etPadrao;
-   DefineEstadoTela;
-end;
-
-procedure TfrmProdutos.btnSairClick(Sender: TObject);
-begin
-   if (vEstadoTela <> etPadrao) then
+  if (vEstadoTela <> etPadrao) then
    begin
       if  TMessageUtil.Pergunta('Deseja sair da operação?') then
       begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
-      end
-   end
-   else
+      end;
+   end;
+end;
+
+procedure TfrmProdutos.btnSairClick(Sender: TObject);
+begin
    if  TMessageUtil.Pergunta('Deseja sair da rotina?') then
    begin
       vEstadoTela := etPadrao;
@@ -674,11 +678,7 @@ end;
 
 procedure TfrmProdutos.edtCodigoUnidadeExit(Sender: TObject);
 begin
-   if vKey = VK_RETURN then
-      ProcessaConsultaUnidade;
-
-
-   vKey := VK_CLEAR;
+   ProcessaConsultaUnidade;
 end;
 
 function TfrmProdutos.ProcessaConsultaUnidade: Boolean;
@@ -742,6 +742,16 @@ begin
       Exit;
 
    edtTipoUnidade.Text          := vObjUnidadeProdutos.Unidade;
+   edtCodigoUnidade.Text        := IntToStr(vObjUnidadeProdutos.Id);
 end;
+
+procedure TfrmProdutos.edtPrecoExit(Sender: TObject);
+var
+   MyFloat:string;
+begin
+   MyFloat := FormatFloat('#0.00', StrToFloat(edtPreco.Text));
+   edtPreco.Text := MyFloat;
+end;
+
 
 end.

@@ -2,7 +2,8 @@ object frmVendas: TfrmVendas
   Left = 677
   Top = 52
   Width = 575
-  Height = 587
+  Height = 595
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Vendas'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -25,7 +26,7 @@ object frmVendas: TfrmVendas
     Left = 0
     Top = 0
     Width = 559
-    Height = 459
+    Height = 464
     Align = alClient
     TabOrder = 0
     object pnlValores: TPanel
@@ -79,6 +80,7 @@ object frmVendas: TfrmVendas
         Top = 26
         Width = 86
         Height = 21
+        Enabled = False
         EditMask = '00\/00\/0000'
         MaxLength = 10
         ReadOnly = True
@@ -98,15 +100,16 @@ object frmVendas: TfrmVendas
         Top = 68
         Width = 409
         Height = 21
+        Enabled = False
         ReadOnly = True
-        TabOrder = 2
+        TabOrder = 4
       end
       object edtCodigoCliente: TEdit
         Left = 52
         Top = 68
         Width = 53
         Height = 21
-        TabOrder = 3
+        TabOrder = 2
         OnKeyPress = edtCodigoClienteKeyPress
       end
       object btnPesquisaCliente: TBitBtn
@@ -115,7 +118,7 @@ object frmVendas: TfrmVendas
         Width = 23
         Height = 25
         Enabled = False
-        TabOrder = 4
+        TabOrder = 3
         OnClick = btnPesquisaClienteClick
         Glyph.Data = {
           36030000424D3603000000000000360000002800000010000000100000000100
@@ -148,9 +151,9 @@ object frmVendas: TfrmVendas
     end
     object pnlBotoesVenda: TPanel
       Left = 1
-      Top = 383
+      Top = 384
       Width = 557
-      Height = 75
+      Height = 79
       Align = alBottom
       TabOrder = 1
       object lblValorTotal: TLabel
@@ -171,6 +174,7 @@ object frmVendas: TfrmVendas
         Top = 40
         Width = 121
         Height = 21
+        Enabled = False
         ReadOnly = True
         TabOrder = 0
       end
@@ -186,7 +190,7 @@ object frmVendas: TfrmVendas
         Left = 1
         Top = 1
         Width = 555
-        Height = 275
+        Height = 272
         Align = alTop
         Caption = 'Dados dos Produtos'
         TabOrder = 0
@@ -195,7 +199,7 @@ object frmVendas: TfrmVendas
           Left = 0
           Top = 16
           Width = 553
-          Height = 257
+          Height = 280
           DataSource = dtsVendas
           ParentShowHint = False
           ShowHint = False
@@ -218,7 +222,8 @@ object frmVendas: TfrmVendas
               Expanded = False
               FieldName = 'Descricao'
               ReadOnly = True
-              Width = 240
+              Title.Caption = 'Descri'#231#227'o'
+              Width = 228
               Visible = True
             end
             item
@@ -238,12 +243,15 @@ object frmVendas: TfrmVendas
               Expanded = False
               FieldName = 'PrecoUnitario'
               ReadOnly = True
+              Title.Caption = 'Pre'#231'o Unitario'
+              Width = 72
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'PrecoTotal'
               ReadOnly = True
+              Title.Caption = 'Pre'#231'o Total'
               Width = 60
               Visible = True
             end>
@@ -253,9 +261,9 @@ object frmVendas: TfrmVendas
   end
   object pnlBotoes: TPanel
     Left = 0
-    Top = 459
+    Top = 464
     Width = 559
-    Height = 89
+    Height = 73
     Align = alBottom
     TabOrder = 1
     object btnIncluir: TBitBtn
@@ -294,78 +302,6 @@ object frmVendas: TfrmVendas
         45F9FBF9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB7CDB767A567247C3228
         8637288637247C3267A567B7CDB7FFFFFFFFFFFFFFFFFFFFFFFF}
     end
-    object btnAlterar: TBitBtn
-      Left = 12
-      Top = 40
-      Width = 75
-      Height = 24
-      Caption = '&Alterar'
-      TabOrder = 3
-      OnClick = btnAlterarClick
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000C40E0000C40E000000000000000000000A2B95062082
-        C3CBE7C1D6F4E1EBF9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFF8898CA0000584E9FDF4CBFF81467D4556FC6FFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFCCCEE68AADDC
-        C3FFFF95EBFF58D0FD0773D93555BCFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFBDCBEA92BAE5FFFFFF79DFFF0EA4EE0B6DD50E7FE033
-        61C5FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5C7DCF
-        DBFFFF06DFFA00C3FC119EEA1272D70D80E13C6ACBFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFF4A5AC135B9E40AFFFF00D8F600C8FE119CEA12
-        71D60D7FDF3767CBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        2E4CBF3AD2EC12FFFF00D9F600C8FE119CEA1271D50D80DE3D6ECEFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3951C339D4ED12FFFF00D8F600
-        C8FE119CEA1271D50D7FDF386AD1FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFF3451C23AD1EC0CFFFD00D9F600C8FE119CEA126FD50C80DF4277
-        D4FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF3E5AC859F0F607
-        FFFB00D8F600C8FE119CEA1371D60B7FE32562D2FFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFF4866CD67F6F803FFFA00D8F600C8FE0EA9F70052
-        BE6275907399DBFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF51
-        6DD168F8F905FFFA00E6FF00A4E9627992FFFFE97976B8345CD6FFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF4C6CD266FFFF00E9E1639AA3FFFF
-        FC6B6FAA0000DD0D27EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFF4576D780B6BCFFFFFC6D7CAD0000DA0007FF0D26E8FFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5F88E784A6BC0C6C
-        E21458FF0B21EDDCE0FAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-        FFFFFFFFFFFFFFFFFFFFFF427BDB44AFF7378AEEE2E7FCFFFFFF}
-    end
-    object btnExcluir: TBitBtn
-      Left = 93
-      Top = 7
-      Width = 75
-      Height = 25
-      Caption = '&Excluir'
-      TabOrder = 1
-      OnClick = btnExcluirClick
-      Glyph.Data = {
-        36030000424D3603000000000000360000002800000010000000100000000100
-        18000000000000030000C40E0000C40E00000000000000000000FFFFFFFFFFFF
-        9B9699736D70716A6B716A6B716A6B716A6B716A6B716A6B716A6B716A6B706A
-        6D9B9699FFFFFFFFFFFFFFFFFFFFFFFF766B70A2AFA5A2AFA5A2AFA5A2AFA5A2
-        AFA5A2AFA5A2AFA5A2AFA5A2AFA5A2AFA5786D72FFFFFFFFFFFFFFFFFFFFFFFF
-        837B7FC9C5C7008036278E5236945CA9BEAF9BB9A5008036008036008036C9C5
-        C7837B7FFFFFFFFFFFFFFFFFFFC4BFC2A19B9CE8E6E604904248A872E0DFDDE0
-        DFDDE0DFDDE0DFDD64B286049042E8E6E6A19B9CDCD9DBFFFFFFFFFFFFABA4A7
-        C9C5C7F0EEED84D6AF26A863E1E8E3F0EEEDF0EEEDE1E8E317A35984D6AFF0EE
-        EDC9C5C7BFB9BCFFFFFFFFFFFF90878BE8E6E6FCFBF9EDF5F0FCFBF9EDF5F0FC
-        FBF9FCFBF9DDF1E6EDF5F0DFF1E6FCFBF9E8E6E69E969AFFFFFFFFFFFF7E7378
-        FFFEFEFFFEFEFFFEFEFFFEFE0BAF60B3E6CCB3E6CC0BAF60FFFEFEFFFEFEFFFE
-        FEFFFEFE887E82FFFFFFFFFFFF867F83F0EEEDF0EEEDF0EEEDF0EEED23AD6C64
-        B28664B28615A963E0E8E3F0EEEDF0EEEDF0EEED8B8488FFFFFFFFFFFF9F9598
-        DDDCDADDDCDADDDCDADDDCDADDDCDA019750019750DDDCDADDDCDADDDCDADDDC
-        DADDDCDA9F9598FFFFFFFFFFFFAAA2A5CBC8C7CBC8C7CBC8C7CBC8C7CBC8C7CB
-        C8C7CBC8C7CBC8C7CBC8C7CBC8C7CBC8C7CBC8C7AAA2A5FFFFFF176B1C0A791C
-        0A791C0A791C0A791C0A791C0A791C0A791C0A791C0A791C0A791C0A791C0A79
-        1C0A791C0A791C136A171F8B3635C06435C06435C06435C06435C06435C06435
-        C06435C06435C06435C06435C06435C06435C06435C0640D8326229B4541D48E
-        41D48E41D48E41D48E41D48E41D48E41D48E41D48E41D48E41D48E41D48E41D4
-        8E41D48E41D48E0E94372C9A46239E4D1C96461A9040178B3C16873915863815
-        863815863815863816883A178B3C1A90411C96461F9C4B219740FFFFFF55975A
-        096F15086A14086512076311076211076211076211076211076412086713096B
-        14096F1545904BFFFFFFFFFFFFFFFFFF6BAB73378E42167B220A74170A74170A
-        74170A74170A74170A74171B7E2742944C76B17DFFFFFFFFFFFF}
-    end
     object btnConfirmar: TBitBtn
       Left = 394
       Top = 8
@@ -373,7 +309,7 @@ object frmVendas: TfrmVendas
       Height = 25
       Caption = '&Confirmar'
       Enabled = False
-      TabOrder = 7
+      TabOrder = 4
       OnClick = btnConfirmarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -410,7 +346,7 @@ object frmVendas: TfrmVendas
       Height = 25
       Caption = '&Cancelar'
       Enabled = False
-      TabOrder = 8
+      TabOrder = 5
       OnClick = btnCancelarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -477,12 +413,12 @@ object frmVendas: TfrmVendas
         A851CF9D4EC59346B98A40B38139CE9A47DFAB53E8B863E4B25F}
     end
     object btnLimpar: TBitBtn
-      Left = 93
+      Left = 13
       Top = 39
       Width = 75
       Height = 25
       Caption = '&Limpar'
-      TabOrder = 4
+      TabOrder = 2
       OnClick = btnLimparClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -513,12 +449,12 @@ object frmVendas: TfrmVendas
         AF8DC2AA84AA9161A98B5DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     end
     object btnPesquisar: TBitBtn
-      Left = 175
+      Left = 95
       Top = 7
       Width = 75
       Height = 25
       Caption = '&Pesquisar'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnPesquisarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -548,26 +484,13 @@ object frmVendas: TfrmVendas
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFC8B89ACCB89CC6B497C3AF90C2AE90BF
         A780BBA077A890608D652DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     end
-    object stbBarraStatus: TStatusBar
-      Left = 1
-      Top = 69
-      Width = 557
-      Height = 19
-      Panels = <
-        item
-          Width = 100
-        end
-        item
-          Width = 50
-        end>
-    end
     object btnConsultar: TBitBtn
-      Left = 174
+      Left = 94
       Top = 39
       Width = 76
       Height = 25
       Caption = '&Consultar'
-      TabOrder = 5
+      TabOrder = 3
       OnClick = btnConsultarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -598,6 +521,19 @@ object frmVendas: TfrmVendas
         CFCFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
     end
   end
+  object stbBarraStatus: TStatusBar
+    Left = 0
+    Top = 537
+    Width = 559
+    Height = 19
+    Panels = <
+      item
+        Width = 100
+      end
+      item
+        Width = 50
+      end>
+  end
   object cdsVenda: TClientDataSet
     Active = True
     Aggregates = <>
@@ -618,7 +554,7 @@ object frmVendas: TfrmVendas
       end
       item
         Name = 'Quantidade'
-        DataType = ftInteger
+        DataType = ftFloat
       end
       item
         Name = 'PrecoUnitario'

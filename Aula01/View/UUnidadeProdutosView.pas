@@ -40,6 +40,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure edtCodigoExit(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     vKey : Word;
@@ -115,21 +116,18 @@ end;
 
 procedure TfrmUnidadeProdutos.btnCancelarClick(Sender: TObject);
 begin
-   vEstadoTela := etPadrao;
-   DefineEstadoTela;
-end;
-
-procedure TfrmUnidadeProdutos.btnSairClick(Sender: TObject);
-begin
    if (vEstadoTela <> etPadrao) then
    begin
       if  TMessageUtil.Pergunta('Deseja sair da operação?') then
       begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
-      end
-   end
-   else
+      end;
+   end;
+end;
+
+procedure TfrmUnidadeProdutos.btnSairClick(Sender: TObject);
+begin
    if  TMessageUtil.Pergunta('Deseja sair da rotina?') then
    begin
       vEstadoTela := etPadrao;
@@ -171,6 +169,7 @@ begin
    btnExcluir.Enabled   := (vEstadoTela in [etPadrao]);
    btnConsultar.Enabled := (vEstadoTela in [etPadrao]);
    btnPesquisar.Enabled := (vEstadoTela in [etPadrao]);
+   btnSair.Enabled      := (vEstadoTela in [etPadrao]);
 
    btnConfirmar.Enabled :=
       vEstadoTela in [etIncluir, etAlterar, etExcluir, etConsultar, etPesquisar];
@@ -239,8 +238,7 @@ begin
       begin
          stbBarraStatus.Panels[0].Text  := 'Excluindo';
 
-         if edtCodigo.Text <> EmptyStr then
-            ProcessaExclusao;
+         if edtCodigo.Text = EmptyStr then
             begin
                lblCodigo.Enabled := True;
                edtCodigo.Enabled := True;
@@ -659,6 +657,13 @@ begin
       ProcessaConsulta;
 
    vKey := VK_CLEAR;
+end;
+
+procedure TfrmUnidadeProdutos.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   Action := caFree;
+   frmUnidadeProdutos := nil;
 end;
 
 end.

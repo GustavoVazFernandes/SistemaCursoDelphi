@@ -1,8 +1,8 @@
 object frmNovoSistema: TfrmNovoSistema
-  Left = 452
-  Top = 128
-  Width = 583
-  Height = 519
+  Left = 180
+  Top = 53
+  Width = 1041
+  Height = 661
   Caption = 'Novo Sistema'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,9 +21,10 @@ object frmNovoSistema: TfrmNovoSistema
   object imgLogo: TImage
     Left = 0
     Top = 0
-    Width = 567
-    Height = 441
+    Width = 1025
+    Height = 583
     Align = alClient
+    AutoSize = True
     Center = True
     Picture.Data = {
       055449636F6E0000010001008080000001002000280801001600000028000000
@@ -2144,8 +2145,8 @@ object frmNovoSistema: TfrmNovoSistema
   end
   object stbBarraStatus: TStatusBar
     Left = 0
-    Top = 441
-    Width = 567
+    Top = 583
+    Width = 1025
     Height = 19
     Panels = <
       item

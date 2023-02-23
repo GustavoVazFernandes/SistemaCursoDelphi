@@ -44,6 +44,7 @@ type
     procedure dbgClienteKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure BitBtn1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
     
   private
@@ -317,5 +318,11 @@ begin
    end;
 end;
 
+
+procedure TfrmClientesPesq.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   cdsCliente.EmptyDataSet;
+end;
 
 end.

@@ -3,6 +3,7 @@ object frmClientes: TfrmClientes
   Top = 185
   Width = 630
   Height = 404
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Clientes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -541,6 +542,7 @@ object frmClientes: TfrmClientes
         Top = 16
         Width = 513
         Height = 21
+        CharCase = ecUpperCase
         MaxLength = 100
         TabOrder = 0
       end
@@ -557,6 +559,7 @@ object frmClientes: TfrmClientes
         Top = 48
         Width = 361
         Height = 21
+        CharCase = ecUpperCase
         MaxLength = 100
         TabOrder = 2
       end
@@ -565,6 +568,7 @@ object frmClientes: TfrmClientes
         Top = 80
         Width = 513
         Height = 21
+        CharCase = ecUpperCase
         MaxLength = 100
         TabOrder = 3
       end
@@ -573,6 +577,8 @@ object frmClientes: TfrmClientes
         Top = 112
         Width = 49
         Height = 21
+        Style = csDropDownList
+        CharCase = ecUpperCase
         ItemHeight = 13
         MaxLength = 2
         TabOrder = 4
@@ -594,6 +600,7 @@ object frmClientes: TfrmClientes
         Top = 112
         Width = 401
         Height = 21
+        CharCase = ecUpperCase
         MaxLength = 100
         TabOrder = 5
       end

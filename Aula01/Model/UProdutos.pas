@@ -13,16 +13,18 @@ type
          vNome                    : String;
          vPrecoVenda              : Double;
          vUnidadeSaida            : string;
+         vId_UnidadeProduto       : Integer;
 
 
 
       public
          constructor Create;
       published
-         property Id            : Integer read vId            write vId;
-         property Nome          : String  read vNome          write vNome;
-         property PrecoVenda    : Double  read vPrecoVenda    write vPrecoVenda;
-         property UnidadeSaida  : String  read vUnidadeSaida  write vUnidadeSaida;
+         property Id                 : Integer read vId                  write vId;
+         property Nome               : String  read vNome                write vNome;
+         property PrecoVenda         : Double  read vPrecoVenda          write vPrecoVenda;
+         property UnidadeSaida       : String  read vUnidadeSaida        write vUnidadeSaida;
+         property Id_UnidadeProduto  : Integer read vId_UnidadeProduto  write vId_UnidadeProduto;
 
       end;
 
@@ -51,10 +53,11 @@ end;
 
 constructor TProduto.Create;
 begin
-   Self.vId                  :=0;
+   Self.vId                  := 0;
    Self.vNome                := EmptyStr;
    Self.vPrecoVenda          := 0;
    Self.vUnidadeSaida        := EmptyStr;
+   Self.vId_UnidadeProduto     := 0;
 end;
 
 end.

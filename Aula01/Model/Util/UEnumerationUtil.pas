@@ -6,7 +6,8 @@ type
    TEstadoTela =
       (etPadrao, etIncluir, etAlterar, etExcluir, etConsultar, etListar,
        etPesquisarCliente,etPesquisarProduto,etConsultarCliente,
-       etConsultarProduto,etPesquisar,etIncluirDados, etConsultarVenda);
+       etConsultarProduto,etPesquisar,etIncluirDados, etConsultarVenda,
+       etPesquisarUnidade);
 
    TPessoa = (peFisica, peJuridica);
 

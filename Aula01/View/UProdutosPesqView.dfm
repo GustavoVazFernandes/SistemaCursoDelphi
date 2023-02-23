@@ -14,6 +14,7 @@ object frmProdutosPesq: TfrmProdutosPesq
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  OnClose = FormClose
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13

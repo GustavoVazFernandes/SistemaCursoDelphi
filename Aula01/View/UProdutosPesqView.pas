@@ -37,6 +37,7 @@ type
       Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
 
    private
@@ -234,6 +235,12 @@ begin
 
    end;
 
+end;
+
+procedure TfrmProdutosPesq.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   cdsProduto.EmptyDataSet;
 end;
 
 end.

@@ -1,8 +1,9 @@
 object frmProdutos: TfrmProdutos
-  Left = 726
-  Top = 443
+  Left = 481
+  Top = 201
   Width = 629
   Height = 212
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Cadastro de Produtos'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -10,9 +11,11 @@ object frmProdutos: TfrmProdutos
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  FormStyle = fsMDIChild
   KeyPreview = True
   OldCreateOrder = False
   Position = poScreenCenter
+  Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
@@ -418,7 +421,7 @@ object frmProdutos: TfrmProdutos
       Top = 16
       Width = 65
       Height = 21
-      TabOrder = 3
+      TabOrder = 4
     end
     object edtCodigoUnidade: TEdit
       Left = 240
@@ -435,7 +438,7 @@ object frmProdutos: TfrmProdutos
       Height = 21
       Enabled = False
       ReadOnly = True
-      TabOrder = 4
+      TabOrder = 3
     end
   end
 end
