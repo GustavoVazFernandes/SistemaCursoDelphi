@@ -222,7 +222,8 @@ object frmVendas: TfrmVendas
               Expanded = False
               FieldName = 'Descricao'
               ReadOnly = True
-              Width = 240
+              Title.Caption = 'Descri'#231#227'o'
+              Width = 228
               Visible = True
             end
             item
@@ -242,12 +243,15 @@ object frmVendas: TfrmVendas
               Expanded = False
               FieldName = 'PrecoUnitario'
               ReadOnly = True
+              Title.Caption = 'Pre'#231'o Unitario'
+              Width = 72
               Visible = True
             end
             item
               Expanded = False
               FieldName = 'PrecoTotal'
               ReadOnly = True
+              Title.Caption = 'Pre'#231'o Total'
               Width = 60
               Visible = True
             end>

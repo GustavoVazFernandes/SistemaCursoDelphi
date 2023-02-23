@@ -48,6 +48,7 @@ type
     procedure btnSairClick(Sender: TObject);
     procedure edtCodigoExit(Sender: TObject);
     procedure edtCodigoUnidadeExit(Sender: TObject);
+    procedure edtPrecoExit(Sender: TObject);
   private
     { Private declarations }
     vKey : Word;
@@ -216,6 +217,7 @@ begin
          CamposEnabled(True);
 
          edtCodigo.Enabled := False;
+         edtPreco.Text     := FloatToStr(0);
          if edtNome.text <> EmptyStr then
          begin
             if edtPreco.CanFocus then
@@ -742,5 +744,14 @@ begin
    edtTipoUnidade.Text          := vObjUnidadeProdutos.Unidade;
    edtCodigoUnidade.Text        := IntToStr(vObjUnidadeProdutos.Id);
 end;
+
+procedure TfrmProdutos.edtPrecoExit(Sender: TObject);
+var
+   MyFloat:string;
+begin
+   MyFloat := FormatFloat('#0.00', StrToFloat(edtPreco.Text));
+   edtPreco.Text := MyFloat;
+end;
+
 
 end.

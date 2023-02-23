@@ -747,10 +747,10 @@ end;
 
 procedure TfrmProdutos.edtPrecoExit(Sender: TObject);
 var
-   MyFloat:string;
+   xMyFloat:string;
 begin
-   MyFloat := FormatFloat('#0.00', StrToFloat(edtPreco.Text));
-   edtPreco.Text := MyFloat;
+   xMyFloat := FormatFloat('#0.00', StrToFloat(edtPreco.Text));
+   edtPreco.Text := xMyFloat;
 end;
 
 

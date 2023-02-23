@@ -996,7 +996,6 @@ end;
 
 procedure TfrmVendas.dbgVendaKeyPress(Sender: TObject; var Key: Char);
 begin
-
    if (vKey = VK_RETURN) and (dbgVenda.SelectedIndex = 0) then
    begin
       if cdsVendaCodigo.Value = 0 then
@@ -1082,6 +1081,13 @@ end;
 procedure TfrmVendas.dbgVendaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
+   if (vKey = VK_DOWN) and
+      (dbgVenda.DataSource.DataSet.RecNo = dbgVenda.DataSource.DataSet.RecordCount) then
+   begin
+      vKey := VK_CLEAR;
+      cdsVenda.Delete;
+   end;
+
    if vKey = VK_DELETE then
    begin
       if cdsVenda.RecordCount > 0 then
