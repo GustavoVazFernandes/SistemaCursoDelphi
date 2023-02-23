@@ -504,7 +504,7 @@ begin
    end;
 
    if edtCodigoCliente.CanFocus then
-      edtCodigoVenda.SetFocus;
+      edtCodigoCliente.SetFocus;
       
 end;
 
