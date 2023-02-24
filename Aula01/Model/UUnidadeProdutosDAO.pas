@@ -14,8 +14,8 @@ type
          function Atualiza(pUnidadeProdutos : TUnidadeProdutos; pCondicao : String): Boolean ;
          function Retorna (pCondicao: string): TUnidadeProdutos;
          function RetornaLista (pCondicao : string = ''): TColUnidadeProdutos;
-
-end;
+         function RetornaCodigoUnidade(pUnidade: String): Integer;
+  end;
 
 implementation
 
@@ -44,6 +44,43 @@ end;
 function TUnidadeProdutosDAO.Retorna(pCondicao: string): TUnidadeProdutos;
 begin
    Result := TUnidadeProdutos (inherited Retorna(pCondicao));
+end;
+
+function TUnidadeProdutosDAO.RetornaCodigoUnidade(
+  pUnidade: String): Integer;
+var
+  xQuery: TSQLQuery;
+begin
+   pUnidade := Trim(pUnidade);
+
+   if pUnidade = EmptyStr then
+      Exit;
+
+   xQuery := nil;
+   try
+      try
+         xQuery := TSQLQuery.Create(nil);
+         xQuery.SQLConnection := vConexao;
+         
+         xQuery.SQL.Text :=
+            'SELECT ID FROM UNIDADEPRODUTO            '#13+
+            ' WHERE UNIDADEPRODUTO.UNIDADE = :UNIDADE ';
+         xQuery.ParamByName('UNIDADE').AsString := pUnidade;
+
+         xQuery.Open;
+
+         Result := xQuery.ParamByName('ID').Value;
+      except
+         on E: Exception do
+            Raise E;
+      end;
+   finally
+      if xQuery <> nil then
+      begin
+         xQuery.Close;
+         FreeAndNil(xQuery);
+      end;
+   end;
 end;
 
 function TUnidadeProdutosDAO.RetornaLista(

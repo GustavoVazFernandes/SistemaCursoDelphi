@@ -63,6 +63,7 @@ type
       Shift: TShiftState);
     procedure edtCodigoVendaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtValorChange(Sender: TObject);
 
 
   private
@@ -93,6 +94,7 @@ type
     function ProcessaVendaItem  : Boolean;
     function ProcessaVendaDados : Boolean;
     function ProcessaVenda      : Boolean;
+    function ValidaVenda        : Boolean;
 
   public
     { Public declarations }
@@ -387,6 +389,12 @@ begin
       FreeAndNil(vObjColVendaItem);
 
    cdsVenda.EmptyDataSet;
+
+   dbgVenda.SelectedIndex := 0;
+
+   if edtCodigoCliente.CanFocus then
+      edtCodigoCliente.SetFocus;
+
 end;
 
 
@@ -504,7 +512,7 @@ begin
    end;
 
    if edtCodigoCliente.CanFocus then
-      edtCodigoVenda.SetFocus;
+      edtCodigoCliente.SetFocus;
       
 end;
 
@@ -523,19 +531,19 @@ function TfrmVendas.ProcessaConfirmacao: Boolean;
 begin
    Result := False;
 
-try
-   case vEstadoTela of
-      etIncluir: Result         := ProcessaInclusao;
-      etConsultar: Result       := ProcessaConsultaCliente;
-      etConsultarVenda: Result  := ProcessaConsulta;
-   end;
+   try
+      case vEstadoTela of
+         etIncluir: Result         := ProcessaInclusao;
+         etConsultar: Result       := ProcessaConsultaCliente;
+         etConsultarVenda: Result  := ProcessaConsulta;
+      end;
 
-   if not Result then
-      Exit;
-except
-   on E: Exception do
-      TMessageUtil.Alerta(E.Message);
-end;
+      if not Result then
+         Exit;
+   except
+      on E: Exception do
+         TMessageUtil.Alerta(E.Message);
+   end;
 
 
    Result := True;
@@ -549,8 +557,8 @@ begin
 
       if ProcessaVenda then
       begin
-         TMessageUtil.Informacao('Cliente cadastrado com sucesso.'#13+
-         'Código cadastrado: '+ IntToStr(vObjVenda.Id));
+         TMessageUtil.Informacao('Venda cadastrada com sucesso.'#13+
+         'Código da venda cadastrada: '+ IntToStr(vObjVenda.Id));
 
          vEstadoTela:= etPadrao;
          DefineEstadoTela;
@@ -563,7 +571,7 @@ begin
       on E: Exception do
       begin
          raise Exception.Create(
-         'Falha ao incluir os dados do cliente [View]: '#13+
+         'Falha ao incluir os dados da venda [View]: '#13+
          e.Message);
       end;
 
@@ -576,6 +584,10 @@ var
 begin
    try
       Result:= False;
+      if not ValidaVenda then
+         exit;
+
+
       if (ProcessaVendaDados) and
          (ProcessaVendaItem) then
       begin
@@ -650,10 +662,10 @@ begin
       if vObjColVendaItem <> nil then
          FreeAndNil(vObjColVendaItem);
 
-      cdsVenda.First;   
+      cdsVenda.First;
       if cdsVendaCodigo.Value = 0 then
       begin
-         TMessageUtil.Alerta('O seu campo de vendas esta vazio');
+         TMessageUtil.Alerta('Informe ao menos um produto para a venda.');
          if dbgVenda.CanFocus then
             dbgVenda.SetFocus;
 
@@ -741,6 +753,7 @@ begin
 
          Exit;
       end;
+
 
       vObjProduto :=
          TProduto(TProdutoController.getInstancia.BuscaProduto(
@@ -1080,12 +1093,20 @@ end;
 
 procedure TfrmVendas.dbgVendaKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+   xAux : Integer;
 begin
+   xAux := dbgVenda.DataSource.DataSet.RecNo + 1;
    if (vKey = VK_DOWN) and
-      (dbgVenda.DataSource.DataSet.RecNo = dbgVenda.DataSource.DataSet.RecordCount) then
+      (xAux = dbgVenda.DataSource.DataSet.RecordCount) or (vKey = VK_DOWN) and
+        (dbgVenda.DataSource.DataSet.RecNo = dbgVenda.DataSource.DataSet.RecordCount) then
    begin
-      vKey := VK_CLEAR;
-      cdsVenda.Delete;
+      if (cdsVendaDescricao.Value = EmptyStr) then
+      begin
+         vKey := VK_CLEAR;
+         cdsVenda.Delete;
+      end;
+
    end;
 
    if vKey = VK_DELETE then
@@ -1109,5 +1130,29 @@ begin
    vKey := VK_CLEAR;
 end;
 
+
+function TfrmVendas.ValidaVenda: Boolean;
+begin
+   Result := False;
+
+   if edtCodigoCliente.text = EmptyStr then
+     begin
+        TMessageUtil.Alerta('Informe o cliente da venda.');
+        if edtCodigoCliente.CanFocus then
+           edtCodigoCliente.SetFocus;
+        Exit;
+     end;
+
+   cdsVenda.First;
+   if cdsVendaCodigo.Value = 0 then
+   begin
+      TMessageUtil.Alerta('Informe ao menos um produto para a venda.');
+      if dbgVenda.CanFocus then
+         dbgVenda.SetFocus;
+      Exit;
+   end;
+
+   Result:= True;
+end;
 
 end.

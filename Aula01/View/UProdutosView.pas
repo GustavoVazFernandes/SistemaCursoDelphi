@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls, Mask, UProdutos, UProdutosDAO,
   UProdutosController, UEnumerationUtil, UUnidadeProdutos, UUnidadeProdutosDAO,
-  UUnidadeProdutosController, DBCtrls;
+  UUnidadeProdutosController, DBCtrls, Math, Types;
 
 type
   TfrmProdutos = class(TForm)
@@ -74,6 +74,7 @@ type
 
     function ProcessaDadosProdutos   : Boolean;
     function ValidaProdutos          : Boolean;
+    function ValidaPreco             : Boolean;
 
   public
     { Public declarations }
@@ -218,15 +219,17 @@ begin
 
          edtCodigo.Enabled := False;
          edtPreco.Text     := FloatToStr(0);
-         if edtNome.text <> EmptyStr then
+
+         if (edtNome.text <> EmptyStr) or (edtTipoUnidade.Text <> EmptyStr) then
          begin
             if edtPreco.CanFocus then
                edtPreco.SetFocus;
          end
          else
-         if edtNome.CanFocus  then
-            edtNome.SetFocus;
-
+         begin
+            if edtNome.CanFocus  then
+               edtNome.SetFocus;
+         end;
       end;
 
       etAlterar:
@@ -497,36 +500,32 @@ begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
          Exit;
+      end
+      else
+      begin
+         vEstadoTela := etConsultar;
+         DefineEstadoTela;
       end;
 
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados do produto?')then
+         begin
+            Screen.Cursor := crHourGlass;
+            TProdutoController.getInstancia.ExcluiProduto(vObjProduto);
+            TMessageUtil.Informacao('Produto excluido com sucesso!');
 
-            begin
-               Screen.Cursor := crHourGlass;
-               TProdutoController.getInstancia.ExcluiProduto(vObjProduto);
-               TMessageUtil.Informacao('Cliente excluido com sucesso!');
-            end
-         else
-            begin
-               LimparTela;
-               vEstadoTela := etPadrao;
-               DefineEstadoTela;
-               Exit;
-            end;
+            LimparTela;
+            vEstadoTela:= etPadrao;
+            DefineEstadoTela;
+         end;
 
       finally
          Screen.Cursor := crDefault;
          Application.ProcessMessages;
-
-
       end;
       Result:= True;
 
-      LimparTela;
-      vEstadoTela:= etPadrao;
-      DefineEstadoTela;
    except
        on E: Exception do
        begin
@@ -543,6 +542,9 @@ function TfrmProdutos.ProcessaInclusao: Boolean;
 begin
    try
       Result := False;
+
+      if not ValidaPreco then
+         exit;
 
       if ProcessaProdutos then
       begin
@@ -753,5 +755,18 @@ begin
    edtPreco.Text := xMyFloat;
 end;
 
+
+function TfrmProdutos.ValidaPreco: Boolean;
+var
+   xAux : Double;
+begin
+   xAux := 0.0;
+   if CompareValue(StrToFloat(edtPreco.text),xAux,0.01) = EqualsValue then
+   begin
+      TMessageUtil.Alerta('Valor invalido para o produto.');
+      if edtPreco.CanFocus then
+         edtPreco.SetFocus;
+   end;
+end;
 
 end.

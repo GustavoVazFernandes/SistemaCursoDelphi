@@ -1,6 +1,6 @@
 object frmProdutos: TfrmProdutos
-  Left = 481
-  Top = 201
+  Left = 714
+  Top = 389
   Width = 629
   Height = 212
   BorderIcons = [biSystemMenu, biMinimize]

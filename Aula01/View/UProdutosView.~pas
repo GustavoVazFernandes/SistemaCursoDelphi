@@ -218,15 +218,17 @@ begin
 
          edtCodigo.Enabled := False;
          edtPreco.Text     := FloatToStr(0);
-         if edtNome.text <> EmptyStr then
+
+         if (edtNome.text <> EmptyStr) or (edtTipoUnidade.Text <> EmptyStr) then
          begin
             if edtPreco.CanFocus then
                edtPreco.SetFocus;
          end
          else
-         if edtNome.CanFocus  then
-            edtNome.SetFocus;
-
+         begin
+            if edtNome.CanFocus  then
+               edtNome.SetFocus;
+         end;
       end;
 
       etAlterar:
@@ -497,36 +499,32 @@ begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
          Exit;
+      end
+      else
+      begin
+         vEstadoTela := etConsultar;
+         DefineEstadoTela;
       end;
 
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados do produto?')then
+         begin
+            Screen.Cursor := crHourGlass;
+            TProdutoController.getInstancia.ExcluiProduto(vObjProduto);
+            TMessageUtil.Informacao('Produto excluido com sucesso!');
 
-            begin
-               Screen.Cursor := crHourGlass;
-               TProdutoController.getInstancia.ExcluiProduto(vObjProduto);
-               TMessageUtil.Informacao('Cliente excluido com sucesso!');
-            end
-         else
-            begin
-               LimparTela;
-               vEstadoTela := etPadrao;
-               DefineEstadoTela;
-               Exit;
-            end;
+            LimparTela;
+            vEstadoTela:= etPadrao;
+            DefineEstadoTela;
+         end;
 
       finally
          Screen.Cursor := crDefault;
          Application.ProcessMessages;
-
-
       end;
       Result:= True;
 
-      LimparTela;
-      vEstadoTela:= etPadrao;
-      DefineEstadoTela;
    except
        on E: Exception do
        begin
@@ -747,10 +745,10 @@ end;
 
 procedure TfrmProdutos.edtPrecoExit(Sender: TObject);
 var
-   MyFloat:string;
+   xMyFloat:string;
 begin
-   MyFloat := FormatFloat('#0.00', StrToFloat(edtPreco.Text));
-   edtPreco.Text := MyFloat;
+   xMyFloat := FormatFloat('#0.00', StrToFloat(edtPreco.Text));
+   edtPreco.Text := xMyFloat;
 end;
 
 

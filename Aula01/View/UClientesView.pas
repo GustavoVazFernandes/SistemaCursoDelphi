@@ -309,14 +309,15 @@ begin
       begin
          stbBarraStatus.Panels[0].Text  := 'Exclusão';
 
-         if edtCodigo.Text = EmptyStr then
+         if edtCodigo.Text <> EmptyStr then
+            ProcessaExclusao;
             begin
                lblCodigo.Enabled := True;
                edtCodigo.Enabled := True;
 
                if edtCodigo.CanFocus then
                   edtCodigo.SetFocus;
-            end
+            end;
 
 
       end;
@@ -823,6 +824,11 @@ begin
          vEstadoTela := etPadrao;
          DefineEstadoTela;
          Exit;
+      end
+      else
+      begin
+         vEstadoTela := etConsultar;
+         DefineEstadoTela;
       end;
 
       try
@@ -833,13 +839,10 @@ begin
             Screen.Cursor := crHourGlass;
             TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
             TMessageUtil.Informacao('Cliente excluido com sucesso!');
-         end
-         else
-         begin
+
             LimparTela;
-            vEstadoTela := etPadrao;
+            vEstadoTela:= etPadrao;
             DefineEstadoTela;
-            Exit;
          end;
       finally
          Screen.Cursor := crDefault;
@@ -847,9 +850,7 @@ begin
       end;
       Result:= True;
 
-      LimparTela;
-      vEstadoTela:= etPadrao;
-      DefineEstadoTela;
+
    except
        on E: Exception do
        begin
@@ -1109,5 +1110,7 @@ begin
 
    end;
 end;
+
+
 
 end.

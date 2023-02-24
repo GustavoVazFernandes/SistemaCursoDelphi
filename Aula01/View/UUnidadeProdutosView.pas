@@ -238,7 +238,8 @@ begin
       begin
          stbBarraStatus.Panels[0].Text  := 'Excluindo';
 
-         if edtCodigo.Text = EmptyStr then
+         if edtCodigo.Text <> EmptyStr then
+            ProcessaExclusao;
             begin
                lblCodigo.Enabled := True;
                edtCodigo.Enabled := True;
@@ -440,36 +441,31 @@ begin
          Exit;
       end;
 
+
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados da unidade de produto?')then
+         begin
+            Screen.Cursor := crHourGlass;
+            TUnidadeProdutosController.getInstancia.
+               ExcluiUnidadeProdutos(vObjUnidadeProdutos);
+            TMessageUtil.Informacao('Unidade de produto excluido com sucesso!');
 
-            begin
-               Screen.Cursor := crHourGlass;
-               TUnidadeProdutosController.getInstancia.
-                  ExcluiUnidadeProdutos(vObjUnidadeProdutos);
-               TMessageUtil.Informacao(
-                  'Unidade de produto excluido com sucesso!');
-            end
+            LimparTela;
+            vEstadoTela:= etPadrao;
+            DefineEstadoTela;
+         end
          else
-            begin
-               LimparTela;
-               vEstadoTela := etPadrao;
-               DefineEstadoTela;
-               Exit;
-            end;
-
+         begin
+            vEstadoTela := etConsultar;
+            DefineEstadoTela;
+         end;
       finally
          Screen.Cursor := crDefault;
          Application.ProcessMessages;
-
-
       end;
       Result:= True;
 
-      LimparTela;
-      vEstadoTela:= etPadrao;
-      DefineEstadoTela;
    except
        on E: Exception do
        begin

@@ -3,6 +3,7 @@ object frmClientes: TfrmClientes
   Top = 185
   Width = 630
   Height = 404
+  BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Clientes'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
