@@ -378,22 +378,22 @@ object frmClientes: TfrmClientes
     Align = alClient
     TabOrder = 2
     object lblCodigo: TLabel
-      Left = 16
-      Top = 24
+      Left = 15
+      Top = 20
       Width = 33
       Height = 13
       Caption = 'Codigo'
     end
     object lblCpfCNPJ: TLabel
-      Left = 418
-      Top = 20
+      Left = 420
+      Top = 17
       Width = 52
       Height = 13
       Caption = 'CPF/CNPJ'
     end
     object lblNome: TLabel
-      Left = 16
-      Top = 64
+      Left = 15
+      Top = 60
       Width = 33
       Height = 13
       Caption = 'Nome'
@@ -460,8 +460,8 @@ object frmClientes: TfrmClientes
       Caption = 'Endere'#231'o'
       TabOrder = 5
       object lblEndereco: TLabel
-        Left = 8
-        Top = 24
+        Left = 5
+        Top = 21
         Width = 55
         Height = 13
         Caption = 'Endere'#231'o'
@@ -473,8 +473,8 @@ object frmClientes: TfrmClientes
         ParentFont = False
       end
       object lblNumero: TLabel
-        Left = 10
-        Top = 56
+        Left = 7
+        Top = 53
         Width = 44
         Height = 13
         Caption = 'Numero'
@@ -486,8 +486,8 @@ object frmClientes: TfrmClientes
         ParentFont = False
       end
       object lblComplemento: TLabel
-        Left = 135
-        Top = 54
+        Left = 144
+        Top = 52
         Width = 64
         Height = 13
         Caption = 'Complemento'
@@ -499,8 +499,8 @@ object frmClientes: TfrmClientes
         ParentFont = False
       end
       object lblBairro: TLabel
-        Left = 10
-        Top = 88
+        Left = 7
+        Top = 85
         Width = 34
         Height = 13
         Caption = 'Bairro'
@@ -512,8 +512,8 @@ object frmClientes: TfrmClientes
         ParentFont = False
       end
       object lblUF: TLabel
-        Left = 11
-        Top = 120
+        Left = 8
+        Top = 117
         Width = 17
         Height = 13
         Caption = 'UF'
@@ -525,8 +525,8 @@ object frmClientes: TfrmClientes
         ParentFont = False
       end
       object lblCidade: TLabel
-        Left = 128
-        Top = 118
+        Left = 132
+        Top = 116
         Width = 40
         Height = 13
         Caption = 'Cidade'

@@ -441,6 +441,7 @@ begin
          Exit;
       end;
 
+
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados da unidade de produto?')then
@@ -452,6 +453,11 @@ begin
 
             LimparTela;
             vEstadoTela:= etPadrao;
+            DefineEstadoTela;
+         end
+         else
+         begin
+            vEstadoTela := etConsultar;
             DefineEstadoTela;
          end;
       finally

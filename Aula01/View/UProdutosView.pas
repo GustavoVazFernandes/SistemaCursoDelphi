@@ -27,10 +27,10 @@ type
     btnSair: TBitBtn;
     lblPreco: TLabel;
     lblCodigoUnidade: TLabel;
-    edtPreco: TMaskEdit;
     edtCodigoUnidade: TEdit;
     lblTipoUnidade: TLabel;
     edtTipoUnidade: TEdit;
+    edtPreco: TEdit;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -258,8 +258,9 @@ begin
       begin
          stbBarraStatus.Panels[0].Text  := 'Excluindo';
 
-         if edtCodigo.Text <> EmptyStr then
+         if (edtCodigo.Text <> EmptyStr)  then
             ProcessaExclusao;
+         if (edtCodigo.Text = EmptyStr) then
             begin
                lblCodigo.Enabled := True;
                edtCodigo.Enabled := True;
@@ -267,6 +268,15 @@ begin
                if edtCodigo.CanFocus then
                   edtCodigo.SetFocus;
             end;
+
+         if (edtCodigo.Text <> EmptyStr) and (edtNome.Text <> EmptyStr) then
+         begin
+            edtCodigo.Enabled := False;
+
+            if btnExcluir.CanFocus then
+               btnExcluir.SetFocus;
+         end;
+
       end;
 
       etConsultar:
@@ -451,7 +461,7 @@ begin
    try
       Result := False;
 
-      if not ValidaProdutos then
+      if not ValidaProdutos = True then
          Exit;
 
 
@@ -543,8 +553,8 @@ begin
    try
       Result := False;
 
-      if not ValidaPreco then
-         exit;
+      if ValidaPreco = True then
+         Exit;
 
       if ProcessaProdutos then
       begin
@@ -760,13 +770,30 @@ function TfrmProdutos.ValidaPreco: Boolean;
 var
    xAux : Double;
 begin
+   Result:= False;
+
+   if edtPreco.Text = EmptyStr then
+   begin
+      TMessageUtil.Alerta('Informe o preço do produto.');
+
+      if edtPreco.CanFocus then
+         edtPreco.SetFocus;
+
+      Result:= True;
+
+      Exit;
+   end;
+
    xAux := 0.0;
    if CompareValue(StrToFloat(edtPreco.text),xAux,0.01) = EqualsValue then
    begin
-      TMessageUtil.Alerta('Valor invalido para o produto.');
+      TMessageUtil.Alerta('O preço do produto não pode ser zero.');
       if edtPreco.CanFocus then
          edtPreco.SetFocus;
+
+      Result:= True;
    end;
+
 end;
 
 end.

@@ -179,7 +179,6 @@ object frmVendas: TfrmVendas
         ParentBiDiMode = False
         ReadOnly = True
         TabOrder = 0
-        OnChange = edtValorChange
       end
     end
     object pnlProdutos: TPanel

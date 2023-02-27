@@ -423,7 +423,8 @@ begin
          TMessageUtil.Alerta(
             'Nenhum cliente encontrado para o código informado.');
 
-         LimparTela;
+         edtCodigoCliente.Text := EmptyStr;
+         edtNome.Text := EmptyStr;
 
          if (edtCodigoCliente.CanFocus) then
              edtCodigoCliente.SetFocus;
@@ -516,6 +517,12 @@ end;
 
 procedure TfrmVendas.btnConfirmarClick(Sender: TObject);
 begin
+   if ProcessaConsultaCliente = False then
+      Exit;
+
+   if ProcessaPesquisaProduto = False then
+      Exit;
+
    ProcessaConfirmacao;
 end;
 
@@ -1152,5 +1159,6 @@ begin
 
    Result:= True;
 end;
+
 
 end.

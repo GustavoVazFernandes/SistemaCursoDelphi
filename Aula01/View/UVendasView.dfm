@@ -157,7 +157,7 @@ object frmVendas: TfrmVendas
       Align = alBottom
       TabOrder = 1
       object lblValorTotal: TLabel
-        Left = 424
+        Left = 405
         Top = 8
         Width = 129
         Height = 29
@@ -170,7 +170,7 @@ object frmVendas: TfrmVendas
         ParentFont = False
       end
       object edtValor: TEdit
-        Left = 429
+        Left = 410
         Top = 40
         Width = 121
         Height = 21
@@ -198,7 +198,7 @@ object frmVendas: TfrmVendas
         TabOrder = 0
         object dbgVenda: TDBGrid
           Tag = 9
-          Left = 0
+          Left = 8
           Top = 16
           Width = 553
           Height = 280

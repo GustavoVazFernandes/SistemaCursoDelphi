@@ -416,14 +416,6 @@ object frmProdutos: TfrmProdutos
           A851CF9D4EC59346B98A40B38139CE9A47DFAB53E8B863E4B25F}
       end
     end
-    object edtPreco: TMaskEdit
-      Left = 536
-      Top = 16
-      Width = 58
-      Height = 21
-      TabOrder = 4
-      OnExit = edtPrecoExit
-    end
     object edtCodigoUnidade: TEdit
       Left = 240
       Top = 16
@@ -440,6 +432,14 @@ object frmProdutos: TfrmProdutos
       Enabled = False
       ReadOnly = True
       TabOrder = 3
+    end
+    object edtPreco: TEdit
+      Left = 528
+      Top = 16
+      Width = 57
+      Height = 21
+      ReadOnly = True
+      TabOrder = 4
     end
   end
 end
