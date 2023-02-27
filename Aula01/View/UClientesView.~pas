@@ -321,7 +321,13 @@ begin
             end;
 
          if (edtCodigo.Text <> EmptyStr) and (edtNome.Text <> EmptyStr) then
+         begin
             edtCodigo.Enabled := False;
+
+            if btnExcluir.CanFocus then
+               btnExcluir.SetFocus;
+         end;
+
 
 
       end;

@@ -259,23 +259,18 @@ begin
          stbBarraStatus.Panels[0].Text  := 'Excluindo';
 
          if (edtCodigo.Text <> EmptyStr)  then
-            ProcessaExclusao;
-         if (edtCodigo.Text = EmptyStr) then
-            begin
-               lblCodigo.Enabled := True;
-               edtCodigo.Enabled := True;
-
-               if edtCodigo.CanFocus then
-                  edtCodigo.SetFocus;
-            end;
-
-         if (edtCodigo.Text <> EmptyStr) and (edtNome.Text <> EmptyStr) then
          begin
-            edtCodigo.Enabled := False;
+            ProcessaExclusao;
+         end
+         else
+         begin
+            lblCodigo.Enabled := True;
+            edtCodigo.Enabled := True;
 
-            if btnExcluir.CanFocus then
-               btnExcluir.SetFocus;
+            if edtCodigo.CanFocus then
+               edtCodigo.SetFocus;
          end;
+
 
       end;
 
@@ -553,8 +548,7 @@ begin
    try
       Result := False;
 
-      if ValidaPreco = True then
-         Exit;
+
 
       if ProcessaProdutos then
       begin
@@ -638,6 +632,9 @@ end;
 
 procedure TfrmProdutos.btnConfirmarClick(Sender: TObject);
 begin
+   if ValidaPreco = True then
+         Exit;
+
    ProcessaConfirmacao;
 end;
 
@@ -726,7 +723,7 @@ begin
          TMessageUtil.Alerta(
             'Nenhuma unidade de produto encontrado para o código informado.');
 
-         LimparTela;
+         edtCodigoUnidade.Text := EmptyStr;
 
          if (edtCodigoUnidade.CanFocus) then
              edtCodigoUnidade.SetFocus;
@@ -772,7 +769,7 @@ var
 begin
    Result:= False;
 
-   if edtPreco.Text = EmptyStr then
+   if Trim(edtPreco.Text) = EmptyStr then
    begin
       TMessageUtil.Alerta('Informe o preço do produto.');
 

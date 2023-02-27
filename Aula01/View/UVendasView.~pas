@@ -92,7 +92,6 @@ type
     function ProcessaVendaItem  : Boolean;
     function ProcessaVendaDados : Boolean;
     function ProcessaVenda      : Boolean;
-    function ValidaVenda        : Boolean;
 
   public
     { Public declarations }
@@ -423,7 +422,8 @@ begin
          TMessageUtil.Alerta(
             'Nenhum cliente encontrado para o código informado.');
 
-         LimparTela;
+         edtCodigoCliente.Text := EmptyStr;
+         edtNome.Text := EmptyStr;
 
          if (edtCodigoCliente.CanFocus) then
              edtCodigoCliente.SetFocus;
@@ -515,7 +515,22 @@ begin
 end;
 
 procedure TfrmVendas.btnConfirmarClick(Sender: TObject);
+var
+   i : Integer;
 begin
+   if ProcessaConsultaCliente = False then
+      Exit;
+   for i := 0 to dbgVenda.DataSource.DataSet.RecordCount - 1 do
+   begin
+      dbgVenda.DataSource.DataSet.RecNo := i + 1;
+      if ProcessaPesquisaProduto = False then
+      begin
+         dbgVenda.SelectedIndex := 0;
+
+         Exit;
+      end;
+   end;
+
    ProcessaConfirmacao;
 end;
 
@@ -582,9 +597,6 @@ var
 begin
    try
       Result:= False;
-      if not ValidaVenda then
-         exit;
-
 
       if (ProcessaVendaDados) and
          (ProcessaVendaItem) then
@@ -852,7 +864,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encontrado para o código informado.');
+            'Produto não encontrado para o codigo informado.');
 
          Exit;
       end;
@@ -1128,29 +1140,5 @@ begin
    vKey := VK_CLEAR;
 end;
 
-
-function TfrmVendas.ValidaVenda: Boolean;
-begin
-   Result := False;
-
-   if edtCodigoCliente.text = EmptyStr then
-     begin
-        TMessageUtil.Alerta('Informe o cliente da venda.');
-        if edtCodigoCliente.CanFocus then
-           edtCodigoCliente.SetFocus;
-        Exit;
-     end;
-
-   cdsVenda.First;
-   if cdsVendaCodigo.Value = 0 then
-   begin
-      TMessageUtil.Alerta('Informe ao menos um produto para a venda.');
-      if dbgVenda.CanFocus then
-         dbgVenda.SetFocus;
-      Exit;
-   end;
-
-   Result:= True;
-end;
 
 end.

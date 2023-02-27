@@ -92,7 +92,6 @@ type
     function ProcessaVendaItem  : Boolean;
     function ProcessaVendaDados : Boolean;
     function ProcessaVenda      : Boolean;
-    function ValidaVenda        : Boolean;
 
   public
     { Public declarations }
@@ -516,12 +515,21 @@ begin
 end;
 
 procedure TfrmVendas.btnConfirmarClick(Sender: TObject);
+var
+   i : Integer;
 begin
    if ProcessaConsultaCliente = False then
       Exit;
+   for i := 0 to dbgVenda.DataSource.DataSet.RecordCount - 1 do
+   begin
+      dbgVenda.DataSource.DataSet.RecNo := i + 1;
+      if ProcessaPesquisaProduto = False then
+      begin
+         dbgVenda.SelectedIndex := 0;
 
-   if ProcessaPesquisaProduto = False then
-      Exit;
+         Exit;
+      end;
+   end;
 
    ProcessaConfirmacao;
 end;
@@ -589,9 +597,6 @@ var
 begin
    try
       Result:= False;
-      if not ValidaVenda then
-         exit;
-
 
       if (ProcessaVendaDados) and
          (ProcessaVendaItem) then
@@ -768,7 +773,8 @@ begin
          if cdsVenda.RecordCount = 0 then
          begin
             cdsVenda.Append;
-            cdsVendaQuantidade.Value := 1;
+            if cdsVendaUnidade.Text = EmptyStr then
+               cdsVendaQuantidade.Value := 1;
             cdsVendaDescricao.Value            := vObjProduto.Nome;
             cdsVendaCodigo.Value               := vObjProduto.Id;
             cdsVendaPrecoUnitario.Value        := vObjProduto.PrecoVenda;
@@ -780,7 +786,8 @@ begin
          else
          begin
             cdsVenda.Edit;
-            cdsVendaQuantidade.Value := 1;
+            if cdsVendaUnidade.Text = EmptyStr then
+               cdsVendaQuantidade.Value := 1;
             cdsVendaDescricao.Value            := vObjProduto.Nome;
             cdsVendaCodigo.Value               := vObjProduto.Id;
             cdsVendaPrecoUnitario.Value        := vObjProduto.PrecoVenda;
@@ -828,7 +835,8 @@ begin
       Exit;
 
    cdsVenda.Edit;
-   cdsVendaQuantidade.Value           := 1;
+   if cdsVendaUnidade.Text = EmptyStr then
+      cdsVendaQuantidade.Value           := 1;
    cdsVendaDescricao.Value            := vObjProduto.Nome;
    cdsVendaCodigo.Value               := vObjProduto.Id;
    cdsVendaPrecoUnitario.Value        := vObjProduto.PrecoVenda;
@@ -859,7 +867,7 @@ begin
       else
       begin
          TMessageUtil.Alerta(
-            'Nenhum produto encontrado para o código informado.');
+            'Produto não encontrado para o codigo informado.');
 
          Exit;
       end;
@@ -1133,31 +1141,6 @@ begin
       ProcessaConsulta;
 
    vKey := VK_CLEAR;
-end;
-
-
-function TfrmVendas.ValidaVenda: Boolean;
-begin
-   Result := False;
-
-   if edtCodigoCliente.text = EmptyStr then
-     begin
-        TMessageUtil.Alerta('Informe o cliente da venda.');
-        if edtCodigoCliente.CanFocus then
-           edtCodigoCliente.SetFocus;
-        Exit;
-     end;
-
-   cdsVenda.First;
-   if cdsVendaCodigo.Value = 0 then
-   begin
-      TMessageUtil.Alerta('Informe ao menos um produto para a venda.');
-      if dbgVenda.CanFocus then
-         dbgVenda.SetFocus;
-      Exit;
-   end;
-
-   Result:= True;
 end;
 
 

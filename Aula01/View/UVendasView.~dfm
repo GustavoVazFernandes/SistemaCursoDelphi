@@ -1,8 +1,8 @@
 object frmVendas: TfrmVendas
   Left = 677
-  Top = 52
+  Top = 51
   Width = 575
-  Height = 595
+  Height = 596
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Vendas'
   Color = clBtnFace
@@ -26,7 +26,7 @@ object frmVendas: TfrmVendas
     Left = 0
     Top = 0
     Width = 559
-    Height = 464
+    Height = 465
     Align = alClient
     TabOrder = 0
     object pnlValores: TPanel
@@ -151,13 +151,13 @@ object frmVendas: TfrmVendas
     end
     object pnlBotoesVenda: TPanel
       Left = 1
-      Top = 384
+      Top = 385
       Width = 557
       Height = 79
       Align = alBottom
       TabOrder = 1
       object lblValorTotal: TLabel
-        Left = 424
+        Left = 405
         Top = 8
         Width = 129
         Height = 29
@@ -170,7 +170,7 @@ object frmVendas: TfrmVendas
         ParentFont = False
       end
       object edtValor: TEdit
-        Left = 429
+        Left = 410
         Top = 40
         Width = 121
         Height = 21
@@ -185,7 +185,7 @@ object frmVendas: TfrmVendas
       Left = 1
       Top = 105
       Width = 557
-      Height = 280
+      Height = 272
       Align = alTop
       TabOrder = 2
       object grbGrid: TGroupBox
@@ -201,7 +201,7 @@ object frmVendas: TfrmVendas
           Left = 0
           Top = 16
           Width = 553
-          Height = 280
+          Height = 249
           DataSource = dtsVendas
           ParentShowHint = False
           ShowHint = False
@@ -263,7 +263,7 @@ object frmVendas: TfrmVendas
   end
   object pnlBotoes: TPanel
     Left = 0
-    Top = 464
+    Top = 465
     Width = 559
     Height = 73
     Align = alBottom
@@ -525,7 +525,7 @@ object frmVendas: TfrmVendas
   end
   object stbBarraStatus: TStatusBar
     Left = 0
-    Top = 537
+    Top = 538
     Width = 559
     Height = 19
     Panels = <
