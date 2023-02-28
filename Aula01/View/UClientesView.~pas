@@ -310,24 +310,17 @@ begin
          stbBarraStatus.Panels[0].Text  := 'Exclusão';
 
          if (edtCodigo.Text <> EmptyStr)  then
-            ProcessaExclusao;
-         if (edtCodigo.Text = EmptyStr) then
-            begin
-               lblCodigo.Enabled := True;
-               edtCodigo.Enabled := True;
-
-               if edtCodigo.CanFocus then
-                  edtCodigo.SetFocus;
-            end;
-
-         if (edtCodigo.Text <> EmptyStr) and (edtNome.Text <> EmptyStr) then
          begin
-            edtCodigo.Enabled := False;
+            ProcessaExclusao;
+         end
+         else
+         begin
+            lblCodigo.Enabled := True;
+            edtCodigo.Enabled := True;
 
-            if btnExcluir.CanFocus then
-               btnExcluir.SetFocus;
+            if edtCodigo.CanFocus then
+               edtCodigo.SetFocus;
          end;
-
 
 
       end;

@@ -1,10 +1,11 @@
 object frmVendas: TfrmVendas
   Left = 677
   Top = 51
-  Width = 575
-  Height = 596
   BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Vendas'
+  ClientHeight = 557
+  ClientWidth = 559
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

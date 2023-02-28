@@ -723,7 +723,7 @@ begin
          TMessageUtil.Alerta(
             'Nenhuma unidade de produto encontrado para o código informado.');
 
-         LimparTela;
+         edtCodigoUnidade.Text := EmptyStr;
 
          if (edtCodigoUnidade.CanFocus) then
              edtCodigoUnidade.SetFocus;
@@ -769,7 +769,7 @@ var
 begin
    Result:= False;
 
-   if edtPreco.Text = EmptyStr then
+   if Trim(edtPreco.Text) = EmptyStr then
    begin
       TMessageUtil.Alerta('Informe o preço do produto.');
 

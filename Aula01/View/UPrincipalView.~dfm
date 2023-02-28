@@ -1,9 +1,10 @@
 object frmNovoSistema: TfrmNovoSistema
   Left = 180
   Top = 53
-  Width = 1041
-  Height = 661
+  BorderStyle = bsSingle
   Caption = 'Novo Sistema'
+  ClientHeight = 602
+  ClientWidth = 1025
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
