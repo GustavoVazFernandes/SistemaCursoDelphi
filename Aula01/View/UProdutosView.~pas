@@ -47,8 +47,10 @@ type
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
     procedure edtCodigoExit(Sender: TObject);
-    procedure edtCodigoUnidadeExit(Sender: TObject);
     procedure edtPrecoExit(Sender: TObject);
+    procedure edtCodigoUnidadeKeyPress(Sender: TObject; var Key: Char);
+    procedure edtPrecoKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCodigoKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     vKey : Word;
@@ -86,7 +88,7 @@ var
 implementation
 
 uses
-   uMessageUtil, UProdutosPesqView;
+   uMessageUtil, UProdutosPesqView, UUnidadeProdutosPesqView;
 
 {$R *.dfm}
 
@@ -330,6 +332,39 @@ begin
          if edtNome.CanFocus then
             edtNome.SetFocus;
       end;
+
+      etPesquisarUnidade:
+      begin
+         stbBarraStatus.Panels[0].Text := 'Pesquisar';
+
+         if frmUnidadeProdutosPesq = nil then
+           frmUnidadeProdutosPesq := TfrmUnidadeProdutosPesq.Create(Application);
+
+         frmUnidadeProdutosPesq.ShowModal;
+
+         if  frmUnidadeProdutosPesq.mUnidadeProdutosID <> 0 then
+         begin
+            edtCodigoUnidade.Text := IntToStr(frmUnidadeProdutosPesq.mUnidadeProdutosID);
+            vEstadoTela := etIncluir;
+            ProcessaConsultaUnidade;
+
+            if edtPreco.CanFocus then
+               edtPreco.SetFocus;
+         end
+         else
+         begin
+            vEstadoTela := etIncluir;
+            DefineEstadoTela;
+            if edtCodigoUnidade.CanFocus then
+               edtCodigoUnidade.SetFocus;
+         end;
+
+         frmUnidadeProdutosPesq.mUnidadeProdutosID := 0;
+         frmUnidadeProdutosPesq.mUnidadeProdutosDescricao := EmptyStr;
+
+
+      end;
+
    end;
 end;
 procedure TfrmProdutos.LimparTela;
@@ -660,13 +695,6 @@ begin
    end;
 end;
 
-procedure TfrmProdutos.edtCodigoExit(Sender: TObject);
-begin
-   if vKey = VK_RETURN then
-      ProcessaConsulta;
-
-   vKey := VK_CLEAR;
-end;
 
 function TfrmProdutos.ValidaProdutos: Boolean;
 begin
@@ -685,10 +713,6 @@ begin
     Result := True;
 end;
 
-procedure TfrmProdutos.edtCodigoUnidadeExit(Sender: TObject);
-begin
-   ProcessaConsultaUnidade;
-end;
 
 function TfrmProdutos.ProcessaConsultaUnidade: Boolean;
 begin
@@ -697,7 +721,7 @@ begin
 
       if (edtCodigoUnidade.Text = EmptyStr) then
       begin
-         TMessageUtil.Alerta('Codigo da unidade de  produto não preenchido.');
+         TMessageUtil.Alerta('Codigo da unidade de produto não preenchido.');
 
          if edtCodigoUnidade.CanFocus then
             edtCodigoUnidade.SetFocus;
@@ -791,6 +815,51 @@ begin
       Result:= True;
    end;
 
+end;
+
+procedure TfrmProdutos.edtCodigoUnidadeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+   if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
+   Key := #0;
+
+   if vKey = VK_RETURN then
+      if edtCodigoUnidade.Text = EmptyStr then
+      begin
+         vEstadoTela := etPesquisarUnidade;
+         DefineEstadoTela;
+      end
+      else
+      begin
+         ProcessaConsultaUnidade;
+         if edtCodigoUnidade.Text <> EmptyStr then
+         begin
+            if edtPreco.CanFocus then
+               edtPreco.SetFocus;
+         end;
+      end;
+
+   vKey := VK_CLEAR;
+
+
+end;
+
+procedure TfrmProdutos.edtPrecoKeyPress(Sender: TObject; var Key: Char);
+begin
+   if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
+   Key := #0;
+end;
+
+procedure TfrmProdutos.edtCodigoKeyPress(Sender: TObject; var Key: Char);
+begin
+   if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
+   Key := #0;
+
+   if vKey = VK_RETURN then
+      ProcessaConsulta;
+
+   vKey := VK_CLEAR;
+   
 end;
 
 end.

@@ -412,6 +412,7 @@ object frmClientes: TfrmClientes
       Height = 21
       TabOrder = 0
       OnExit = edtCodigoExit
+      OnKeyPress = edtCodigoKeyPress
     end
     object chkAtivo: TCheckBox
       Left = 168
@@ -554,6 +555,7 @@ object frmClientes: TfrmClientes
         Height = 21
         MaxLength = 20
         TabOrder = 1
+        OnKeyPress = edtNumeroKeyPress
       end
       object edtComplemento: TEdit
         Left = 216

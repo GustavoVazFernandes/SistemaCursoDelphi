@@ -109,7 +109,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       TabOrder = 0
-      OnExit = edtCodigoExit
+      OnKeyPress = edtCodigoKeyPress
     end
     object edtNome: TEdit
       Left = 56
@@ -423,7 +423,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       TabOrder = 2
-      OnExit = edtCodigoUnidadeExit
+      OnKeyPress = edtCodigoUnidadeKeyPress
     end
     object edtTipoUnidade: TEdit
       Left = 384
@@ -440,6 +440,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       TabOrder = 4
+      OnKeyPress = edtPrecoKeyPress
     end
   end
 end

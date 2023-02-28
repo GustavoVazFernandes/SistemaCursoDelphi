@@ -1,10 +1,11 @@
 object frmProdutos: TfrmProdutos
   Left = 714
   Top = 389
-  Width = 629
-  Height = 212
   BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Cadastro de Produtos'
+  ClientHeight = 173
+  ClientWidth = 613
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -109,6 +110,7 @@ object frmProdutos: TfrmProdutos
       Height = 21
       TabOrder = 0
       OnExit = edtCodigoExit
+      OnKeyPress = edtCodigoKeyPress
     end
     object edtNome: TEdit
       Left = 56
@@ -422,7 +424,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       TabOrder = 2
-      OnExit = edtCodigoUnidadeExit
+      OnKeyPress = edtCodigoUnidadeKeyPress
     end
     object edtTipoUnidade: TEdit
       Left = 384
@@ -439,6 +441,7 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       TabOrder = 4
+      OnKeyPress = edtPrecoKeyPress
     end
   end
 end

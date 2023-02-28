@@ -95,6 +95,7 @@ object frmVendas: TfrmVendas
         Height = 21
         TabOrder = 1
         OnKeyDown = edtCodigoVendaKeyDown
+        OnKeyPress = edtCodigoVendaKeyPress
       end
       object edtNome: TEdit
         Left = 136

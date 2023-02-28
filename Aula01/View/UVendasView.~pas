@@ -1117,6 +1117,7 @@ begin
       if (cdsVendaDescricao.Value = EmptyStr) then
       begin
          vKey := VK_CLEAR;
+         cdsVenda.Edit;
          cdsVenda.Delete;
       end;
 

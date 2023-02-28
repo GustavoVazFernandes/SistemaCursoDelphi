@@ -70,6 +70,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Height = 21
       TabOrder = 0
       OnExit = edtCodigoExit
+      OnKeyPress = edtCodigoKeyPress
     end
     object edtUnidade: TEdit
       Left = 61
