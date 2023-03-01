@@ -347,8 +347,8 @@ begin
         end
         else
         begin
-          lblCodigo.Enabled := True;
-          edtCodigo.Enabled := True;
+           lblCodigo.Enabled := True;
+           edtCodigo.Enabled := True;
 
            if (edtCodigo.CanFocus) then
                edtCodigo.SetFocus;
@@ -361,7 +361,7 @@ begin
          stbBarraStatus.Panels[0].Text := 'Pesquisa';
 
          if frmClientesPesq = nil then
-           frmClientesPesq := TfrmClientesPesq.Create(Application);
+            frmClientesPesq := TfrmClientesPesq.Create(Application);
 
          frmClientesPesq.ShowModal;
 
@@ -503,7 +503,6 @@ begin
          TMessageUtil.Alerta(E.Message);
    end;
 
-
    Result := True;
 end;
 
@@ -546,12 +545,9 @@ begin
       begin
          //Gravação do BD
          TPessoaController.getInstancia.GravaPessoa(
-         vObjCliente,vObjColEndereco);
-
+            vObjCliente,vObjColEndereco);
 
          Result := True;
-
-
       end;
 
 
@@ -582,8 +578,9 @@ begin
          xCPFCNPJ := NumerosCPFCNPJ(Trim(edtCPFCNPJ.Text));
          if not ValidaCPF(xCPFCNPJ) then
          begin
-         if edtCPFCNPJ.CanFocus then
-            edtCPFCNPJ.SetFocus;
+            if edtCPFCNPJ.CanFocus then
+               edtCPFCNPJ.SetFocus;
+
             edtCPFCNPJ.Clear;
             Exit;
          end;
@@ -595,8 +592,9 @@ begin
          if not ValidaCNPJ(xCPFCNPJ) then
          begin
             
-         if edtCPFCNPJ.CanFocus then
-            edtCPFCNPJ.SetFocus;
+            if edtCPFCNPJ.CanFocus then
+               edtCPFCNPJ.SetFocus;
+
             edtCPFCNPJ.Clear;
             Exit;
          end;
@@ -615,8 +613,8 @@ begin
             Exit;
       end;
 
-         if (vObjCliente) = nil then
-            Exit;
+      if (vObjCliente) = nil then
+         Exit;
 
       vObjCliente.Tipo_Pessoa         := 0;
       vObjCliente.Nome                := edtNome.Text;
@@ -721,7 +719,7 @@ begin
 
       vObjColEndereco :=
          TPessoaController.getInstancia.BuscaEnderecoPessoa(
-         StrToIntDef(edtCodigo.Text, 0));
+            StrToIntDef(edtCodigo.Text, 0));
 
       if (vObjCliente <> nil) then
          CarregaDadosTela
@@ -839,7 +837,6 @@ begin
       try
          if TMessageUtil.Pergunta(
          'Quer realmente excluir os dados do cliente?')then
-
          begin
             Screen.Cursor := crHourGlass;
             TPessoaController.getInstancia.ExcluiPessoa(vObjCliente);
@@ -854,7 +851,6 @@ begin
          Application.ProcessMessages;
       end;
       Result:= True;
-
 
    except
        on E: Exception do
@@ -891,7 +887,6 @@ begin
          edtNumero.SetFocus;
       Exit;
    end;
-
 
    if(Trim(edtBairro.Text) = EmptyStr) then
    begin
@@ -930,15 +925,15 @@ end;
 procedure TfrmClientes.rdgTipoPessoaClick(Sender: TObject);
 begin
    if rdgTipoPessoa.ItemIndex = 1 then
-      begin
-         edtCPFCNPJ.Clear;
-         edtCPFCNPJ.EditMask := '##\.###\.###\/####\-##;1;_'
-      end
+   begin
+      edtCPFCNPJ.Clear;
+      edtCPFCNPJ.EditMask := '##\.###\.###\/####\-##;1;_'
+   end
    else
-      begin
-         edtCPFCNPJ.Clear;
-         edtCPFCNPJ.EditMask := '###\.###\.###\-##;1;_';
-      end;
+   begin
+      edtCPFCNPJ.Clear;
+      edtCPFCNPJ.EditMask := '###\.###\.###\-##;1;_';
+   end;
 
 end;
 
@@ -992,10 +987,10 @@ begin
       (xCPFCNPJ = '55555555555') or (xCPFCNPJ = '66666666666') or
       (xCPFCNPJ = '77777777777') or (xCPFCNPJ = '88888888888') or
       (xCPFCNPJ = '99999999999') or (xCPFCNPJ = '00000000000') then
-      begin
-         TMessageUtil.Alerta('O CPF informado é invalido.');
-         Exit
-      end
+   begin
+      TMessageUtil.Alerta('O CPF informado é invalido.');
+      Exit
+   end
    else
       if (Length(Trim(num))<>11)then
       begin
@@ -1066,10 +1061,10 @@ begin
       (xCPFCNPJ = '55555555555555') or (xCPFCNPJ = '66666666666666') or
       (xCPFCNPJ = '77777777777777') or (xCPFCNPJ = '88888888888888') or
       (xCPFCNPJ = '99999999999999') or (xCPFCNPJ = '00000000000000') then
-      begin
-         TMessageUtil.Alerta('O CPF informado é invalido.');
-         Exit
-      end
+   begin
+      TMessageUtil.Alerta('O CPF informado é invalido.');
+      Exit
+   end
    else
    if (Length(Trim(num))<>14)then
    begin
@@ -1115,10 +1110,6 @@ begin
 
    end;
 end;
-
-
-
-
 
 procedure TfrmClientes.edtNumeroKeyPress(Sender: TObject; var Key: Char);
 begin

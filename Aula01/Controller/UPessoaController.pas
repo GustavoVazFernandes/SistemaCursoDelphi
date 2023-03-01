@@ -53,7 +53,7 @@ begin
 
        finally
            if xEnderecoDAO <> nil then
-           FreeAndNil(xEnderecoDAO)
+           FreeAndNil(xEnderecoDAO);
        end;
    except
       on E: Exception do
@@ -86,8 +86,8 @@ begin
       on E: Exception do
       begin
           raise Exception.Create(
-          'Falha ao buscar os dados da pessoa. [Controller]'#13+
-          e.Message);
+             'Falha ao buscar os dados da pessoa. [Controller]'#13+
+                e.Message);
       end;
    end;
 
@@ -117,7 +117,6 @@ begin
          else
          begin
             xPessoaDAO.Deleta(RetornaCondicaoPessoa(pPessoa.Id));
-
             xEnderecoDAO.Deleta(RetornaCondicaoPessoa(pPessoa.Id, True));
          end;
 
@@ -129,7 +128,6 @@ begin
             FreeAndNil(xPessoaDAO);
          if xEnderecoDAO <> nil then
             FreeAndNil(xEnderecoDAO);
-
       end;
 
 
@@ -139,7 +137,7 @@ begin
           TConexao.get.cancelaTransacao;
           raise Exception.Create(
              'Falha ao excluir os dados da pessoa [Controller]'#13+
-             e.Message);
+                e.Message);
        end;
    end;
 end;
@@ -208,8 +206,8 @@ begin
        begin
           TConexao.get.cancelaTransacao;
           Raise Exception.Create(
-          'Falha ao gravar os dados do cliente [Controller].'#13 +
-          e.Message);
+            'Falha ao gravar os dados do cliente [Controller].'#13 +
+               e.Message);
        end;
 
    end;
@@ -241,8 +239,8 @@ begin
       on E:Exception do
       begin
          Raise Exception.Create(
-         'Falha ao buscar ao dados da pessoa'#13+
-         e.Message);
+            'Falha ao buscar ao dados da pessoa'#13+
+               e.Message);
       end;
    end;
 end;

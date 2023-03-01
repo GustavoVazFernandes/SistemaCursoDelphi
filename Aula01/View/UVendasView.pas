@@ -185,44 +185,44 @@ begin
          LimparTela;
 
 
-           if (frmVendas <>nil)   and
-              (frmVendas.Active)  and
-              (btnIncluir.CanFocus) then
-               btnIncluir.SetFocus;
+         if (frmVendas <>nil)   and
+            (frmVendas.Active)  and
+            (btnIncluir.CanFocus) then
+             btnIncluir.SetFocus;
 
-           Application.ProcessMessages;
+         Application.ProcessMessages;
       end;
 
       etConsultar:
       begin
-        stbBarraStatus.Panels[0].Text := 'Consultar';
-        CamposEnabled(False);
+         stbBarraStatus.Panels[0].Text := 'Consultar';
+         CamposEnabled(False);
 
-        if (edtCodigoCliente.Text <> EmptyStr) then
-        begin
-           edtCodigoCliente.Enabled    := False;
-           btnConfirmar.Enabled := False;
+         if (edtCodigoCliente.Text <> EmptyStr) then
+         begin
+            edtCodigoCliente.Enabled    := False;
+            btnConfirmar.Enabled := False;
 
-        end
-        else
-        begin
-          lblCodigo.Enabled := True;
-          edtCodigoCliente.Enabled := True;
+         end
+         else
+         begin
+            lblCodigo.Enabled := True;
+            edtCodigoCliente.Enabled := True;
 
-           if (edtCodigoCliente.CanFocus) then
-               edtCodigoCliente.SetFocus;
+            if (edtCodigoCliente.CanFocus) then
+                edtCodigoCliente.SetFocus;
 
-        end;
+         end;
       end;
 
        etIncluir:
       begin
-        stbBarraStatus.Panels[0].Text := 'Incluir';
-        CamposEnabled(True);
-        btnPesquisar.Enabled := False;
-        btnConsultar.Enabled := False;
-        btnLimpar.Enabled    := True;
-        edtCodigoVenda.Enabled := False;
+         stbBarraStatus.Panels[0].Text := 'Incluir';
+         CamposEnabled(True);
+         btnPesquisar.Enabled := False;
+         btnConsultar.Enabled := False;
+         btnLimpar.Enabled    := True;
+         edtCodigoVenda.Enabled := False;
 
          if edtCodigoCliente.CanFocus then
             edtCodigoCliente.SetFocus;
@@ -261,7 +261,7 @@ begin
          stbBarraStatus.Panels[0].Text := 'Pesquisar';
 
          if frmProdutosPesq = nil then
-           frmProdutosPesq := TfrmProdutosPesq.Create(Application);
+            frmProdutosPesq := TfrmProdutosPesq.Create(Application);
 
          frmProdutosPesq.ShowModal;
 
@@ -452,16 +452,16 @@ begin
   if (vObjCliente = nil) then
      Exit;
 
-  edtCodigoCliente.Text   := IntToStr (vObjCliente.Id);
-  edtNome.Text            := vObjCliente.Nome;
+   edtCodigoCliente.Text   := IntToStr (vObjCliente.Id);
+   edtNome.Text            := vObjCliente.Nome;
 
-  if (vObjVenda = nil) then
-     Exit;
+   if (vObjVenda = nil) then
+      Exit;
 
-  edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
-  edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
-  edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
-  edtData.Text            := DateToStr(vObjVenda.DataVenda);
+   edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
+   edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
+   edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
+   edtData.Text            := DateToStr(vObjVenda.DataVenda);
 
 
   if vObjColVendaItem <> nil then
@@ -637,7 +637,6 @@ begin
             vObjVenda := TVenda.Create;
       end;
 
-
       if (vObjVenda) = nil then
          Exit;
 
@@ -723,9 +722,7 @@ begin
             TMessageUtil.Alerta('ID do produto não informado');
             Exit;
          end;
-
       end;
-
 
       Result := True;
    except
@@ -817,8 +814,6 @@ begin
       if dbgVenda.CanFocus then
          dbgVenda.SetFocus;
 
-
-
    except
       on E: Exception do
       begin
@@ -828,7 +823,6 @@ begin
       end;
    end;
 end;
-
 
 procedure TfrmVendas.CarregaDadosProduto;
 begin
@@ -898,7 +892,6 @@ begin
       xTotal := xTotal + dbgVenda.DataSource.DataSet.FieldByName('PrecoTotal').AsFloat;
    end;
    edtValor.Text := FloatToStr(xTotal);
-
    edtValor.Text := FormatFloat('##0.00',xTotal);
 
    Result := True;
@@ -976,8 +969,7 @@ begin
    vObjCliente :=
          TCliente(TPessoaController.getInstancia.BuscaPessoa(
             StrToIntDef(edtCodigoCliente.Text, 0)));
-   edtNome.text := vObjCliente.Nome;
-
+   edtNome.Text := vObjCliente.Nome;
 
    if vObjColVendaItem <> nil then
    begin
@@ -989,7 +981,6 @@ begin
          cdsVendaUnidade.Text         := vObjColVendaItem.Retorna(i).UnidadeSaida;
          cdsVendaPrecoTotal.Text      := FloatToStr(vObjColVendaItem.Retorna(i).TotalItem);
          cdsVendaPrecoUnitario.Value  := vObjColVendaItem.Retorna(i).ValorUnitario;
-
 
          vObjProduto :=
             TProduto(TProdutoController.getInstancia.BuscaProduto(
@@ -1005,7 +996,6 @@ begin
    end;
 
    edtValor.Text := FormatFloat('##0.00',vObjVenda.TotalVenda);
-
 end;
 
 

@@ -58,7 +58,7 @@ type
   end;
 
 var
-  frmVendaPesq: TfrmVendaPesq;
+   frmVendaPesq: TfrmVendaPesq;
 
 implementation
 
@@ -124,36 +124,36 @@ begin
          xListaVenda :=
           TVendaController.getInstancia.PesquisaVenda(Trim(edtCodigo.Text));
 
-          cdsVendaPesq.EmptyDataSet;
+         cdsVendaPesq.EmptyDataSet;
 
-          if xListaVenda <> nil then
-             for xAux := 0 to pred(xListaVenda.Count) do
-             begin
-                cdsVendaPesq.Append;
-                cdsVendaPesqID.Value := xListaVenda.Retorna(xAux).Id;
-                i := xListaVenda.Retorna(xAux).Id_Cliente;
-                vObjCliente :=
-                   TCliente(TPessoaController.getInstancia.BuscaPessoa(
-                      i));
-                cdsVendaPesqCliente.Value := vObjCliente.Nome;
-                cdsVendaPesqData.Value := xListaVenda.Retorna(xAux).DataVenda;
-                cdsVendaPesqTotal.Value :=xListaVenda.Retorna(xAux).TotalVenda;
-                cdsVendaPesq.Post;
-             end;
+         if xListaVenda <> nil then
+            for xAux := 0 to pred(xListaVenda.Count) do
+            begin
+               cdsVendaPesq.Append;
+               cdsVendaPesqID.Value := xListaVenda.Retorna(xAux).Id;
+               i := xListaVenda.Retorna(xAux).Id_Cliente;
+               vObjCliente :=
+                  TCliente(TPessoaController.getInstancia.BuscaPessoa(
+                     i));
+               cdsVendaPesqCliente.Value := vObjCliente.Nome;
+               cdsVendaPesqData.Value := xListaVenda.Retorna(xAux).DataVenda;
+               cdsVendaPesqTotal.Value :=xListaVenda.Retorna(xAux).TotalVenda;
+               cdsVendaPesq.Post;
+            end;
 
-             if cdsVendaPesq.RecordCount = 0 then
-             begin
-                if edtCodigo.CanFocus then
-                   edtCodigo.SetFocus;
+            if cdsVendaPesq.RecordCount = 0 then
+            begin
+               if edtCodigo.CanFocus then
+                  edtCodigo.SetFocus;
 
-                TMessageUtil.Alerta('Nenhuma venda encontrado na pesquisa.');
-             end
-             else
-             begin
-                cdsVendaPesq.First;
-                if dbgVendaPesq.CanFocus then
-                   dbgVendaPesq.SetFocus;
-             end;
+               TMessageUtil.Alerta('Nenhuma venda encontrado na pesquisa.');
+            end
+            else
+            begin
+               cdsVendaPesq.First;
+               if dbgVendaPesq.CanFocus then
+                  dbgVendaPesq.SetFocus;
+            end;
 
       finally
          if xListaVenda <> nil  then

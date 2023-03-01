@@ -56,7 +56,7 @@ type
   end;
 
 var
-  frmProdutosPesq: TfrmProdutosPesq;
+   frmProdutosPesq: TfrmProdutosPesq;
 
 implementation
 
@@ -144,31 +144,31 @@ begin
 
            cdsProduto.EmptyDataSet;
 
-          if xListaProduto <> nil then
-             for xAux := 0 to pred(xListaProduto.Count) do
-             begin
-                cdsProduto.Append;
-                cdsProdutoID.Value := xListaProduto.Retorna(xAux).Id;
-                cdsProdutoUnidade.Value := xListaProduto.Retorna(xAux).UnidadeSaida;
-                cdsProdutoNome.Value := xListaProduto.Retorna(xAux).Nome;
-                cdsProdutoPreco.Value := xListaProduto.Retorna(xAux).PrecoVenda;
-                cdsProduto.Post;
-             end;
+         if xListaProduto <> nil then
+            for xAux := 0 to pred(xListaProduto.Count) do
+            begin
+               cdsProduto.Append;
+               cdsProdutoID.Value := xListaProduto.Retorna(xAux).Id;
+               cdsProdutoUnidade.Value := xListaProduto.Retorna(xAux).UnidadeSaida;
+               cdsProdutoNome.Value := xListaProduto.Retorna(xAux).Nome;
+               cdsProdutoPreco.Value := xListaProduto.Retorna(xAux).PrecoVenda;
+               cdsProduto.Post;
+            end;
 
-             if cdsProduto.RecordCount = 0 then
-             begin
-                if edtNome.CanFocus then
-                   edtNome.SetFocus;
+            if cdsProduto.RecordCount = 0 then
+            begin
+               if edtNome.CanFocus then
+                  edtNome.SetFocus;
 
-                TMessageUtil.Alerta(
-                   'Nenhum produto encontrada na pesquisa.');
-             end
-             else
-             begin
-                cdsProduto.First;
-                if dbgProduto.CanFocus then
-                   dbgProduto.SetFocus;
-             end;
+               TMessageUtil.Alerta(
+                  'Nenhum produto encontrada na pesquisa.');
+            end
+            else
+            begin
+               cdsProduto.First;
+               if dbgProduto.CanFocus then
+                  dbgProduto.SetFocus;
+            end;
 
       finally
          if xListaProduto <> nil  then

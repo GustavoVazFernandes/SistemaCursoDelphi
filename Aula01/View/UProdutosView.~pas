@@ -46,7 +46,6 @@ type
     procedure btnConfirmarClick(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
-    procedure edtCodigoExit(Sender: TObject);
     procedure edtPrecoExit(Sender: TObject);
     procedure edtCodigoUnidadeKeyPress(Sender: TObject; var Key: Char);
     procedure edtPrecoKeyPress(Sender: TObject; var Key: Char);

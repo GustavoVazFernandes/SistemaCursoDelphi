@@ -63,6 +63,7 @@ type
       Shift: TShiftState);
     procedure edtCodigoVendaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure edtCodigoVendaKeyPress(Sender: TObject; var Key: Char);
 
   private
     { Private declarations }
@@ -1100,6 +1101,10 @@ begin
          end;
       end;
 
+
+   if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
+   Key := #0;
+
    vKey := VK_CLEAR;
 end;
 
@@ -1144,5 +1149,12 @@ begin
    vKey := VK_CLEAR;
 end;
 
+
+procedure TfrmVendas.edtCodigoVendaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+   if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
+   Key := #0;
+end;
 
 end.

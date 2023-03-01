@@ -109,7 +109,6 @@ object frmProdutos: TfrmProdutos
       Width = 57
       Height = 21
       TabOrder = 0
-      OnExit = edtCodigoExit
       OnKeyPress = edtCodigoKeyPress
     end
     object edtNome: TEdit

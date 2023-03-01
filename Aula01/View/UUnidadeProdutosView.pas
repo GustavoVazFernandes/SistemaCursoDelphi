@@ -187,10 +187,10 @@ begin
          stbBarraStatus.Panels[0].Text := EmptyStr;
          stbBarraStatus.Panels[1].Text := EmptyStr;
 
-           if (frmUnidadeProdutos <>nil)   and
-              (frmUnidadeProdutos.Active)  and
-              (btnIncluir.CanFocus) then
-               btnIncluir.SetFocus;
+         if (frmUnidadeProdutos <>nil)   and
+            (frmUnidadeProdutos.Active)  and
+            (btnIncluir.CanFocus) then
+             btnIncluir.SetFocus;
 
            Application.ProcessMessages;
       end;
@@ -287,7 +287,7 @@ begin
          stbBarraStatus.Panels[0].Text := 'Pesquisar';
 
          if frmUnidadeProdutosPesq = nil then
-           frmUnidadeProdutosPesq := TfrmUnidadeProdutosPesq.Create(Application);
+            frmUnidadeProdutosPesq := TfrmUnidadeProdutosPesq.Create(Application);
 
          frmUnidadeProdutosPesq.ShowModal;
 
@@ -398,7 +398,7 @@ begin
 
       vObjUnidadeProdutos :=
          TUnidadeProdutos(TUnidadeProdutosController.getInstancia.
-         BuscaUnidadeProdutos(StrToIntDef(edtCodigo.Text, 0)));
+            BuscaUnidadeProdutos(StrToIntDef(edtCodigo.Text, 0)));
 
       if (vObjUnidadeProdutos <> nil) then
          CarregaDadosTela
@@ -520,12 +520,9 @@ begin
       begin
          //Gravação do BD
          TUnidadeProdutosController.getInstancia.GravaUnidadeProdutos(
-         vObjUnidadeProdutos);
-
+            vObjUnidadeProdutos);
 
          Result := True;
-
-
       end;
 
 
@@ -535,9 +532,8 @@ begin
       Raise Exception.Create(
             'Falha ao gravar os dados da unidade do produto [View]'#13+
             e.Message);
-
       end;
-    end;
+   end;
 end;
 
 
@@ -581,7 +577,6 @@ begin
       if not ValidaUnidadeProdutos then
          Exit;
 
-
       if vEstadoTela =etIncluir then
       begin
          if vObjUnidadeProdutos = nil then
@@ -594,14 +589,12 @@ begin
             Exit;
       end;
 
-         if (vObjUnidadeProdutos) = nil then
-            Exit;
+      if (vObjUnidadeProdutos) = nil then
+         Exit;
 
-
-      vObjUnidadeProdutos.Ativo                  := chkAtivo.Checked;
-      vObjUnidadeProdutos.Unidade                := edtUnidade.Text;
-      vObjUnidadeProdutos.Descricao              := edtDescricao.Text;
-
+      vObjUnidadeProdutos.Ativo      := chkAtivo.Checked;
+      vObjUnidadeProdutos.Unidade    := edtUnidade.Text;
+      vObjUnidadeProdutos.Descricao  := edtDescricao.Text;
 
       Result := True;
    except
@@ -625,7 +618,7 @@ begin
        if edtUnidade.CanFocus then
           edtUnidade.SetFocus;
 
-        Exit;
+       Exit;
     end;
 
     if (edtDescricao.Text = EmptyStr) then
@@ -635,7 +628,7 @@ begin
        if edtDescricao.CanFocus then
           edtDescricao.SetFocus;
 
-        Exit;
+       Exit;
     end;
 
     Result := True;

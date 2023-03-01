@@ -82,7 +82,7 @@ type
   end;
 
 var
-  frmProdutos: TfrmProdutos;
+   frmProdutos: TfrmProdutos;
 
 implementation
 
@@ -294,8 +294,8 @@ begin
         end
         else
         begin
-          lblCodigo.Enabled := True;
-          edtCodigo.Enabled := True;
+           lblCodigo.Enabled := True;
+           edtCodigo.Enabled := True;
 
            if (edtCodigo.CanFocus) then
                edtCodigo.SetFocus;
@@ -309,7 +309,7 @@ begin
          stbBarraStatus.Panels[0].Text := 'Pesquisar';
 
          if frmProdutosPesq = nil then
-           frmProdutosPesq := TfrmProdutosPesq.Create(Application);
+            frmProdutosPesq := TfrmProdutosPesq.Create(Application);
 
          frmProdutosPesq.ShowModal;
 
@@ -493,7 +493,6 @@ begin
       if not ValidaProdutos = True then
          Exit;
 
-
       if vEstadoTela =etIncluir then
       begin
          if vObjProduto = nil then
@@ -506,8 +505,8 @@ begin
             Exit;
       end;
 
-         if (vObjProduto) = nil then
-            Exit;
+      if (vObjProduto) = nil then
+         Exit;
 
       vObjProduto.Nome                := edtNome.Text;
       vObjProduto.PrecoVenda          := StrToFloat(edtPreco.Text);
@@ -582,8 +581,6 @@ begin
    try
       Result := False;
 
-
-
       if ProcessaProdutos then
       begin
          TMessageUtil.Informacao('Produto cadastrado com sucesso.'#13+
@@ -594,7 +591,6 @@ begin
 
          Result := True;
       end;
-
 
    except
       on E: Exception do
@@ -616,12 +612,8 @@ begin
          //Gravação do BD
          TProdutoController.getInstancia.GravaProduto(vObjProduto);
 
-
          Result := True;
-
-
       end;
-
 
    except
       on E: Exception do
@@ -629,7 +621,6 @@ begin
       Raise Exception.Create(
             'Falha ao gravar os dados do produto [View]'#13+
             e.Message);
-
       end;
     end;
 end;
@@ -667,7 +658,7 @@ end;
 procedure TfrmProdutos.btnConfirmarClick(Sender: TObject);
 begin
    if ValidaPreco = True then
-         Exit;
+      Exit;
 
    ProcessaConfirmacao;
 end;
@@ -730,7 +721,7 @@ begin
 
       vObjUnidadeProdutos :=
          TUnidadeProdutos(TUnidadeProdutosController.getInstancia.
-         BuscaUnidadeProdutos(StrToIntDef(edtCodigoUnidade.Text,0)));
+            BuscaUnidadeProdutos(StrToIntDef(edtCodigoUnidade.Text,0)));
 
 
 
@@ -762,8 +753,8 @@ begin
       on E: Exception do
       begin
          Raise Exception.Create(
-         'Falha ao consultar os dados da unidade de  produto [View]:'#13+
-         e.Message);
+            'Falha ao consultar os dados da unidade de  produto [View]:'#13+
+               e.Message);
       end;
    end;
 end;

@@ -55,10 +55,10 @@ type
     { Public declarations }
     mUnidadeProdutosID : Integer;
     mUnidadeProdutosDescricao: String;
-  end;
+end;
 
 var
-  frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq;
+   frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq;
 
 implementation
 
@@ -127,37 +127,37 @@ begin
 
            cdsUnidadeProdutos.EmptyDataSet;
 
-          if xListaUnidadeProdutos <> nil then
-             for xAux := 0 to pred(xListaUnidadeProdutos.Count) do
-             begin
-                cdsUnidadeProdutos.Append;
-                cdsUnidadeProdutosID.Value := xListaUnidadeProdutos.Retorna(
-                   xAux).Id;
-                cdsUnidadeProdutosUnidade.Value := xListaUnidadeProdutos.Retorna(
-                   xAux).Unidade;
-                cdsUnidadeProdutosDescricao.Value := xListaUnidadeProdutos.Retorna(
-                   xAux).Descricao;
-                cdsUnidadeProdutosAtivo.Value :=
-                   IfThen(xListaUnidadeProdutos.Retorna(xAux).Ativo,1,0);
-                cdsUnidadeProdutosDescricaoAtivo.Value :=
-                   IfThen(xListaUnidadeProdutos.Retorna(xAux).Ativo, 'Sim', 'Não');
-                   cdsUnidadeProdutos.Post;
-             end;
+         if xListaUnidadeProdutos <> nil then
+            for xAux := 0 to pred(xListaUnidadeProdutos.Count) do
+            begin
+               cdsUnidadeProdutos.Append;
+               cdsUnidadeProdutosID.Value := xListaUnidadeProdutos.Retorna(
+                  xAux).Id;
+               cdsUnidadeProdutosUnidade.Value := xListaUnidadeProdutos.Retorna(
+                  xAux).Unidade;
+               cdsUnidadeProdutosDescricao.Value := xListaUnidadeProdutos.Retorna(
+                  xAux).Descricao;
+               cdsUnidadeProdutosAtivo.Value :=
+                  IfThen(xListaUnidadeProdutos.Retorna(xAux).Ativo,1,0);
+               cdsUnidadeProdutosDescricaoAtivo.Value :=
+                  IfThen(xListaUnidadeProdutos.Retorna(xAux).Ativo, 'Sim', 'Não');
+                  cdsUnidadeProdutos.Post;
+            end;
 
-             if cdsUnidadeProdutos.RecordCount = 0 then
-             begin
-                if edtNome.CanFocus then
-                   edtNome.SetFocus;
+            if cdsUnidadeProdutos.RecordCount = 0 then
+            begin
+               if edtNome.CanFocus then
+                  edtNome.SetFocus;
 
-                TMessageUtil.Alerta(
-                   'Nenhuma unidade de produto encontrada na pesquisa.');
-             end
-             else
-             begin
-                cdsUnidadeProdutos.First;
-                if dbgUnidadeProdutos.CanFocus then
-                   dbgUnidadeProdutos.SetFocus;
-             end;
+               TMessageUtil.Alerta(
+                  'Nenhuma unidade de produto encontrada na pesquisa.');
+            end
+            else
+            begin
+               cdsUnidadeProdutos.First;
+               if dbgUnidadeProdutos.CanFocus then
+                  dbgUnidadeProdutos.SetFocus;
+            end;
 
       finally
          if xListaUnidadeProdutos <> nil  then

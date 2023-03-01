@@ -148,7 +148,7 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
       Width = 75
       Height = 25
       Caption = '&Sair'
-      TabOrder = 1
+      TabOrder = 2
       OnClick = btnSairClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -184,7 +184,7 @@ object frmUnidadeProdutosPesq: TfrmUnidadeProdutosPesq
       Width = 75
       Height = 25
       Caption = '&Limpar'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnLimparClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100

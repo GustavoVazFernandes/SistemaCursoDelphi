@@ -41,6 +41,7 @@ type
       Shift: TShiftState);
     procedure edtCodigoExit(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure edtCodigoKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
     vKey : Word;
@@ -664,6 +665,13 @@ procedure TfrmUnidadeProdutos.FormClose(Sender: TObject;
 begin
    Action := caFree;
    frmUnidadeProdutos := nil;
+end;
+
+procedure TfrmUnidadeProdutos.edtCodigoKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+   if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
+   Key := #0;
 end;
 
 end.
