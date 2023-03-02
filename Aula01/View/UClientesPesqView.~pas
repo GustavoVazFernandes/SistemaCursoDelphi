@@ -155,36 +155,36 @@ begin
          xListaCliente := TColPessoa.Create;
 
          xListaCliente :=
-          TPessoaController.getInstancia.PesquisaPessoa(Trim(edtNome.Text));
+            TPessoaController.getInstancia.PesquisaPessoa(Trim(edtNome.Text));
 
-          cdsCliente.EmptyDataSet;
+         cdsCliente.EmptyDataSet;
 
-          if xListaCliente <> nil then
-             for xAux := 0 to pred(xListaCliente.Count) do
-             begin
-                cdsCliente.Append;
-                cdsClienteID.Value := xListaCliente.Retorna(xAux).Id;
-                cdsClienteNome.Value := xListaCliente.Retorna(xAux).Nome;
-                cdsClienteAtivo.Value :=
-                   IfThen(xListaCliente.Retorna(xAux).Ativo,1,0);
-                cdsClienteDescricaoAtivo.Value :=
-                   IfThen(xListaCliente.Retorna(xAux).Ativo, 'Sim', 'Não');
-                   cdsCliente.Post;
-             end;
+         if xListaCliente <> nil then
+            for xAux := 0 to pred(xListaCliente.Count) do
+            begin
+               cdsCliente.Append;
+               cdsClienteID.Value := xListaCliente.Retorna(xAux).Id;
+               cdsClienteNome.Value := xListaCliente.Retorna(xAux).Nome;
+               cdsClienteAtivo.Value :=
+                  IfThen(xListaCliente.Retorna(xAux).Ativo,1,0);
+               cdsClienteDescricaoAtivo.Value :=
+                  IfThen(xListaCliente.Retorna(xAux).Ativo, 'Sim', 'Não');
+               cdsCliente.Post;
+            end;
 
-             if cdsCliente.RecordCount = 0 then
-             begin
-                if edtNome.CanFocus then
-                   edtNome.SetFocus;
+            if cdsCliente.RecordCount = 0 then
+            begin
+               if edtNome.CanFocus then
+                  edtNome.SetFocus;
 
-                TMessageUtil.Alerta('Nenhum cliente encontrado na pesquisa.');
-             end
-             else
-             begin
-                cdsCliente.First;
-                if dbgCliente.CanFocus then
-                   dbgCliente.SetFocus;
-             end;
+               TMessageUtil.Alerta('Nenhum cliente encontrado na pesquisa.');
+            end
+            else
+            begin
+               cdsCliente.First;
+               if dbgCliente.CanFocus then
+                  dbgCliente.SetFocus;
+            end;
 
       finally
          if xListaCliente <> nil  then

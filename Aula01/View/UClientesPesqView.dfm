@@ -1,6 +1,6 @@
 object frmClientesPesq: TfrmClientesPesq
-  Left = 708
-  Top = 54
+  Left = 249
+  Top = 55
   BorderStyle = bsDialog
   Caption = 'Pesquisa de Cliente'
   ClientHeight = 273

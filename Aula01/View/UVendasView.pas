@@ -64,6 +64,7 @@ type
     procedure edtCodigoVendaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure edtCodigoVendaKeyPress(Sender: TObject; var Key: Char);
+    procedure dbgVendaExit(Sender: TObject);
 
   private
     { Private declarations }
@@ -861,8 +862,16 @@ begin
       end
       else
       begin
+         if (cdsVendaUnidade.Text = EmptyStr) and (cdsVendaDescricao.Text = EmptyStr) then
+         begin
+            cdsVenda.Delete;
+            Result:= True;
+            Exit;
+         end;
+
          TMessageUtil.Alerta(
             'Produto não encontrado para o codigo informado.');
+
 
          Exit;
       end;
@@ -1145,6 +1154,13 @@ procedure TfrmVendas.edtCodigoVendaKeyPress(Sender: TObject;
 begin
    if ((Key in ['0'..'9'] = False) and (Word(Key) <> VK_BACK)) then
    Key := #0;
+end;
+
+procedure TfrmVendas.dbgVendaExit(Sender: TObject);
+begin
+   cdsVenda.Edit;
+   cdsVendaPrecoTotal.Value := cdsVendaQuantidade.Value * cdsVendaPrecoUnitario.Value;
+   cdsVenda.Post;
 end;
 
 end.

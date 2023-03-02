@@ -1,6 +1,6 @@
 object frmVendas: TfrmVendas
-  Left = 677
-  Top = 51
+  Left = 356
+  Top = 52
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Vendas'
@@ -213,6 +213,7 @@ object frmVendas: TfrmVendas
           TitleFont.Height = -11
           TitleFont.Name = 'MS Sans Serif'
           TitleFont.Style = []
+          OnExit = dbgVendaExit
           OnKeyDown = dbgVendaKeyDown
           OnKeyPress = dbgVendaKeyPress
           Columns = <
