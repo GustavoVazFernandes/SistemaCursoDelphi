@@ -55,7 +55,7 @@ object frmUnidadeProdutos: TfrmUnidadeProdutos
       Top = 44
       Width = 58
       Height = 13
-      Caption = 'Descric'#227'o'
+      Caption = 'Descri'#231#227'o'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

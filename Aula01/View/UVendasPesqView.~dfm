@@ -1,6 +1,6 @@
 object frmVendaPesq: TfrmVendaPesq
-  Left = 395
-  Top = 178
+  Left = 713
+  Top = 191
   BorderStyle = bsDialog
   Caption = 'Pesquisa de Venda'
   ClientHeight = 271
@@ -265,6 +265,15 @@ object frmVendaPesq: TfrmVendaPesq
       item
         Name = 'Total'
         DataType = ftFloat
+      end
+      item
+        Name = 'Faturada'
+        DataType = ftInteger
+      end
+      item
+        Name = 'DescricaoFaturada'
+        DataType = ftString
+        Size = 3
       end>
     IndexDefs = <>
     Params = <>
@@ -273,25 +282,38 @@ object frmVendaPesq: TfrmVendaPesq
     Left = 33
     Top = 112
     Data = {
-      5C0000009619E0BD0100000018000000040000000000030000005C0002494404
+      930000009619E0BD010000001800000006000000000003000000930002494404
       0001000000000007436C69656E74650100490000000100055749445448020002
-      0064000444617461080008000000000005546F74616C08000400000000000000}
+      0064000444617461080008000000000005546F74616C08000400000000000846
+      6174757261646104000100000000001144657363726963616F46617475726164
+      6101004900000001000557494454480200020003000000}
     object cdsVendaPesqID: TIntegerField
-      DisplayWidth = 15
+      DisplayWidth = 6
       FieldName = 'ID'
     end
     object cdsVendaPesqCliente: TStringField
-      DisplayWidth = 59
+      DisplayWidth = 50
       FieldName = 'Cliente'
       Size = 100
     end
     object cdsVendaPesqData: TDateTimeField
-      DisplayWidth = 11
+      DisplayWidth = 16
       FieldName = 'Data'
     end
     object cdsVendaPesqTotal: TFloatField
-      DisplayWidth = 8
+      DisplayWidth = 12
       FieldName = 'Total'
+    end
+    object cdsVendaPesqFaturada: TIntegerField
+      DisplayWidth = 10
+      FieldName = 'Faturada'
+      Visible = False
+    end
+    object cdsVendaPesqDescricaoFaturada: TStringField
+      DisplayLabel = 'Faturada'
+      DisplayWidth = 9
+      FieldName = 'DescricaoFaturada'
+      Size = 3
     end
   end
 end

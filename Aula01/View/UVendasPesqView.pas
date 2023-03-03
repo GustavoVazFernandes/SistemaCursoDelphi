@@ -29,6 +29,8 @@ type
     cdsVendaPesqCliente: TStringField;
     cdsVendaPesqData: TDateTimeField;
     cdsVendaPesqTotal: TFloatField;
+    cdsVendaPesqFaturada: TIntegerField;
+    cdsVendaPesqDescricaoFaturada: TStringField;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btnConfirmarClick(Sender: TObject);
@@ -130,14 +132,18 @@ begin
             for xAux := 0 to pred(xListaVenda.Count) do
             begin
                cdsVendaPesq.Append;
-               cdsVendaPesqID.Value := xListaVenda.Retorna(xAux).Id;
+               cdsVendaPesqID.Value          := xListaVenda.Retorna(xAux).Id;
                i := xListaVenda.Retorna(xAux).Id_Cliente;
                vObjCliente :=
                   TCliente(TPessoaController.getInstancia.BuscaPessoa(
                      i));
-               cdsVendaPesqCliente.Value := vObjCliente.Nome;
-               cdsVendaPesqData.Value := xListaVenda.Retorna(xAux).DataVenda;
-               cdsVendaPesqTotal.Value :=xListaVenda.Retorna(xAux).TotalVenda;
+               cdsVendaPesqCliente.Value     := vObjCliente.Nome;
+               cdsVendaPesqData.Value        := xListaVenda.Retorna(xAux).DataVenda;
+               cdsVendaPesqTotal.Value       := xListaVenda.Retorna(xAux).TotalVenda;
+               cdsVendaPesqFaturada.Value    :=
+                  IfThen(xListaVenda.Retorna(xAux).Faturada,1,0);
+               cdsVendaPesqDescricaoFaturada.Value :=
+                  IfThen(xListaVenda.Retorna(xAux).Faturada, 'Sim', 'Não');
                cdsVendaPesq.Post;
             end;
 
@@ -247,5 +253,4 @@ begin
       (btnConfirmar.CanFocus) then
       btnConfirmar.SetFocus;
 end;
-
 end.

@@ -44,6 +44,8 @@ type
     pnlProdutos: TPanel;
     grbGrid: TGroupBox;
     dbgVenda: TDBGrid;
+    chkFaturada: TCheckBox;
+    btnCancelarVenda: TBitBtn;
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -65,6 +67,7 @@ type
       Shift: TShiftState);
     procedure edtCodigoVendaKeyPress(Sender: TObject; var Key: Char);
     procedure dbgVendaExit(Sender: TObject);
+    procedure btnCancelarVendaClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -90,6 +93,7 @@ type
     function ProcessaPesquisaProduto    : Boolean;
     function ProcessaTotalValor         : Boolean;
     function ProcessaConsulta           : Boolean;
+    function ProcessaAlteracao          : Boolean;
 
     function ProcessaVendaItem  : Boolean;
     function ProcessaVendaDados : Boolean;
@@ -160,21 +164,22 @@ end;
 
 procedure TfrmVendas.DefineEstadoTela;
 begin
-   btnIncluir.Enabled           := (vEstadoTela in [etPadrao]);
-   btnConsultar.Enabled         := (vEstadoTela in [etPadrao]);
-   btnPesquisar.Enabled         := (vEstadoTela in [etPadrao]);
-   btnLimpar.Enabled            := (vEstadoTela in [etPadrao]);
-   btnSair.Enabled  := (vEstadoTela in [etPadrao]);
+   btnIncluir.Enabled        := (vEstadoTela in [etPadrao]);
+   btnConsultar.Enabled      := (vEstadoTela in [etPadrao]);
+   btnPesquisar.Enabled      := (vEstadoTela in [etPadrao]);
+   btnLimpar.Enabled         := False;
+   btnSair.Enabled           := (vEstadoTela in [etPadrao]);
+   btnCancelarVenda.Enabled  := False;
 
    btnPesquisaCliente.Enabled  :=
       vEstadoTela in [etIncluir, etPesquisarCliente, etPesquisarProduto];
 
    btnConfirmar.Enabled :=
-      vEstadoTela in [etIncluir, etExcluir, etConsultar, etPesquisar,
+      vEstadoTela in [etIncluir, etConsultar, etPesquisar,
       etPesquisarCliente, etPesquisarProduto, etConsultarVenda];
 
    btnCancelar.Enabled :=
-      vEstadoTela in [etIncluir,  etExcluir, etConsultar, etPesquisar,
+      vEstadoTela in [etIncluir, etConsultar, etPesquisar,
       etPesquisarCliente, etPesquisarProduto, etConsultarVenda];
 
 
@@ -220,10 +225,12 @@ begin
       begin
          stbBarraStatus.Panels[0].Text := 'Incluir';
          CamposEnabled(True);
-         btnPesquisar.Enabled := False;
-         btnConsultar.Enabled := False;
-         btnLimpar.Enabled    := True;
+
+         btnPesquisar.Enabled   := False;
+         btnConsultar.Enabled   := False;
+         btnLimpar.Enabled      := True;
          edtCodigoVenda.Enabled := False;
+         chkFaturada.Checked    := True;
 
          if edtCodigoCliente.CanFocus then
             edtCodigoCliente.SetFocus;
@@ -281,16 +288,20 @@ begin
 
       end;
 
-      
       etConsultarVenda:
       begin
-         stbBarraStatus.Panels[0].Text := 'Consulta';
+         stbBarraStatus.Panels[0].Text := 'Consultar';
          CamposEnabled(False);
 
          if (edtCodigoVenda.Text <> EmptyStr) then
          begin
             edtCodigoVenda.Enabled    := False;
             btnConfirmar.Enabled := False;
+
+            if chkFaturada.Checked = True then
+               btnCancelarVenda.Enabled := True
+            else
+               btnCancelarVenda.Enabled := False;
          end
          else
          begin
@@ -330,6 +341,22 @@ begin
          if edtNome.CanFocus then
             edtNome.SetFocus;
       end;
+
+      etAlterar:
+      begin
+         stbBarraStatus.Panels[0].Text :='Cancelar Venda';
+
+         if (edtCodigoVenda.Text <> EmptyStr)  then
+         begin
+            ProcessaAlteracao;
+         end
+         else
+         begin
+            vEstadoTela := etConsultarVenda;
+            DefineEstadoTela;
+         end;
+
+      end;
    end;
 end;
 
@@ -337,26 +364,28 @@ end;
 procedure TfrmVendas.CamposEnabled(pOpcao: Boolean);
 var
    i : Integer; // Variavel auxiliar do comando de repetição
+begin
+   for i := 0 to pred(ComponentCount) do
    begin
-      for i := 0 to pred(ComponentCount) do
-      begin
-         if (Components[i] is TEdit) then
-            (Components[i] as TEdit).Enabled := pOpcao;
+      if (Components[i] is TEdit) then
+         (Components[i] as TEdit).Enabled := pOpcao;
 
-         if (Components[i] is TMaskEdit) then
-            (Components[i] as TMaskEdit).Enabled := pOpcao;
+      if (Components[i] is TMaskEdit) then
+         (Components[i] as TMaskEdit).Enabled := pOpcao;
 
-         if Components[i] is TDBGrid then
-            (Components[i] as TDBGrid).Enabled := pOpcao;
+      if Components[i] is TDBGrid then
+         (Components[i] as TDBGrid).Enabled := pOpcao;
 
-      end;
-      cdsVendaCodigo.ReadOnly := False;
-      cdsVendaQuantidade.ReadOnly := False;
-      edtData.Enabled  := False;
-      edtNome.Enabled  := False;
-      edtValor.Enabled := False;
-
+      if (Components[i] is TCheckBox) then
+         (Components[i] as TCheckBox).Enabled := pOpcao;
    end;
+   cdsVendaCodigo.ReadOnly := False;
+   cdsVendaQuantidade.ReadOnly := False;
+   edtData.Enabled  := False;
+   edtNome.Enabled  := False;
+   edtValor.Enabled := False;
+
+end;
 
 procedure TfrmVendas.LimparTela;
 var
@@ -371,6 +400,9 @@ begin
      // Se o campo for do tipo MASKEDIT
       if (Components[i] is TMaskEdit) then // Limpa o valor que esta no campo
          (Components[i] as TMaskEdit).Text := EmptyStr;
+
+      if (Components[i] is TCheckBox) then // Define o campo como FALSO
+         (Components[i] as TCheckBox).Checked := False;
    end;
    edtData.Text    := DateToStr(Date());
    edtData.Enabled := False;
@@ -463,6 +495,7 @@ begin
    edtCodigoCliente.Text   := IntToStr (vObjVenda.Id_Cliente);
    edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
    edtData.Text            := DateToStr(vObjVenda.DataVenda);
+   chkFaturada.Checked     := vObjVenda.Faturada;
 
 
   if vObjColVendaItem <> nil then
@@ -646,6 +679,7 @@ begin
       vObjVenda.Id_Cliente   := StrToInt(edtCodigoCliente.Text);
       vObjVenda.DataVenda    := StrToDate(edtData.Text);
       vObjVenda.TotalVenda   := StrToFloat(edtValor.Text);
+      vObjVenda.Faturada     := chkFaturada.Checked;
 
       Result := True;
    except
@@ -974,6 +1008,7 @@ begin
    edtCodigoVenda.Text     := IntToStr (vObjVenda.Id);
    edtValor.Text           := FloatToStr(vObjVenda.TotalVenda);
    edtData.Text            := DateToStr(vObjVenda.DataVenda);
+   chkFaturada.Checked     := vObjVenda.Faturada;
 
    vObjCliente :=
          TCliente(TPessoaController.getInstancia.BuscaPessoa(
@@ -1161,6 +1196,47 @@ begin
    cdsVenda.Edit;
    cdsVendaPrecoTotal.Value := cdsVendaQuantidade.Value * cdsVendaPrecoUnitario.Value;
    cdsVenda.Post;
+end;
+
+function TfrmVendas.ProcessaAlteracao: Boolean;
+begin
+   try
+      Result := False;
+
+      if TMessageUtil.Pergunta('Quer realmente cancelar esta venda?')then
+      begin
+         chkFaturada.Checked := False;
+         if ProcessaVenda then
+         begin
+            TMessageUtil.Informacao('Dados foram alterados com sucesso!');
+
+            vEstadoTela := etPadrao;
+            DefineEstadoTela;
+            Result := True;
+         end;
+      end
+      else
+      begin
+         vEstadoTela := etConsultarVenda;
+         DefineEstadoTela;
+      end;
+
+
+   except
+       on E: Exception do
+       begin
+          raise Exception.Create (
+            'Falha ao cancelar venda: [View]'#13+
+            e.Message);
+       end;
+
+   end;
+end;
+
+procedure TfrmVendas.btnCancelarVendaClick(Sender: TObject);
+begin
+   vEstadoTela := etAlterar;
+   DefineEstadoTela;
 end;
 
 end.

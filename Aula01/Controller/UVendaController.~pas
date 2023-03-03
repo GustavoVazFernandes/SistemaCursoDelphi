@@ -41,18 +41,18 @@ var
 begin
    try
        try
-          Result := nil;
+         Result := nil;
 
-          xVendaItemDAO:=
-             TVendaItemDAO.Create(TConexao.getInstance.getConn);
+         xVendaItemDAO:=
+            TVendaItemDAO.Create(TConexao.getInstance.getConn);
 
-          Result:=
-             xVendaItemDAO.RetornaLista(RetornaCondicaoVenda(pID_Venda, True));
+         Result:=
+            xVendaItemDAO.RetornaLista(RetornaCondicaoVenda(pID_Venda, True));
 
-       finally
-           if xVendaItemDAO <> nil then
-           FreeAndNil(xVendaItemDAO)
-       end;
+      finally
+          if xVendaItemDAO <> nil then
+          FreeAndNil(xVendaItemDAO)
+      end;
    except
       on E: Exception do
       begin
@@ -199,13 +199,13 @@ begin
       end;
 
    except
-       on E: Exception do
-       begin
-          TConexao.get.cancelaTransacao;
-          Raise Exception.Create(
-          'Falha ao gravar os dados da venda [Controller].'#13 +
-          e.Message);
-       end;
+      on E: Exception do
+      begin
+         TConexao.get.cancelaTransacao;
+         Raise Exception.Create(
+         'Falha ao gravar os dados da venda [Controller].'#13 +
+         e.Message);
+      end;
 
    end;
 end;

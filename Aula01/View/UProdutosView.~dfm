@@ -46,14 +46,14 @@ object frmProdutos: TfrmProdutos
     TabOrder = 1
     object lblCodigo: TLabel
       Left = 16
-      Top = 24
+      Top = 20
       Width = 33
       Height = 13
-      Caption = 'Codigo'
+      Caption = 'C'#243'digo'
     end
     object lblNome: TLabel
-      Left = 16
-      Top = 61
+      Left = 15
+      Top = 60
       Width = 33
       Height = 13
       Caption = 'Nome'
@@ -82,7 +82,7 @@ object frmProdutos: TfrmProdutos
       Top = 19
       Width = 109
       Height = 13
-      Caption = 'Codigo da Unidade'
+      Caption = 'C'#243'digo da Unidade'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

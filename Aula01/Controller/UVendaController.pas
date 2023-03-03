@@ -40,7 +40,7 @@ var
    xVendaItemDAO: TVendaItemDAO;
 begin
    try
-       try
+      try
          Result := nil;
 
          xVendaItemDAO:=

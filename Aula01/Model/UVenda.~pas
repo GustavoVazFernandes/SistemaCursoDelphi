@@ -12,7 +12,7 @@ type
          vId           : Integer;
          vId_Cliente   : Integer;
          vDataVenda    : TDateTime;
-         vFaturada     : Boolean;
+         vFaturada     : Integer;
          vTotalVenda   : Double;
 
 
@@ -22,7 +22,7 @@ type
          property Id          : Integer    read vId            write vId;
          property Id_Cliente  : Integer    read vId_Cliente    write vId_Cliente;
          property DataVenda   : TDateTime  read vDataVenda     write vDataVenda;
-         property Faturada    : Boolean    read vFaturada      write vFaturada;
+         property Faturada    : Integer    read vFaturada      write vFaturada;
          property TotalVenda  : Double     read vTotalVenda    write vTotalVenda;
 
       end;
@@ -52,11 +52,11 @@ end;
 
 constructor TVenda.Create;
 begin
-   Self.vId                  := 0;
-   Self.vId_Cliente          := 0;
+   Self.vId                  :=0;
+   Self.vId_Cliente          :=0;
    Self.vDataVenda           := Date;
-   Self.vFaturada            := False;
-   Self.vTotalVenda          := 0;
+   Self.vFaturada            :=0;
+   Self.vTotalVenda          :=0;
 end;
 
 end.

@@ -383,7 +383,7 @@ object frmClientes: TfrmClientes
       Top = 20
       Width = 33
       Height = 13
-      Caption = 'Codigo'
+      Caption = 'C'#243'digo'
     end
     object lblCpfCNPJ: TLabel
       Left = 420
@@ -394,7 +394,7 @@ object frmClientes: TfrmClientes
     end
     object lblNome: TLabel
       Left = 15
-      Top = 60
+      Top = 59
       Width = 33
       Height = 13
       Caption = 'Nome'
@@ -431,8 +431,8 @@ object frmClientes: TfrmClientes
       Columns = 2
       ItemIndex = 0
       Items.Strings = (
-        'Fisica'
-        'Juridica')
+        'F'#237'sica'
+        'Jur'#237'dica')
       TabOrder = 2
       OnClick = rdgTipoPessoaClick
     end
@@ -463,7 +463,7 @@ object frmClientes: TfrmClientes
       TabOrder = 5
       object lblEndereco: TLabel
         Left = 5
-        Top = 21
+        Top = 20
         Width = 55
         Height = 13
         Caption = 'Endere'#231'o'
@@ -475,11 +475,11 @@ object frmClientes: TfrmClientes
         ParentFont = False
       end
       object lblNumero: TLabel
-        Left = 7
+        Left = 6
         Top = 53
         Width = 44
         Height = 13
-        Caption = 'Numero'
+        Caption = 'N'#250'mero'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11

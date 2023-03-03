@@ -1,6 +1,6 @@
 object frmVendas: TfrmVendas
-  Left = 677
-  Top = 51
+  Left = 674
+  Top = 65
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Vendas'
@@ -39,7 +39,7 @@ object frmVendas: TfrmVendas
       TabOrder = 0
       object lblData: TLabel
         Left = 176
-        Top = 30
+        Top = 28
         Width = 28
         Height = 13
         Caption = 'Data'
@@ -51,8 +51,8 @@ object frmVendas: TfrmVendas
         ParentFont = False
       end
       object lblVenda: TLabel
-        Left = 7
-        Top = 28
+        Left = 8
+        Top = 27
         Width = 80
         Height = 13
         Caption = 'C'#243'digo Venda'
@@ -65,7 +65,7 @@ object frmVendas: TfrmVendas
       end
       object lblCodigo: TLabel
         Left = 8
-        Top = 72
+        Top = 70
         Width = 40
         Height = 13
         Caption = 'Cliente'
@@ -150,6 +150,14 @@ object frmVendas: TfrmVendas
           45F9FBF9FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB7CDB767A567247C3228
           8637288637247C3267A567B7CDB7FFFFFFFFFFFFFFFFFFFFFFFF}
       end
+      object chkFaturada: TCheckBox
+        Left = 320
+        Top = 27
+        Width = 97
+        Height = 17
+        Caption = 'Faturada'
+        TabOrder = 5
+      end
     end
     object pnlBotoesVenda: TPanel
       Left = 1
@@ -220,6 +228,7 @@ object frmVendas: TfrmVendas
             item
               Expanded = False
               FieldName = 'Codigo'
+              Title.Caption = 'C'#243'digo'
               Width = 42
               Visible = True
             end
@@ -314,7 +323,7 @@ object frmVendas: TfrmVendas
       Height = 25
       Caption = '&Confirmar'
       Enabled = False
-      TabOrder = 4
+      TabOrder = 5
       OnClick = btnConfirmarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -351,7 +360,7 @@ object frmVendas: TfrmVendas
       Height = 25
       Caption = '&Cancelar'
       Enabled = False
-      TabOrder = 5
+      TabOrder = 6
       OnClick = btnCancelarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -387,7 +396,7 @@ object frmVendas: TfrmVendas
       Width = 75
       Height = 25
       Caption = '&Sair'
-      TabOrder = 6
+      TabOrder = 7
       OnClick = btnSairClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -423,7 +432,7 @@ object frmVendas: TfrmVendas
       Width = 75
       Height = 25
       Caption = '&Limpar'
-      TabOrder = 2
+      TabOrder = 3
       OnClick = btnLimparClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -495,7 +504,7 @@ object frmVendas: TfrmVendas
       Width = 76
       Height = 25
       Caption = '&Consultar'
-      TabOrder = 3
+      TabOrder = 4
       OnClick = btnConsultarClick
       Glyph.Data = {
         36030000424D3603000000000000360000002800000010000000100000000100
@@ -524,6 +533,42 @@ object frmVendas: TfrmVendas
         C6C6C6F8F7ECFFFFF7FFFFF7FFFFF3FEFDEEBCBCBCC5C5C5FFFFFFFFFFFFFFFF
         FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE1E1E1CFCFCFC3C3C3C3C3C3C3C3C3CF
         CFCFDFDFDFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    end
+    object btnCancelarVenda: TBitBtn
+      Left = 175
+      Top = 23
+      Width = 106
+      Height = 25
+      Caption = '&Cancelar Venda'
+      TabOrder = 2
+      OnClick = btnCancelarVendaClick
+      Glyph.Data = {
+        36030000424D3603000000000000360000002800000010000000100000000100
+        18000000000000030000C40E0000C40E00000000000000000000FFFFFF5B57D9
+        2722CD2622CE2721CD251FCA241FCA241ECA251FCA251EC9251EC9261FCC231D
+        C8261FCC5A55D9FFFFFF5F5FE12E2DFB2423EF0B06B6201DE52B29FA2824F428
+        24F42723F42722F42925FC130DCE0A05B0211AEF2921FB5C5ADE2423D5272BEF
+        1312B16A67BF1B1AB01F20E22D2EF4282AED2929EE2C2DF40E0DCA3F3CB59090
+        CE1210B12321EE201CD12C2CD4100EBB918ED3FFFFFFADAAE0100FB21C20E030
+        36F42F35F40D0DCE3835B8ECECF8FFFFFF6A67C60F0DC02B29D52F33DB1D24D7
+        433DC3EBEAF8FFFFFFAFADE31D1BB91D24DE171CD73934BEEEEDF9FFFFFFACAA
+        E41F1BBD252CE72D2CD83035DC384FFA161ED43A32C5EDEDF9FFFFFFD0CEF020
+        1FC11E1DC0E2E2F6FFFFFFB3B1E81511BF232DE53241F72E2FD82D33DD364FF3
+        3950F3151DD83E35CCDEDBF6FFFFFFCFCDF2CFCEF3FFFFFFD4D3F32321C7202C
+        E33447F43144F22B2EDB5056E43B55F3334BEF3852F41F2ADF211DCBCDCCF4FF
+        FFFFFFFFFFCDCBF42120CD2232E3354DF42F44EE364DF24D52E26E71EA6E82F7
+        556AF24862F32B3BE8221FD2CDCBF3FFFFFFFFFFFFCDCBF4201DD2242FE4445D
+        F35366F26A7DF66B6FE86B6FEC7388F7788CF66472F1514BE0D5D2F7FFFFFFDC
+        DAF8DCDAF8FFFFFFDCDAF8655EE2575EEA7588F66F83F6686DEA6C71EE7891F7
+        6779F25550E6CAC6F6FFFFFFE9E8FC5851E65954E6E0DEFAFFFFFFF6F5FD6F69
+        E9575FEC748CF76A6FED6E75EF6F82F35E59EBC2BFF7FFFFFFF2F1FD6E66EC5D
+        68EF6472F15E57EBC5C1F8FFFFFFF1F0FD7670EC616BF16D73EF6F77F15A5CEF
+        928BF3FFFFFFF1F0FE6F68F05B64EF7A92F67A91F66775F25551EDC3BFF9FFFF
+        FFAFA8F75857F06C70EF6C75F27A91F65A57F0AEA8F77771F35F68F27D96F679
+        8EF5788EF57C94F66D7FF45F5BF0948CF55956F1758BF66A73F0949AF685A1F7
+        7C94F65B5BF36975F584A1F88099F77F98F77F98F77E97F6819CF67588F55C5F
+        F37990F5819DF79299F4FFFFFF969BF7747BF47177F4747CF47279F47279F471
+        79F47179F47279F47178F4727AF4727AF47279F49499F6FFFFFF}
     end
   end
   object stbBarraStatus: TStatusBar

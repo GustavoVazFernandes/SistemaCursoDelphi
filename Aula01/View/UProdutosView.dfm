@@ -45,15 +45,15 @@ object frmProdutos: TfrmProdutos
     Align = alClient
     TabOrder = 1
     object lblCodigo: TLabel
-      Left = 16
-      Top = 24
+      Left = 17
+      Top = 19
       Width = 33
       Height = 13
-      Caption = 'Codigo'
+      Caption = 'C'#243'digo'
     end
     object lblNome: TLabel
       Left = 16
-      Top = 61
+      Top = 60
       Width = 33
       Height = 13
       Caption = 'Nome'
@@ -65,7 +65,7 @@ object frmProdutos: TfrmProdutos
       ParentFont = False
     end
     object lblPreco: TLabel
-      Left = 485
+      Left = 486
       Top = 19
       Width = 34
       Height = 13
@@ -82,7 +82,7 @@ object frmProdutos: TfrmProdutos
       Top = 19
       Width = 109
       Height = 13
-      Caption = 'Codigo da Unidade'
+      Caption = 'C'#243'digo da Unidade'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11
@@ -91,7 +91,7 @@ object frmProdutos: TfrmProdutos
       ParentFont = False
     end
     object lblTipoUnidade: TLabel
-      Left = 301
+      Left = 302
       Top = 19
       Width = 79
       Height = 13
